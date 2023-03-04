@@ -847,6 +847,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "appName",
+            "type": "string"
+          },
+          {
             "name": "assetMint",
             "type": "publicKey"
           },

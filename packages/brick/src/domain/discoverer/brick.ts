@@ -8,29 +8,45 @@ import {
 import { solanaPrivateRPC } from '@aleph-indexer/solana'
 import bs58 from 'bs58'
 import { AccountInfo, PublicKey } from '@solana/web3.js'
+import { publish } from '../../utils/messages.js'
 
 export default class BrickDiscoverer {
   constructor(
     public accountTypes: Set<AccountType> = new Set(Object.values(AccountType)),
-    protected cache: Record<string, BrickAccountInfo> = {},
+    protected addressRecordCache: Record<string, BrickAccountInfo> = {},
+    protected typeRecordCache: Record<string, BrickAccountInfo[]> = {},
+    protected appRecordCache: Record<string, BrickAccountInfo[]> = {},
   ) {}
 
   async loadAccounts(): Promise<BrickAccountInfo[]> {
     const newAccounts: BrickAccountInfo[] = []
     const accounts = await this.getAllAccounts()
 
+    // aggregate message account address key = raw this.cache
     for (const accountInfo of accounts) {
-      if (this.cache[accountInfo.address]) continue
-
-      this.cache[accountInfo.address] = accountInfo
-      newAccounts.push(this.cache[accountInfo.address])
+      if (this.addressRecordCache[accountInfo.address]){
+        // if the state has changed we need to publish it
+        if (this.addressRecordCache[accountInfo.address] !== accountInfo) {
+          await publish(accountInfo.address, accountInfo)
+          await publish(accountInfo.type, this.typeRecordCache[accountInfo.type])
+          await publish(accountInfo.data.app, accountInfo)
+        }
+      } else {
+        this.addressRecordCache[accountInfo.address] = accountInfo
+        await publish(accountInfo.address, accountInfo)
+        newAccounts.push(this.addressRecordCache[accountInfo.address])
+      }
     }
+
+    // aggregate message account type key, processed this.cache
+    
+    // aggregate message app name key, processed this.cache
 
     return newAccounts
   }
 
   getAccountType(address: string): AccountType {
-    return this.cache[address].type
+    return this.addressRecordCache[address].type
   }
 
   /**
