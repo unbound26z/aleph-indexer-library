@@ -1,0 +1,953 @@
+{
+  "version": "0.1.0",
+  "name": "brick",
+  "instructions": [
+    {
+      "name": "createAsset",
+      "accounts": [
+        {
+          "name": "metadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "arg",
+                "type": "string",
+                "path": "hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Mint",
+                "path": "asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "acceptedMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadata",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "metadata"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "path": "metadata_program"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Mint",
+                "path": "asset_mint"
+              }
+            ],
+            "programId": {
+              "kind": "account",
+              "type": "publicKey",
+              "path": "metadata_program"
+            }
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "hashId",
+          "type": "string"
+        },
+        {
+          "name": "appName",
+          "type": "string"
+        },
+        {
+          "name": "itemHash",
+          "type": "string"
+        },
+        {
+          "name": "timestampFundsVault",
+          "type": "u64"
+        },
+        {
+          "name": "tokenPrice",
+          "type": "u32"
+        },
+        {
+          "name": "exemplars",
+          "type": "i32"
+        },
+        {
+          "name": "quantityPerExemplars",
+          "type": "u32"
+        },
+        {
+          "name": "tokenName",
+          "type": "string"
+        },
+        {
+          "name": "tokenSymbol",
+          "type": "string"
+        },
+        {
+          "name": "tokenUri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "editAssetPrice",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "tokenPrice",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "buyAsset",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "Asset",
+                "path": "asset.hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyerTransferVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "acceptedMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payment",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Mint",
+                "path": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "path": "authority"
+              },
+              {
+                "kind": "arg",
+                "type": "u64",
+                "path": "timestamp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paymentVault",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment_vault"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Payment",
+                "path": "payment"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyerMintedTokenVault",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "timestamp",
+          "type": "u64"
+        },
+        {
+          "name": "exemplars",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "shareAsset",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "Asset",
+                "path": "asset.hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receiverMintedTokenVault",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "exemplars",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "withdrawFunds",
+      "accounts": [
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "Asset",
+                "path": "asset.hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receiverVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "buyer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payment",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Mint",
+                "path": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Payment",
+                "path": "payment.buyer"
+              },
+              {
+                "kind": "account",
+                "type": "u64",
+                "account": "Payment",
+                "path": "payment.payment_timestamp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paymentVault",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment_vault"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Payment",
+                "path": "payment"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "refund",
+      "accounts": [
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "Asset",
+                "path": "asset.hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receiverVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payment",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Mint",
+                "path": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Payment",
+                "path": "payment.buyer"
+              },
+              {
+                "kind": "account",
+                "type": "u64",
+                "account": "Payment",
+                "path": "payment.payment_timestamp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paymentVault",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "payment_vault"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Payment",
+                "path": "payment"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyerMintedTokenVault",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "useAsset",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset_mint"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "Asset",
+                "path": "asset.hash_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyerMintedTokenVault",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "exemplars",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "deleteAsset",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "asset",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "asset"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "Asset",
+                "path": "asset.asset_mint"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Asset",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "appName",
+            "type": "string"
+          },
+          {
+            "name": "hashId",
+            "type": "string"
+          },
+          {
+            "name": "itemHash",
+            "type": "string"
+          },
+          {
+            "name": "acceptedMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "assetMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "timestampFundsVault",
+            "type": "u64"
+          },
+          {
+            "name": "price",
+            "type": "u32"
+          },
+          {
+            "name": "sold",
+            "type": "u32"
+          },
+          {
+            "name": "used",
+            "type": "u32"
+          },
+          {
+            "name": "shared",
+            "type": "u32"
+          },
+          {
+            "name": "refunded",
+            "type": "u32"
+          },
+          {
+            "name": "exemplars",
+            "type": "i32"
+          },
+          {
+            "name": "quantityPerExemplars",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "mintBump",
+            "type": "u8"
+          },
+          {
+            "name": "metadataBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Payment",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "assetMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "seller",
+            "type": "publicKey"
+          },
+          {
+            "name": "buyer",
+            "type": "publicKey"
+          },
+          {
+            "name": "exemplars",
+            "type": "u32"
+          },
+          {
+            "name": "price",
+            "type": "u32"
+          },
+          {
+            "name": "totalAmount",
+            "type": "u64"
+          },
+          {
+            "name": "paymentTimestamp",
+            "type": "u64"
+          },
+          {
+            "name": "sellerReceiveFundsTimestamp",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "bumpVault",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TimeForRefundHasConsumed",
+      "msg": "Refund time has consumed"
+    },
+    {
+      "code": 6001,
+      "name": "CannotWithdrawYet",
+      "msg": "You cannot withdraw these funds yet"
+    },
+    {
+      "code": 6002,
+      "name": "NotEnoughTokensAvailable",
+      "msg": "There are not enough tokens to buy"
+    },
+    {
+      "code": 6003,
+      "name": "UsersStillHoldUnusedTokens",
+      "msg": "There are still users with a token available for use"
+    },
+    {
+      "code": 6004,
+      "name": "IncorrectPaymentToken",
+      "msg": "You are trying to pay a different mint than the one stated by the seller"
+    },
+    {
+      "code": 6005,
+      "name": "IncorrectBuyerTokenAccountOnTransfer",
+      "msg": "You are providing a wrong buyer token account, is where the funds come from to pay"
+    },
+    {
+      "code": 6006,
+      "name": "IncorrectBuyerTokenAccountToStorePurchasedToken",
+      "msg": "You are providing a wrong buyer token account, is where the access token will be received"
+    },
+    {
+      "code": 6007,
+      "name": "IncorrectAssetAuthority",
+      "msg": "You are not the owner of this asset account"
+    },
+    {
+      "code": 6008,
+      "name": "IncorrectPaymentAuthority",
+      "msg": "You are not the owner of this payment account"
+    },
+    {
+      "code": 6009,
+      "name": "IncorrectPaymentVault",
+      "msg": "You are providing a worng payment vault"
+    },
+    {
+      "code": 6010,
+      "name": "IncorrectReceiverTokenAccount",
+      "msg": "You are providing an incorrect token account"
+    }
+  ],
+  "metadata": {
+    "address": "84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S"
+  }
+}

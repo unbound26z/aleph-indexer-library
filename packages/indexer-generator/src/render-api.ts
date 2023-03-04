@@ -228,7 +228,7 @@ import { InstructionType } from '../utils/layouts/index.js'
 // ------------------- TYPES ---------------------------
 
 `
-  if (accounts && instructions && types) {
+  if (types) {
     for (const type of types.enums) {
       apiTypes += `
 export const ${type.name} = new GraphQLEnumType({
@@ -258,7 +258,8 @@ export const ${type.name} = new GraphQLObjectType({
       })
 `
     }
-
+  }
+  if (accounts && instructions) {
     apiTypes += `
 
 // ------------------- STATS ---------------------------
