@@ -1,4 +1,4 @@
-import { StorageStream, Utils } from '@aleph-indexer/core'
+import { StorageStream } from '@aleph-indexer/core'
 import {
   IndexerDomainContext,
   AccountIndexerConfigWithMeta,
@@ -9,11 +9,12 @@ import {
   AccountTimeSeriesStats,
   AccountStatsFilters,
   AccountStats,
+  ParserContext,
 } from '@aleph-indexer/framework'
 import {
   isParsedIx,
   SolanaIndexerWorkerDomainI,
-  SolanaInstructionContext,
+  SolanaParsedInstructionContext,
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
@@ -82,18 +83,21 @@ export default class WorkerDomain
     return this.getAccountStats(account)
   }
 
-  async solanaFilterInstructions(
-    ixsContext: SolanaInstructionContext[],
-  ): Promise<SolanaInstructionContext[]> {
-    return ixsContext.filter(({ ix }) => {
-      return isParsedIx(ix) && ix.programId === this.programId
-    })
+  async solanaFilterInstruction(
+    context: ParserContext,
+    entity: SolanaParsedInstructionContext,
+  ): Promise<boolean> {
+    return (
+      isParsedIx(entity.instruction) &&
+      entity.instruction.programId === BRICK_PROGRAM_ID
+    )
   }
 
   async solanaIndexInstructions(
-    ixsContext: SolanaInstructionContext[],
+    context: ParserContext,
+    ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    const parsedIxs = ixsContext.map((ix) => this.eventParser.parse(ix))
+    const parsedIxs = await Promise.all(ixsContext.map((ix) => this.eventParser.parse(ix, this.accounts)))
 
     console.log(`indexing ${ixsContext.length} parsed ixs`)
 
