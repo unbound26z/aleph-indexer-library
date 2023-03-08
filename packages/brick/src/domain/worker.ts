@@ -18,7 +18,7 @@ import {
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
-import { AccountType, ParsedEvents, PaymentArgs } from '../utils/layouts/index.js'
+import { AccountType, ParsedEvents, PaymentArgs, TokenMetadataArgs } from '../utils/layouts/index.js'
 import { BrickAccountStats, BrickAccountInfo } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
@@ -97,7 +97,7 @@ export default class WorkerDomain
     context: ParserContext,
     ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    const parsedIxs = await Promise.all(ixsContext.map((ix) => this.eventParser.parse(ix, this.accounts)))
+    const parsedIxs = await Promise.all(ixsContext.map(async (ix) => await this.eventParser.parse(ix, this.accounts)))
 
     console.log(`indexing ${ixsContext.length} parsed ixs`)
 
@@ -136,6 +136,7 @@ export default class WorkerDomain
 
   async getUserWithdrawalsAvailable(
     account: string,
+    app?: string,
   ): Promise<BrickAccountInfo[]> {
     const actualTimestamp = Date.now()
     const paymentsAccounts: BrickAccountInfo[] = []
@@ -145,7 +146,16 @@ export default class WorkerDomain
         (acc.info.data as PaymentArgs).seller.toString() === account && 
         actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
       ) {
-        paymentsAccounts.push(acc.info)
+        if (app) {
+          const tokenAccount = (acc.info.data as PaymentArgs).token_account.toString()
+          const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
+          if (this.accounts[app] && app == appAddress) {
+            paymentsAccounts.push(acc.info)
+          }
+        }
+        else {
+          paymentsAccounts.push(acc.info)
+        }
       }
     }
 
@@ -154,6 +164,7 @@ export default class WorkerDomain
 
   async getUserRefundsAvailable(
     account: string,
+    app?: string,
   ): Promise<BrickAccountInfo[]> {
     const actualTimestamp = Date.now()
     const paymentsAccounts: BrickAccountInfo[] = []

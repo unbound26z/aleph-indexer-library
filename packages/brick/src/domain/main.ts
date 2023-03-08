@@ -71,12 +71,14 @@ export default class MainDomain
 
   async getUserWithdrawalsAvailable(
     account: string,
+    app?: string,
   ): Promise<BrickAccountInfo[]> {
     const infos = (await this.context.apiClient
       .useBlockchain(Blockchain.Solana)
       .invokeDomainMethod({
         account,
         method: 'getUserWithdrawalsAvailable',
+        args: [app]
       })) as BrickAccountInfo[]
 
     return infos
@@ -84,12 +86,14 @@ export default class MainDomain
 
   async getUserRefundsAvailable(
     account: string,
+    app?: string,
   ): Promise<BrickAccountInfo[]> {
     const infos = (await this.context.apiClient
       .useBlockchain(Blockchain.Solana)
       .invokeDomainMethod({
         account,
         method: 'getUserRefundsAvailable',
+        args: [app]
       })) as BrickAccountInfo[]
 
     return infos

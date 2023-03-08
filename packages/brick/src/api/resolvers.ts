@@ -13,17 +13,24 @@ import {
 export type AccountsFilters = {
   types?: AccountType[]
   accounts?: string[]
+  app?: string,
   includeStats?: boolean
 }
 
 export type EventsFilters = {
   account: string
   types?: InstructionType[]
+  app?: string,
   startDate?: number
   endDate?: number
   limit?: number
   skip?: number
   reverse?: boolean
+}
+
+export type UsersFilters = {
+  address: string,
+  app?: string,
 }
 
 export type GlobalStatsFilters = AccountsFilters
@@ -36,12 +43,12 @@ export class APIResolvers {
     return acountsData.map(({ info, stats }) => ({ ...info, stats }))
   }
 
-  async getUserWithdrawalsAvailable(address: string): Promise<BrickAccountInfo[]> {
-    return await this.domain.getUserWithdrawalsAvailable(address)
+  async getUserWithdrawalsAvailable(args: UsersFilters): Promise<BrickAccountInfo[]> {
+    return await this.domain.getUserWithdrawalsAvailable(args.address, args.app)
   }
 
-  async getUserRefundsAvailable(address: string): Promise<BrickAccountInfo[]> {
-    return await this.domain.getUserRefundsAvailable(address)
+  async getUserRefundsAvailable(args: UsersFilters): Promise<BrickAccountInfo[]> {
+    return await this.domain.getUserRefundsAvailable(args.address, args.app)
   }
 
   async getEvents({

@@ -14,6 +14,7 @@ import {
   GlobalStatsFilters,
   APIResolvers,
   AccountsFilters,
+  UsersFilters,
 } from './resolvers.js'
 import MainDomain from '../domain/main.js'
 
@@ -36,6 +37,7 @@ export default class APISchema extends IndexerAPISchema {
             args: {
               types: { type: new GraphQLList(GraphQLString) },
               accounts: { type: new GraphQLList(GraphQLString) },
+              app: { type: GraphQLString },
             },
             resolve: (_, ctx, __, info) => {
               ctx.includeStats =
@@ -52,9 +54,10 @@ export default class APISchema extends IndexerAPISchema {
             type: Types.AccountsInfo,
             args: {
               address: { type: GraphQLString },
+              app: { type: GraphQLString },
             },
             resolve: (_, ctx) => {
-              return this.resolver.getUserWithdrawalsAvailable(ctx.address)
+              return this.resolver.getUserWithdrawalsAvailable(ctx as UsersFilters)
             },
           },
 
@@ -62,9 +65,10 @@ export default class APISchema extends IndexerAPISchema {
             type: Types.AccountsInfo,
             args: {
               address: { type: GraphQLString },
+              app: { type: GraphQLString },
             },
             resolve: (_, ctx) => {
-              return this.resolver.getUserRefundsAvailable(ctx.address)
+              return this.resolver.getUserRefundsAvailable(ctx as UsersFilters)
             },
           },
 
@@ -73,6 +77,7 @@ export default class APISchema extends IndexerAPISchema {
             args: {
               account: { type: new GraphQLNonNull(GraphQLString) },
               types: { type: new GraphQLList(Types.ParsedEvents) },
+              app: { type: GraphQLString },
               startDate: { type: GraphQLFloat },
               endDate: { type: GraphQLFloat },
               limit: { type: GraphQLInt },
