@@ -48,6 +48,16 @@ export default class APISchema extends IndexerAPISchema {
             },
           },
 
+          userWithdrawalsAvailable: {
+            type: Types.AccountsInfo,
+            args: {
+              address: { type: GraphQLString },
+            },
+            resolve: (_, ctx) => {
+              return this.resolver.getUserWithdrawalsAvailable(ctx.address)
+            },
+          },
+
           events: {
             type: Types.Events,
             args: {

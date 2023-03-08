@@ -44,7 +44,7 @@
               {
                 "kind": "arg",
                 "type": "string",
-                "path": "hash_id"
+                "path": "off_chain_id"
               }
             ]
           }
@@ -107,7 +107,7 @@
       ],
       "args": [
         {
-          "name": "hashId",
+          "name": "offChainId",
           "type": "string"
         },
         {
@@ -115,11 +115,7 @@
           "type": "string"
         },
         {
-          "name": "itemHash",
-          "type": "string"
-        },
-        {
-          "name": "timestampFundsVault",
+          "name": "refundTimespan",
           "type": "u64"
         },
         {
@@ -129,10 +125,6 @@
         {
           "name": "exemplars",
           "type": "i32"
-        },
-        {
-          "name": "quantityPerExemplars",
-          "type": "u32"
         },
         {
           "name": "tokenName",
@@ -252,7 +244,7 @@
                 "kind": "account",
                 "type": "string",
                 "account": "Asset",
-                "path": "asset.hash_id"
+                "path": "asset.off_chain_id"
               }
             ]
           }
@@ -318,7 +310,7 @@
           }
         },
         {
-          "name": "buyerMintedTokenVault",
+          "name": "buyerTokenVault",
           "isMut": true,
           "isSigner": false
         }
@@ -327,10 +319,6 @@
         {
           "name": "timestamp",
           "type": "u64"
-        },
-        {
-          "name": "exemplars",
-          "type": "u32"
         }
       ]
     },
@@ -397,13 +385,13 @@
                 "kind": "account",
                 "type": "string",
                 "account": "Asset",
-                "path": "asset.hash_id"
+                "path": "asset.off_chain_id"
               }
             ]
           }
         },
         {
-          "name": "receiverMintedTokenVault",
+          "name": "receiverVault",
           "isMut": true,
           "isSigner": false
         }
@@ -463,7 +451,7 @@
                 "kind": "account",
                 "type": "string",
                 "account": "Asset",
-                "path": "asset.hash_id"
+                "path": "asset.off_chain_id"
               }
             ]
           }
@@ -581,7 +569,7 @@
                 "kind": "account",
                 "type": "string",
                 "account": "Asset",
-                "path": "asset.hash_id"
+                "path": "asset.off_chain_id"
               }
             ]
           }
@@ -644,7 +632,7 @@
           }
         },
         {
-          "name": "buyerMintedTokenVault",
+          "name": "buyerTokenVault",
           "isMut": true,
           "isSigner": false
         }
@@ -714,23 +702,18 @@
                 "kind": "account",
                 "type": "string",
                 "account": "Asset",
-                "path": "asset.hash_id"
+                "path": "asset.off_chain_id"
               }
             ]
           }
         },
         {
-          "name": "buyerMintedTokenVault",
+          "name": "buyerTokenVault",
           "isMut": true,
           "isSigner": false
         }
       ],
-      "args": [
-        {
-          "name": "exemplars",
-          "type": "u32"
-        }
-      ]
+      "args": []
     },
     {
       "name": "deleteAsset",
@@ -775,11 +758,7 @@
             "type": "string"
           },
           {
-            "name": "hashId",
-            "type": "string"
-          },
-          {
-            "name": "itemHash",
+            "name": "offChainId",
             "type": "string"
           },
           {
@@ -795,7 +774,7 @@
             "type": "publicKey"
           },
           {
-            "name": "timestampFundsVault",
+            "name": "refundTimespan",
             "type": "u64"
           },
           {
@@ -823,10 +802,6 @@
             "type": "i32"
           },
           {
-            "name": "quantityPerExemplars",
-            "type": "u32"
-          },
-          {
             "name": "bump",
             "type": "u8"
           },
@@ -847,10 +822,6 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "appName",
-            "type": "string"
-          },
-          {
             "name": "assetMint",
             "type": "publicKey"
           },
@@ -863,23 +834,15 @@
             "type": "publicKey"
           },
           {
-            "name": "exemplars",
-            "type": "u32"
-          },
-          {
             "name": "price",
             "type": "u32"
-          },
-          {
-            "name": "totalAmount",
-            "type": "u64"
           },
           {
             "name": "paymentTimestamp",
             "type": "u64"
           },
           {
-            "name": "sellerReceiveFundsTimestamp",
+            "name": "refundConsumedAt",
             "type": "u64"
           },
           {
@@ -902,18 +865,18 @@
     },
     {
       "code": 6001,
-      "name": "CannotWithdrawYet",
-      "msg": "You cannot withdraw these funds yet"
-    },
-    {
-      "code": 6002,
       "name": "NotEnoughTokensAvailable",
       "msg": "There are not enough tokens to buy"
     },
     {
-      "code": 6003,
+      "code": 6002,
       "name": "UsersStillHoldUnusedTokens",
       "msg": "There are still users with a token available for use"
+    },
+    {
+      "code": 6003,
+      "name": "CannotWithdrawYet",
+      "msg": "You cannot withdraw these funds yet"
     },
     {
       "code": 6004,

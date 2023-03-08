@@ -40,7 +40,7 @@ export const shareAssetStruct = new beet.BeetArgsStruct<
  * @property [_writable_, **signer**] authority
  * @property [_writable_] asset
  * @property [_writable_] assetMint
- * @property [_writable_] receiverMintedTokenVault
+ * @property [_writable_] receiverVault
  * @category Instructions
  * @category ShareAsset
  * @category generated
@@ -53,7 +53,7 @@ export type ShareAssetInstructionAccounts = {
   authority: web3.PublicKey
   asset: web3.PublicKey
   assetMint: web3.PublicKey
-  receiverMintedTokenVault: web3.PublicKey
+  receiverVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
@@ -119,7 +119,7 @@ export function createShareAssetInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.receiverMintedTokenVault,
+      pubkey: accounts.receiverVault,
       isWritable: true,
       isSigner: false,
     },

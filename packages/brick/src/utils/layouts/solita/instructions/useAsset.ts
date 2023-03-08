@@ -14,23 +14,10 @@ import * as web3 from '@solana/web3.js'
  * @category UseAsset
  * @category generated
  */
-export type UseAssetInstructionArgs = {
-  exemplars: number
-}
-/**
- * @category Instructions
- * @category UseAsset
- * @category generated
- */
-export const useAssetStruct = new beet.BeetArgsStruct<
-  UseAssetInstructionArgs & {
-    instructionDiscriminator: number[] /* size: 8 */
-  }
->(
-  [
-    ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['exemplars', beet.u32],
-  ],
+export const useAssetStruct = new beet.BeetArgsStruct<{
+  instructionDiscriminator: number[] /* size: 8 */
+}>(
+  [['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)]],
   'UseAssetInstructionArgs',
 )
 /**
@@ -40,7 +27,7 @@ export const useAssetStruct = new beet.BeetArgsStruct<
  * @property [_writable_, **signer**] authority
  * @property [_writable_] asset
  * @property [_writable_] assetMint
- * @property [_writable_] buyerMintedTokenVault
+ * @property [_writable_] buyerTokenVault
  * @category Instructions
  * @category UseAsset
  * @category generated
@@ -53,7 +40,7 @@ export type UseAssetInstructionAccounts = {
   authority: web3.PublicKey
   asset: web3.PublicKey
   assetMint: web3.PublicKey
-  buyerMintedTokenVault: web3.PublicKey
+  buyerTokenVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
@@ -65,22 +52,18 @@ export const useAssetInstructionDiscriminator = [
  * Creates a _UseAsset_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
- * @param args to provide as instruction data to the program
- *
  * @category Instructions
  * @category UseAsset
  * @category generated
  */
 export function createUseAssetInstruction(
   accounts: UseAssetInstructionAccounts,
-  args: UseAssetInstructionArgs,
   programId = new web3.PublicKey(
     '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
   ),
 ) {
   const [data] = useAssetStruct.serialize({
     instructionDiscriminator: useAssetInstructionDiscriminator,
-    ...args,
   })
   const keys: web3.AccountMeta[] = [
     {
@@ -119,7 +102,7 @@ export function createUseAssetInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.buyerMintedTokenVault,
+      pubkey: accounts.buyerTokenVault,
       isWritable: true,
       isSigner: false,
     },

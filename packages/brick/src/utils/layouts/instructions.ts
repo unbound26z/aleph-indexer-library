@@ -1,6 +1,6 @@
 import { EventBase } from '@aleph-indexer/framework'
 import * as solita from './solita/index.js'
-import { PublicKey } from '@solana/web3.js'
+import BN from 'bn.js'
 
 export enum InstructionType {
   CreateAsset = 'CreateAssetEvent',
@@ -14,21 +14,18 @@ export enum InstructionType {
 }
 
 export type InstructionBase = EventBase<InstructionType> & {
-  programId: string
-  signer: string
-  account: string
+  signer?: string
+  account?: string
 }
 
 /*-----------------------* CUSTOM EVENTS TYPES *-----------------------*/
 
 export type CreateAssetEventData = {
-  hashId: string
+  offChainId: string
   appName: string
-  itemHash: string
-  timestampFundsVault: BN
+  refundTimespan: BN
   tokenPrice: number
   exemplars: number
-  quantityPerExemplars: number
   tokenName: string
   tokenSymbol: string
   tokenUri: string
@@ -64,7 +61,6 @@ export type EditAssetPriceEvent = InstructionBase &
 
 export type BuyAssetEventData = {
   timestamp: BN
-  exemplars: number
 }
 
 export type BuyAssetInfo = {
@@ -117,12 +113,7 @@ export type RefundEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type UseAssetEventData = {
-  exemplars: number
-}
-
 export type UseAssetInfo = {
-  data: UseAssetEventData
   accounts: solita.UseAssetInstructionAccounts
 }
 

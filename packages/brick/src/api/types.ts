@@ -68,19 +68,17 @@ export const Asset = new GraphQLObjectType({
   name: 'Asset',
   fields: {
     appName: { type: new GraphQLNonNull(GraphQLString) },
-    hashId: { type: new GraphQLNonNull(GraphQLString) },
-    itemHash: { type: new GraphQLNonNull(GraphQLString) },
+    offChainId: { type: new GraphQLNonNull(GraphQLString) },
     acceptedMint: { type: new GraphQLNonNull(GraphQLString) },
     assetMint: { type: new GraphQLNonNull(GraphQLString) },
     authority: { type: new GraphQLNonNull(GraphQLString) },
-    timestampFundsVault: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    refundTimespan: { type: new GraphQLNonNull(GraphQLBigNumber) },
     price: { type: new GraphQLNonNull(GraphQLInt) },
     sold: { type: new GraphQLNonNull(GraphQLInt) },
     used: { type: new GraphQLNonNull(GraphQLInt) },
     shared: { type: new GraphQLNonNull(GraphQLInt) },
     refunded: { type: new GraphQLNonNull(GraphQLInt) },
     exemplars: { type: new GraphQLNonNull(GraphQLInt) },
-    quantityPerExemplars: { type: new GraphQLNonNull(GraphQLInt) },
     bump: { type: new GraphQLNonNull(GraphQLInt) },
     mintBump: { type: new GraphQLNonNull(GraphQLInt) },
     metadataBump: { type: new GraphQLNonNull(GraphQLInt) },
@@ -93,11 +91,9 @@ export const Payment = new GraphQLObjectType({
     assetMint: { type: new GraphQLNonNull(GraphQLString) },
     seller: { type: new GraphQLNonNull(GraphQLString) },
     buyer: { type: new GraphQLNonNull(GraphQLString) },
-    exemplars: { type: new GraphQLNonNull(GraphQLInt) },
     price: { type: new GraphQLNonNull(GraphQLInt) },
-    totalAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
     paymentTimestamp: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    sellerReceiveFundsTimestamp: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    refundConsumedAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
     bump: { type: new GraphQLNonNull(GraphQLInt) },
     bumpVault: { type: new GraphQLNonNull(GraphQLInt) },
   },
@@ -193,13 +189,11 @@ export const CreateAssetEventAccounts = new GraphQLObjectType({
 export const CreateAssetEventData = new GraphQLObjectType({
   name: 'CreateAssetEventData',
   fields: {
-    hashId: { type: new GraphQLNonNull(GraphQLString) },
+    offChainId: { type: new GraphQLNonNull(GraphQLString) },
     appName: { type: new GraphQLNonNull(GraphQLString) },
-    itemHash: { type: new GraphQLNonNull(GraphQLString) },
-    timestampFundsVault: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    refundTimespan: { type: new GraphQLNonNull(GraphQLBigNumber) },
     tokenPrice: { type: new GraphQLNonNull(GraphQLInt) },
     exemplars: { type: new GraphQLNonNull(GraphQLInt) },
-    quantityPerExemplars: { type: new GraphQLNonNull(GraphQLInt) },
     tokenName: { type: new GraphQLNonNull(GraphQLString) },
     tokenSymbol: { type: new GraphQLNonNull(GraphQLString) },
     tokenUri: { type: new GraphQLNonNull(GraphQLString) },
@@ -262,7 +256,7 @@ export const BuyAssetEventAccounts = new GraphQLObjectType({
     acceptedMint: { type: new GraphQLNonNull(GraphQLString) },
     payment: { type: new GraphQLNonNull(GraphQLString) },
     paymentVault: { type: new GraphQLNonNull(GraphQLString) },
-    buyerMintedTokenVault: { type: new GraphQLNonNull(GraphQLString) },
+    buyerTokenVault: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -270,7 +264,6 @@ export const BuyAssetEventData = new GraphQLObjectType({
   name: 'BuyAssetEventData',
   fields: {
     timestamp: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    exemplars: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -297,7 +290,7 @@ export const ShareAssetEventAccounts = new GraphQLObjectType({
     authority: { type: new GraphQLNonNull(GraphQLString) },
     asset: { type: new GraphQLNonNull(GraphQLString) },
     assetMint: { type: new GraphQLNonNull(GraphQLString) },
-    receiverMintedTokenVault: { type: new GraphQLNonNull(GraphQLString) },
+    receiverVault: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -357,7 +350,7 @@ export const RefundEventAccounts = new GraphQLObjectType({
     receiverVault: { type: new GraphQLNonNull(GraphQLString) },
     payment: { type: new GraphQLNonNull(GraphQLString) },
     paymentVault: { type: new GraphQLNonNull(GraphQLString) },
-    buyerMintedTokenVault: { type: new GraphQLNonNull(GraphQLString) },
+    buyerTokenVault: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -383,14 +376,7 @@ export const UseAssetEventAccounts = new GraphQLObjectType({
     authority: { type: new GraphQLNonNull(GraphQLString) },
     asset: { type: new GraphQLNonNull(GraphQLString) },
     assetMint: { type: new GraphQLNonNull(GraphQLString) },
-    buyerMintedTokenVault: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const UseAssetEventData = new GraphQLObjectType({
-  name: 'UseAssetEventData',
-  fields: {
-    exemplars: { type: new GraphQLNonNull(GraphQLInt) },
+    buyerTokenVault: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -400,7 +386,6 @@ export const UseAssetEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.UseAsset,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(UseAssetEventData) },
     accounts: { type: new GraphQLNonNull(UseAssetEventAccounts) },
   },
 })

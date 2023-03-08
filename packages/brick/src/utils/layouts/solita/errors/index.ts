@@ -35,36 +35,13 @@ createErrorFromNameLookup.set(
 )
 
 /**
- * CannotWithdrawYet: 'You cannot withdraw these funds yet'
- *
- * @category Errors
- * @category generated
- */
-export class CannotWithdrawYetError extends Error {
-  readonly code: number = 0x1771
-  readonly name: string = 'CannotWithdrawYet'
-  constructor() {
-    super('You cannot withdraw these funds yet')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, CannotWithdrawYetError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x1771, () => new CannotWithdrawYetError())
-createErrorFromNameLookup.set(
-  'CannotWithdrawYet',
-  () => new CannotWithdrawYetError(),
-)
-
-/**
  * NotEnoughTokensAvailable: 'There are not enough tokens to buy'
  *
  * @category Errors
  * @category generated
  */
 export class NotEnoughTokensAvailableError extends Error {
-  readonly code: number = 0x1772
+  readonly code: number = 0x1771
   readonly name: string = 'NotEnoughTokensAvailable'
   constructor() {
     super('There are not enough tokens to buy')
@@ -74,7 +51,7 @@ export class NotEnoughTokensAvailableError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1772, () => new NotEnoughTokensAvailableError())
+createErrorFromCodeLookup.set(0x1771, () => new NotEnoughTokensAvailableError())
 createErrorFromNameLookup.set(
   'NotEnoughTokensAvailable',
   () => new NotEnoughTokensAvailableError(),
@@ -87,7 +64,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class UsersStillHoldUnusedTokensError extends Error {
-  readonly code: number = 0x1773
+  readonly code: number = 0x1772
   readonly name: string = 'UsersStillHoldUnusedTokens'
   constructor() {
     super('There are still users with a token available for use')
@@ -98,12 +75,35 @@ export class UsersStillHoldUnusedTokensError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1773,
+  0x1772,
   () => new UsersStillHoldUnusedTokensError(),
 )
 createErrorFromNameLookup.set(
   'UsersStillHoldUnusedTokens',
   () => new UsersStillHoldUnusedTokensError(),
+)
+
+/**
+ * CannotWithdrawYet: 'You cannot withdraw these funds yet'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class CannotWithdrawYetError extends Error {
+  readonly code: number = 0x1773
+  readonly name: string = 'CannotWithdrawYet'
+  constructor() {
+    super('You cannot withdraw these funds yet')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, CannotWithdrawYetError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1773, () => new CannotWithdrawYetError())
+createErrorFromNameLookup.set(
+  'CannotWithdrawYet',
+  () => new CannotWithdrawYetError(),
 )
 
 /**

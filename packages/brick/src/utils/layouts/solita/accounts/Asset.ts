@@ -16,19 +16,17 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
  */
 export type AssetArgs = {
   appName: string
-  hashId: string
-  itemHash: string
+  offChainId: string
   acceptedMint: web3.PublicKey
   assetMint: web3.PublicKey
   authority: web3.PublicKey
-  timestampFundsVault: beet.bignum
+  refundTimespan: beet.bignum
   price: number
   sold: number
   used: number
   shared: number
   refunded: number
   exemplars: number
-  quantityPerExemplars: number
   bump: number
   mintBump: number
   metadataBump: number
@@ -45,19 +43,17 @@ export const assetDiscriminator = [234, 180, 241, 252, 139, 224, 160, 8]
 export class Asset implements AssetArgs {
   private constructor(
     readonly appName: string,
-    readonly hashId: string,
-    readonly itemHash: string,
+    readonly offChainId: string,
     readonly acceptedMint: web3.PublicKey,
     readonly assetMint: web3.PublicKey,
     readonly authority: web3.PublicKey,
-    readonly timestampFundsVault: beet.bignum,
+    readonly refundTimespan: beet.bignum,
     readonly price: number,
     readonly sold: number,
     readonly used: number,
     readonly shared: number,
     readonly refunded: number,
     readonly exemplars: number,
-    readonly quantityPerExemplars: number,
     readonly bump: number,
     readonly mintBump: number,
     readonly metadataBump: number,
@@ -69,19 +65,17 @@ export class Asset implements AssetArgs {
   static fromArgs(args: AssetArgs) {
     return new Asset(
       args.appName,
-      args.hashId,
-      args.itemHash,
+      args.offChainId,
       args.acceptedMint,
       args.assetMint,
       args.authority,
-      args.timestampFundsVault,
+      args.refundTimespan,
       args.price,
       args.sold,
       args.used,
       args.shared,
       args.refunded,
       args.exemplars,
-      args.quantityPerExemplars,
       args.bump,
       args.mintBump,
       args.metadataBump,
@@ -194,13 +188,12 @@ export class Asset implements AssetArgs {
   pretty() {
     return {
       appName: this.appName,
-      hashId: this.hashId,
-      itemHash: this.itemHash,
+      offChainId: this.offChainId,
       acceptedMint: this.acceptedMint.toBase58(),
       assetMint: this.assetMint.toBase58(),
       authority: this.authority.toBase58(),
-      timestampFundsVault: (() => {
-        const x = <{ toNumber: () => number }>this.timestampFundsVault
+      refundTimespan: (() => {
+        const x = <{ toNumber: () => number }>this.refundTimespan
         if (typeof x.toNumber === 'function') {
           try {
             return x.toNumber()
@@ -216,7 +209,6 @@ export class Asset implements AssetArgs {
       shared: this.shared,
       refunded: this.refunded,
       exemplars: this.exemplars,
-      quantityPerExemplars: this.quantityPerExemplars,
       bump: this.bump,
       mintBump: this.mintBump,
       metadataBump: this.metadataBump,
@@ -237,19 +229,17 @@ export const assetBeet = new beet.FixableBeetStruct<
   [
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['appName', beet.utf8String],
-    ['hashId', beet.utf8String],
-    ['itemHash', beet.utf8String],
+    ['offChainId', beet.utf8String],
     ['acceptedMint', beetSolana.publicKey],
     ['assetMint', beetSolana.publicKey],
     ['authority', beetSolana.publicKey],
-    ['timestampFundsVault', beet.u64],
+    ['refundTimespan', beet.u64],
     ['price', beet.u32],
     ['sold', beet.u32],
     ['used', beet.u32],
     ['shared', beet.u32],
     ['refunded', beet.u32],
     ['exemplars', beet.i32],
-    ['quantityPerExemplars', beet.u32],
     ['bump', beet.u8],
     ['mintBump', beet.u8],
     ['metadataBump', beet.u8],

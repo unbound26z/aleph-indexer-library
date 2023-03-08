@@ -49,7 +49,7 @@ export const BuyAssetAccounts = [
   'acceptedMint',
   'payment',
   'paymentVault',
-  'buyerMintedTokenVault',
+  'buyerTokenVault',
 ]
 
 export type ShareAssetInstruction = {
@@ -66,7 +66,7 @@ export const ShareAssetAccounts = [
   'authority',
   'asset',
   'assetMint',
-  'receiverMintedTokenVault',
+  'receiverVault',
 ]
 
 export type WithdrawFundsInstruction = {
@@ -100,7 +100,7 @@ export const RefundAccounts = [
   'receiverVault',
   'payment',
   'paymentVault',
-  'buyerMintedTokenVault',
+  'buyerTokenVault',
 ]
 
 export type UseAssetInstruction = {
@@ -117,7 +117,7 @@ export const UseAssetAccounts = [
   'authority',
   'asset',
   'assetMint',
-  'buyerMintedTokenVault',
+  'buyerTokenVault',
 ]
 
 export type DeleteAssetInstruction = {

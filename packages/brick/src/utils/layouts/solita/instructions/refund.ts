@@ -29,7 +29,7 @@ export const refundStruct = new beet.BeetArgsStruct<{
  * @property [_writable_] receiverVault
  * @property [_writable_] payment
  * @property [_writable_] paymentVault
- * @property [_writable_] buyerMintedTokenVault
+ * @property [_writable_] buyerTokenVault
  * @category Instructions
  * @category Refund
  * @category generated
@@ -42,7 +42,7 @@ export type RefundInstructionAccounts = {
   receiverVault: web3.PublicKey
   payment: web3.PublicKey
   paymentVault: web3.PublicKey
-  buyerMintedTokenVault: web3.PublicKey
+  buyerTokenVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
@@ -102,7 +102,7 @@ export function createRefundInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.buyerMintedTokenVault,
+      pubkey: accounts.buyerTokenVault,
       isWritable: true,
       isSigner: false,
     },

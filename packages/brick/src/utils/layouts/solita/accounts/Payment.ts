@@ -18,11 +18,9 @@ export type PaymentArgs = {
   assetMint: web3.PublicKey
   seller: web3.PublicKey
   buyer: web3.PublicKey
-  exemplars: number
   price: number
-  totalAmount: beet.bignum
   paymentTimestamp: beet.bignum
-  sellerReceiveFundsTimestamp: beet.bignum
+  refundConsumedAt: beet.bignum
   bump: number
   bumpVault: number
 }
@@ -40,11 +38,9 @@ export class Payment implements PaymentArgs {
     readonly assetMint: web3.PublicKey,
     readonly seller: web3.PublicKey,
     readonly buyer: web3.PublicKey,
-    readonly exemplars: number,
     readonly price: number,
-    readonly totalAmount: beet.bignum,
     readonly paymentTimestamp: beet.bignum,
-    readonly sellerReceiveFundsTimestamp: beet.bignum,
+    readonly refundConsumedAt: beet.bignum,
     readonly bump: number,
     readonly bumpVault: number,
   ) {}
@@ -57,11 +53,9 @@ export class Payment implements PaymentArgs {
       args.assetMint,
       args.seller,
       args.buyer,
-      args.exemplars,
       args.price,
-      args.totalAmount,
       args.paymentTimestamp,
-      args.sellerReceiveFundsTimestamp,
+      args.refundConsumedAt,
       args.bump,
       args.bumpVault,
     )
@@ -173,19 +167,7 @@ export class Payment implements PaymentArgs {
       assetMint: this.assetMint.toBase58(),
       seller: this.seller.toBase58(),
       buyer: this.buyer.toBase58(),
-      exemplars: this.exemplars,
       price: this.price,
-      totalAmount: (() => {
-        const x = <{ toNumber: () => number }>this.totalAmount
-        if (typeof x.toNumber === 'function') {
-          try {
-            return x.toNumber()
-          } catch (_) {
-            return x
-          }
-        }
-        return x
-      })(),
       paymentTimestamp: (() => {
         const x = <{ toNumber: () => number }>this.paymentTimestamp
         if (typeof x.toNumber === 'function') {
@@ -197,8 +179,8 @@ export class Payment implements PaymentArgs {
         }
         return x
       })(),
-      sellerReceiveFundsTimestamp: (() => {
-        const x = <{ toNumber: () => number }>this.sellerReceiveFundsTimestamp
+      refundConsumedAt: (() => {
+        const x = <{ toNumber: () => number }>this.refundConsumedAt
         if (typeof x.toNumber === 'function') {
           try {
             return x.toNumber()
@@ -229,11 +211,9 @@ export const paymentBeet = new beet.BeetStruct<
     ['assetMint', beetSolana.publicKey],
     ['seller', beetSolana.publicKey],
     ['buyer', beetSolana.publicKey],
-    ['exemplars', beet.u32],
     ['price', beet.u32],
-    ['totalAmount', beet.u64],
     ['paymentTimestamp', beet.u64],
-    ['sellerReceiveFundsTimestamp', beet.u64],
+    ['refundConsumedAt', beet.u64],
     ['bump', beet.u8],
     ['bumpVault', beet.u8],
   ],

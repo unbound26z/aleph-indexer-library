@@ -16,7 +16,6 @@ import * as web3 from '@solana/web3.js'
  */
 export type BuyAssetInstructionArgs = {
   timestamp: beet.bignum
-  exemplars: number
 }
 /**
  * @category Instructions
@@ -31,7 +30,6 @@ export const buyAssetStruct = new beet.BeetArgsStruct<
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['timestamp', beet.u64],
-    ['exemplars', beet.u32],
   ],
   'BuyAssetInstructionArgs',
 )
@@ -47,7 +45,7 @@ export const buyAssetStruct = new beet.BeetArgsStruct<
  * @property [] acceptedMint
  * @property [_writable_] payment
  * @property [_writable_] paymentVault
- * @property [_writable_] buyerMintedTokenVault
+ * @property [_writable_] buyerTokenVault
  * @category Instructions
  * @category BuyAsset
  * @category generated
@@ -65,7 +63,7 @@ export type BuyAssetInstructionAccounts = {
   acceptedMint: web3.PublicKey
   payment: web3.PublicKey
   paymentVault: web3.PublicKey
-  buyerMintedTokenVault: web3.PublicKey
+  buyerTokenVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
@@ -156,7 +154,7 @@ export function createBuyAssetInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.buyerMintedTokenVault,
+      pubkey: accounts.buyerTokenVault,
       isWritable: true,
       isSigner: false,
     },

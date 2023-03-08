@@ -133,4 +133,14 @@ export default class WorkerDomain
     if (!accountInstance) throw new Error(`Account ${account} does not exist`)
     return accountInstance
   }
+
+  async getUserWithdrawalsAvailable(
+    account: string,
+  ): Promise<BrickAccountInfo[]> {
+    const infos = this.userDAL
+      .useIndex()
+      .getAllFromTo()
+
+    return infos
+  }
 }

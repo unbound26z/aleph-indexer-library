@@ -69,6 +69,19 @@ export default class MainDomain
     return accounts
   }
 
+  async getUserWithdrawalsAvailable(
+    account: string,
+  ): Promise<BrickAccountInfo[]> {
+    const infos = (await this.context.apiClient
+      .useBlockchain(Blockchain.Solana)
+      .invokeDomainMethod({
+        account,
+        method: 'getUserWithdrawalsAvailable',
+      })) as BrickAccountInfo[]
+
+    return infos
+  }
+
   async getAccount(
     account: string,
     includeStats?: boolean,

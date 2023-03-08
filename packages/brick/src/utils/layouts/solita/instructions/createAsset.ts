@@ -15,13 +15,11 @@ import * as web3 from '@solana/web3.js'
  * @category generated
  */
 export type CreateAssetInstructionArgs = {
-  hashId: string
+  offChainId: string
   appName: string
-  itemHash: string
-  timestampFundsVault: beet.bignum
+  refundTimespan: beet.bignum
   tokenPrice: number
   exemplars: number
-  quantityPerExemplars: number
   tokenName: string
   tokenSymbol: string
   tokenUri: string
@@ -38,13 +36,11 @@ export const createAssetStruct = new beet.FixableBeetArgsStruct<
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['hashId', beet.utf8String],
+    ['offChainId', beet.utf8String],
     ['appName', beet.utf8String],
-    ['itemHash', beet.utf8String],
-    ['timestampFundsVault', beet.u64],
+    ['refundTimespan', beet.u64],
     ['tokenPrice', beet.u32],
     ['exemplars', beet.i32],
-    ['quantityPerExemplars', beet.u32],
     ['tokenName', beet.utf8String],
     ['tokenSymbol', beet.utf8String],
     ['tokenUri', beet.utf8String],

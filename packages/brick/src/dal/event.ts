@@ -7,7 +7,7 @@ export type EventStorage = EntityStorage<ParsedEvents>
 
 // in this vector you can include the properties of several
 // events that are BN in order to be able to cast them
-const mappedBNProps: string[] = ['timestampFundsVault', 'timestamp']
+const mappedBNProps: string[] = ['refundTimespan', 'timestamp']
 
 // in this vector you can include the properties of several
 // events that are PublicKey in order to be able to cast them

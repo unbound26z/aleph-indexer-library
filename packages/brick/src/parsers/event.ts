@@ -3,21 +3,13 @@ import {
   SolanaParsedEvent,
 } from '@aleph-indexer/solana'
 import { AccountDomain } from '../domain/account.js'
-
 import {
   ParsedEvents,
   ParsedEventsInfo,
   InstructionType,
-  CreateAssetEvent,
-  EditAssetPriceEvent,
-  BuyAssetEvent,
-  ShareAssetEvent,
-  WithdrawFundsEvent,
-  RefundEvent,
   UseAssetEvent,
-  DeleteAssetEvent,
-  UseAssetInfo,
   AssetArgs,
+  UseAssetInfo,
 } from '../utils/layouts/index.js'
 
 export class EventParser {
@@ -34,22 +26,22 @@ export class EventParser {
       ? parentTransaction.blockTime * 1000
       : parentTransaction.slot
 
-    const baseEvent = {
-      ...parsed.info,
-      id,
-      timestamp,
-      type: parsed.type,
-      account: txContext.parserContext.account,
-      signer: txContext.tx.parsed.message.accountKeys[0].pubkey,
-    }
-
     if (parsed.type == InstructionType.UseAsset) {
-      const assetAddress = 
-      const signer = (accounts[assetAddress].info.data as AssetArgs).authority
-
-      return baseEvent as UseAssetEvent
+      return {
+        id,
+        timestamp,
+        type: parsed.type,
+        account: parsed.info.accounts.asset.toString(),
+        signer: (accounts[parsed.info.accounts.asset.toString()].info.data as AssetArgs).authority.toString(),
+        ...parsed.info as UseAssetInfo,
+      } as UseAssetEvent
     } else {
-      return baseEvent as ParsedEvents
+      return {
+        id,
+        timestamp,
+        type: parsed.type,
+        ...parsed.info,
+      } as ParsedEvents
     }
   }
 }
