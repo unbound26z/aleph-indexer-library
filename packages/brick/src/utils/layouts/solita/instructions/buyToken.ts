@@ -85,7 +85,7 @@ export function createBuyTokenInstruction(
   accounts: BuyTokenInstructionAccounts,
   args: BuyTokenInstructionArgs,
   programId = new web3.PublicKey(
-    '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
+    'BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5',
   ),
 ) {
   const [data] = buyTokenStruct.serialize({

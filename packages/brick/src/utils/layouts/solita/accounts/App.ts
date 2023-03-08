@@ -84,7 +84,7 @@ export class App implements AppArgs {
    */
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey(
-      '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
+      'BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5',
     ),
   ) {
     return beetSolana.GpaBuilder.fromStruct(programId, appBeet)

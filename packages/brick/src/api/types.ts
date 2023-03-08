@@ -108,6 +108,7 @@ export const App = new GraphQLObjectType({
 export const Payment = new GraphQLObjectType({
   name: 'Payment',
   fields: {
+    tokenAccount: { type: new GraphQLNonNull(GraphQLString) },
     tokenMint: { type: new GraphQLNonNull(GraphQLString) },
     seller: { type: new GraphQLNonNull(GraphQLString) },
     buyer: { type: new GraphQLNonNull(GraphQLString) },
@@ -129,6 +130,7 @@ export const TokenMetadata = new GraphQLObjectType({
     sellerConfig: { type: new GraphQLNonNull(SellerConfig) },
     transactionsInfo: { type: new GraphQLNonNull(TransactionsInfo) },
     bumps: { type: new GraphQLNonNull(Bumps) },
+    offChainId2: { type: new GraphQLNonNull(GraphQLString) },
     offChainId: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
@@ -260,6 +262,7 @@ export const CreateTokenEventData = new GraphQLObjectType({
   name: 'CreateTokenEventData',
   fields: {
     offChainId: { type: new GraphQLNonNull(GraphQLString) },
+    offChainId2: { type: new GraphQLNonNull(GraphQLString) },
     offChainMetadata: { type: new GraphQLNonNull(GraphQLString) },
     refundTimespan: { type: new GraphQLNonNull(GraphQLBigNumber) },
     tokenPrice: { type: new GraphQLNonNull(GraphQLInt) },

@@ -1,5 +1,6 @@
 import { EventBase } from '@aleph-indexer/framework'
 import * as solita from './solita/index.js'
+import { PublicKey } from '@solana/web3.js'
 import BN from 'bn.js'
 
 export enum InstructionType {
@@ -41,6 +42,7 @@ export type CreateAppEvent = InstructionBase &
 
 export type CreateTokenEventData = {
   offChainId: string
+  offChainId2: string
   offChainMetadata: string
   refundTimespan: BN
   tokenPrice: number

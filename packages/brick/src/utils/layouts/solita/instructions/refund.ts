@@ -59,7 +59,7 @@ export const refundInstructionDiscriminator = [2, 96, 183, 251, 63, 208, 46, 46]
 export function createRefundInstruction(
   accounts: RefundInstructionAccounts,
   programId = new web3.PublicKey(
-    '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
+    'BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5',
   ),
 ) {
   const [data] = refundStruct.serialize({

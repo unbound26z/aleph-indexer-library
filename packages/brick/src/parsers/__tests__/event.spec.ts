@@ -11,7 +11,7 @@ describe('EventParser', () => {
     const instruction = {
       index: 0,
       parsed: {
-        type: 'CreateAssetEvent',
+        type: 'CreateAppEvent',
         info: {
           programId: 'programId',
         },
@@ -68,7 +68,7 @@ describe('EventParser', () => {
     expect(parsedEvent).toEqual({
       id: 'signature:00',
       timestamp: 0,
-      type: 'CreateAssetEvent',
+      type: 'CreateAppEvent',
       account: 'account',
       programId: 'programId',
       signer: '2gCzKgSTPSy4fL7z9NQhJAKvumEofTa2DFJU4wGhQ5Jt',

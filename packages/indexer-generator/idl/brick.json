@@ -180,6 +180,10 @@
           "type": "string"
         },
         {
+          "name": "offChainId2",
+          "type": "string"
+        },
+        {
           "name": "offChainMetadata",
           "type": "string"
         },
@@ -872,6 +876,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "tokenAccount",
+            "type": "publicKey"
+          },
+          {
             "name": "tokenMint",
             "type": "publicKey"
           },
@@ -948,6 +956,15 @@
             "name": "bumps",
             "type": {
               "defined": "Bumps"
+            }
+          },
+          {
+            "name": "offChainId2",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
@@ -1066,41 +1083,51 @@
     },
     {
       "code": 6007,
+      "name": "InconrrectAppAccount",
+      "msg": "You are providing a wrong app account"
+    },
+    {
+      "code": 6008,
+      "name": "InconrrectCreatorAccount",
+      "msg": "You are providing a wrong creator vault"
+    },
+    {
+      "code": 6009,
       "name": "IncorrectPaymentToken",
       "msg": "You are trying to pay a different mint than the one stated by the seller"
     },
     {
-      "code": 6008,
+      "code": 6010,
       "name": "IncorrectBuyerTokenAccountOnTransfer",
       "msg": "You are providing a wrong buyer token account, is where the funds come from to pay"
     },
     {
-      "code": 6009,
+      "code": 6011,
       "name": "IncorrectBuyerTokenAccountToStorePurchasedToken",
       "msg": "You are providing a wrong buyer token account, is where the access token will be received"
     },
     {
-      "code": 6010,
+      "code": 6012,
       "name": "IncorrectTokenAuthority",
       "msg": "You are not the owner of this token account"
     },
     {
-      "code": 6011,
+      "code": 6013,
       "name": "IncorrectPaymentAuthority",
       "msg": "You are not the owner of this payment account"
     },
     {
-      "code": 6012,
+      "code": 6014,
       "name": "IncorrectPaymentVault",
       "msg": "You are providing a worng payment vault"
     },
     {
-      "code": 6013,
+      "code": 6015,
       "name": "IncorrectReceiverTokenAccount",
       "msg": "You are providing an incorrect token account"
     }
   ],
   "metadata": {
-    "address": "84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S"
+    "address": "BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5"
   }
 }

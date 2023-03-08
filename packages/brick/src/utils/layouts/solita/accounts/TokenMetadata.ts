@@ -28,6 +28,7 @@ export type TokenMetadataArgs = {
   sellerConfig: SellerConfig
   transactionsInfo: TransactionsInfo
   bumps: Bumps
+  offChainId2: number[] /* size: 32 */
   offChainId: string
 }
 
@@ -50,6 +51,7 @@ export class TokenMetadata implements TokenMetadataArgs {
     readonly sellerConfig: SellerConfig,
     readonly transactionsInfo: TransactionsInfo,
     readonly bumps: Bumps,
+    readonly offChainId2: number[] /* size: 32 */,
     readonly offChainId: string,
   ) {}
 
@@ -65,6 +67,7 @@ export class TokenMetadata implements TokenMetadataArgs {
       args.sellerConfig,
       args.transactionsInfo,
       args.bumps,
+      args.offChainId2,
       args.offChainId,
     )
   }
@@ -109,7 +112,7 @@ export class TokenMetadata implements TokenMetadataArgs {
    */
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey(
-      '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
+      'BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5',
     ),
   ) {
     return beetSolana.GpaBuilder.fromStruct(programId, tokenMetadataBeet)
@@ -181,6 +184,7 @@ export class TokenMetadata implements TokenMetadataArgs {
       sellerConfig: this.sellerConfig,
       transactionsInfo: this.transactionsInfo,
       bumps: this.bumps,
+      offChainId2: this.offChainId2,
       offChainId: this.offChainId,
     }
   }
@@ -205,6 +209,7 @@ export const tokenMetadataBeet = new beet.FixableBeetStruct<
     ['sellerConfig', sellerConfigBeet],
     ['transactionsInfo', transactionsInfoBeet],
     ['bumps', bumpsBeet],
+    ['offChainId2', beet.uniformFixedSizeArray(beet.u8, 32)],
     ['offChainId', beet.utf8String],
   ],
   TokenMetadata.fromArgs,

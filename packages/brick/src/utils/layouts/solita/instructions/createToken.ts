@@ -16,6 +16,7 @@ import * as web3 from '@solana/web3.js'
  */
 export type CreateTokenInstructionArgs = {
   offChainId: string
+  offChainId2: string
   offChainMetadata: string
   refundTimespan: beet.bignum
   tokenPrice: number
@@ -37,6 +38,7 @@ export const createTokenStruct = new beet.FixableBeetArgsStruct<
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['offChainId', beet.utf8String],
+    ['offChainId2', beet.utf8String],
     ['offChainMetadata', beet.utf8String],
     ['refundTimespan', beet.u64],
     ['tokenPrice', beet.u32],
@@ -93,7 +95,7 @@ export function createCreateTokenInstruction(
   accounts: CreateTokenInstructionAccounts,
   args: CreateTokenInstructionArgs,
   programId = new web3.PublicKey(
-    '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
+    'BrickarF2QeREBZsapbhgYPHJi5FYkJVnx7mZhxETCt5',
   ),
 ) {
   const [data] = createTokenStruct.serialize({
