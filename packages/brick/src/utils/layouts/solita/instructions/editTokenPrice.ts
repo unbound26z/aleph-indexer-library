@@ -10,50 +10,67 @@ import * as web3 from '@solana/web3.js'
 
 /**
  * @category Instructions
- * @category DeleteAsset
+ * @category EditTokenPrice
  * @category generated
  */
-export const deleteAssetStruct = new beet.BeetArgsStruct<{
-  instructionDiscriminator: number[] /* size: 8 */
-}>(
-  [['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)]],
-  'DeleteAssetInstructionArgs',
+export type EditTokenPriceInstructionArgs = {
+  tokenPrice: number
+}
+/**
+ * @category Instructions
+ * @category EditTokenPrice
+ * @category generated
+ */
+export const editTokenPriceStruct = new beet.BeetArgsStruct<
+  EditTokenPriceInstructionArgs & {
+    instructionDiscriminator: number[] /* size: 8 */
+  }
+>(
+  [
+    ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
+    ['tokenPrice', beet.u32],
+  ],
+  'EditTokenPriceInstructionArgs',
 )
 /**
- * Accounts required by the _deleteAsset_ instruction
+ * Accounts required by the _editTokenPrice_ instruction
  *
  * @property [_writable_, **signer**] authority
- * @property [_writable_] asset
+ * @property [_writable_] token
  * @category Instructions
- * @category DeleteAsset
+ * @category EditTokenPrice
  * @category generated
  */
-export type DeleteAssetInstructionAccounts = {
+export type EditTokenPriceInstructionAccounts = {
   authority: web3.PublicKey
-  asset: web3.PublicKey
+  token: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
-export const deleteAssetInstructionDiscriminator = [
-  72, 146, 219, 26, 48, 171, 78, 33,
+export const editTokenPriceInstructionDiscriminator = [
+  197, 30, 108, 1, 210, 189, 181, 237,
 ]
 
 /**
- * Creates a _DeleteAsset_ instruction.
+ * Creates a _EditTokenPrice_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
+ * @param args to provide as instruction data to the program
+ *
  * @category Instructions
- * @category DeleteAsset
+ * @category EditTokenPrice
  * @category generated
  */
-export function createDeleteAssetInstruction(
-  accounts: DeleteAssetInstructionAccounts,
+export function createEditTokenPriceInstruction(
+  accounts: EditTokenPriceInstructionAccounts,
+  args: EditTokenPriceInstructionArgs,
   programId = new web3.PublicKey(
     '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
   ),
 ) {
-  const [data] = deleteAssetStruct.serialize({
-    instructionDiscriminator: deleteAssetInstructionDiscriminator,
+  const [data] = editTokenPriceStruct.serialize({
+    instructionDiscriminator: editTokenPriceInstructionDiscriminator,
+    ...args,
   })
   const keys: web3.AccountMeta[] = [
     {
@@ -62,7 +79,7 @@ export function createDeleteAssetInstruction(
       isSigner: true,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.token,
       isWritable: true,
       isSigner: false,
     },

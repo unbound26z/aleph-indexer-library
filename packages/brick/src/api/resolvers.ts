@@ -40,6 +40,10 @@ export class APIResolvers {
     return await this.domain.getUserWithdrawalsAvailable(address)
   }
 
+  async getUserRefundsAvailable(address: string): Promise<BrickAccountInfo[]> {
+    return await this.domain.getUserRefundsAvailable(address)
+  }
+
   async getEvents({
     account,
     types,

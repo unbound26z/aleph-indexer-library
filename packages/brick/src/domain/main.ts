@@ -82,6 +82,19 @@ export default class MainDomain
     return infos
   }
 
+  async getUserRefundsAvailable(
+    account: string,
+  ): Promise<BrickAccountInfo[]> {
+    const infos = (await this.context.apiClient
+      .useBlockchain(Blockchain.Solana)
+      .invokeDomainMethod({
+        account,
+        method: 'getUserRefundsAvailable',
+      })) as BrickAccountInfo[]
+
+    return infos
+  }
+
   async getAccount(
     account: string,
     includeStats?: boolean,
@@ -186,8 +199,9 @@ export default class MainDomain
     return {
       totalAccesses: 0,
       totalAccounts: {
-        [AccountType.Asset]: 0,
+        [AccountType.App]: 0,
         [AccountType.Payment]: 0,
+        [AccountType.TokenMetadata]: 0,
       },
       totalAccessesByProgramId: {},
       startTimestamp: undefined,

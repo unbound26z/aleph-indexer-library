@@ -11,59 +11,86 @@ import * as web3 from '@solana/web3.js'
 
 /**
  * @category Instructions
- * @category UseAsset
+ * @category BuyToken
  * @category generated
  */
-export const useAssetStruct = new beet.BeetArgsStruct<{
-  instructionDiscriminator: number[] /* size: 8 */
-}>(
-  [['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)]],
-  'UseAssetInstructionArgs',
+export type BuyTokenInstructionArgs = {
+  timestamp: beet.bignum
+}
+/**
+ * @category Instructions
+ * @category BuyToken
+ * @category generated
+ */
+export const buyTokenStruct = new beet.BeetArgsStruct<
+  BuyTokenInstructionArgs & {
+    instructionDiscriminator: number[] /* size: 8 */
+  }
+>(
+  [
+    ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
+    ['timestamp', beet.u64],
+  ],
+  'BuyTokenInstructionArgs',
 )
 /**
- * Accounts required by the _useAsset_ instruction
+ * Accounts required by the _buyToken_ instruction
  *
  * @property [] associatedTokenProgram
+ * @property [] clock
  * @property [_writable_, **signer**] authority
- * @property [_writable_] asset
- * @property [_writable_] assetMint
+ * @property [_writable_] token
+ * @property [_writable_] tokenMint
+ * @property [_writable_] buyerTransferVault
+ * @property [] acceptedMint
+ * @property [_writable_] payment
+ * @property [_writable_] paymentVault
  * @property [_writable_] buyerTokenVault
  * @category Instructions
- * @category UseAsset
+ * @category BuyToken
  * @category generated
  */
-export type UseAssetInstructionAccounts = {
+export type BuyTokenInstructionAccounts = {
   systemProgram?: web3.PublicKey
   tokenProgram?: web3.PublicKey
   associatedTokenProgram: web3.PublicKey
   rent?: web3.PublicKey
+  clock: web3.PublicKey
   authority: web3.PublicKey
-  asset: web3.PublicKey
-  assetMint: web3.PublicKey
+  token: web3.PublicKey
+  tokenMint: web3.PublicKey
+  buyerTransferVault: web3.PublicKey
+  acceptedMint: web3.PublicKey
+  payment: web3.PublicKey
+  paymentVault: web3.PublicKey
   buyerTokenVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
-export const useAssetInstructionDiscriminator = [
-  114, 253, 6, 49, 141, 203, 167, 238,
+export const buyTokenInstructionDiscriminator = [
+  138, 127, 14, 91, 38, 87, 115, 105,
 ]
 
 /**
- * Creates a _UseAsset_ instruction.
+ * Creates a _BuyToken_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
+ * @param args to provide as instruction data to the program
+ *
  * @category Instructions
- * @category UseAsset
+ * @category BuyToken
  * @category generated
  */
-export function createUseAssetInstruction(
-  accounts: UseAssetInstructionAccounts,
+export function createBuyTokenInstruction(
+  accounts: BuyTokenInstructionAccounts,
+  args: BuyTokenInstructionArgs,
   programId = new web3.PublicKey(
     '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
   ),
 ) {
-  const [data] = useAssetStruct.serialize({
-    instructionDiscriminator: useAssetInstructionDiscriminator,
+  const [data] = buyTokenStruct.serialize({
+    instructionDiscriminator: buyTokenInstructionDiscriminator,
+    ...args,
   })
   const keys: web3.AccountMeta[] = [
     {
@@ -87,17 +114,42 @@ export function createUseAssetInstruction(
       isSigner: false,
     },
     {
+      pubkey: accounts.clock,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
       pubkey: accounts.authority,
       isWritable: true,
       isSigner: true,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.token,
       isWritable: true,
       isSigner: false,
     },
     {
-      pubkey: accounts.assetMint,
+      pubkey: accounts.tokenMint,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.buyerTransferVault,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.acceptedMint,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.payment,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.paymentVault,
       isWritable: true,
       isSigner: false,
     },

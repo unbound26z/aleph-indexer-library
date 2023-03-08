@@ -7,9 +7,10 @@ import {
   ParsedEvents,
   ParsedEventsInfo,
   InstructionType,
-  UseAssetEvent,
-  AssetArgs,
-  UseAssetInfo,
+  UseTokenEvent,
+  TokenMetadataArgs,
+  UseTokenInfo,
+  UseTokenInstructionAccounts,
 } from '../utils/layouts/index.js'
 
 export class EventParser {
@@ -26,15 +27,16 @@ export class EventParser {
       ? parentTransaction.blockTime * 1000
       : parentTransaction.slot
 
-    if (parsed.type == InstructionType.UseAsset) {
+    if (parsed.type == InstructionType.UseToken) {
+      const tokenAccount = (parsed.info.accounts as UseTokenInstructionAccounts).token.toString()
       return {
         id,
         timestamp,
         type: parsed.type,
-        account: parsed.info.accounts.asset.toString(),
-        signer: (accounts[parsed.info.accounts.asset.toString()].info.data as AssetArgs).authority.toString(),
-        ...parsed.info as UseAssetInfo,
-      } as UseAssetEvent
+        account: tokenAccount,
+        signer: (accounts[tokenAccount].info.data as TokenMetadataArgs).authority.toString(),
+        ...parsed.info as UseTokenInfo,
+      } as UseTokenEvent
     } else {
       return {
         id,

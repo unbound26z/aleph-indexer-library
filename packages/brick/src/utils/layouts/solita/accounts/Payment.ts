@@ -15,7 +15,7 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
  * @category generated
  */
 export type PaymentArgs = {
-  assetMint: web3.PublicKey
+  tokenMint: web3.PublicKey
   seller: web3.PublicKey
   buyer: web3.PublicKey
   price: number
@@ -35,7 +35,7 @@ export const paymentDiscriminator = [227, 231, 51, 26, 244, 88, 4, 148]
  */
 export class Payment implements PaymentArgs {
   private constructor(
-    readonly assetMint: web3.PublicKey,
+    readonly tokenMint: web3.PublicKey,
     readonly seller: web3.PublicKey,
     readonly buyer: web3.PublicKey,
     readonly price: number,
@@ -50,7 +50,7 @@ export class Payment implements PaymentArgs {
    */
   static fromArgs(args: PaymentArgs) {
     return new Payment(
-      args.assetMint,
+      args.tokenMint,
       args.seller,
       args.buyer,
       args.price,
@@ -164,7 +164,7 @@ export class Payment implements PaymentArgs {
    */
   pretty() {
     return {
-      assetMint: this.assetMint.toBase58(),
+      tokenMint: this.tokenMint.toBase58(),
       seller: this.seller.toBase58(),
       buyer: this.buyer.toBase58(),
       price: this.price,
@@ -208,7 +208,7 @@ export const paymentBeet = new beet.BeetStruct<
 >(
   [
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['assetMint', beetSolana.publicKey],
+    ['tokenMint', beetSolana.publicKey],
     ['seller', beetSolana.publicKey],
     ['buyer', beetSolana.publicKey],
     ['price', beet.u32],

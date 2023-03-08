@@ -3,26 +3,45 @@ import * as solita from './solita/index.js'
 import BN from 'bn.js'
 
 export enum InstructionType {
-  CreateAsset = 'CreateAssetEvent',
-  EditAssetPrice = 'EditAssetPriceEvent',
-  BuyAsset = 'BuyAssetEvent',
-  ShareAsset = 'ShareAssetEvent',
+  CreateApp = 'CreateAppEvent',
+  CreateToken = 'CreateTokenEvent',
+  EditTokenPrice = 'EditTokenPriceEvent',
+  BuyToken = 'BuyTokenEvent',
+  ShareToken = 'ShareTokenEvent',
   WithdrawFunds = 'WithdrawFundsEvent',
   Refund = 'RefundEvent',
-  UseAsset = 'UseAssetEvent',
-  DeleteAsset = 'DeleteAssetEvent',
+  UseToken = 'UseTokenEvent',
+  Deletetoken = 'DeletetokenEvent',
 }
 
 export type InstructionBase = EventBase<InstructionType> & {
-  signer?: string
-  account?: string
+  programId: string
+  signer: string
+  account: string
 }
 
 /*-----------------------* CUSTOM EVENTS TYPES *-----------------------*/
 
-export type CreateAssetEventData = {
-  offChainId: string
+export type CreateAppEventData = {
   appName: string
+  feeBasisPoints: number
+}
+
+export type CreateAppInfo = {
+  data: CreateAppEventData
+  accounts: solita.CreateAppInstructionAccounts
+}
+
+export type CreateAppEvent = InstructionBase &
+  CreateAppInfo & {
+    type: InstructionType.CreateApp
+  }
+
+/*----------------------------------------------------------------------*/
+
+export type CreateTokenEventData = {
+  offChainId: string
+  offChainMetadata: string
   refundTimespan: BN
   tokenPrice: number
   exemplars: number
@@ -31,62 +50,62 @@ export type CreateAssetEventData = {
   tokenUri: string
 }
 
-export type CreateAssetInfo = {
-  data: CreateAssetEventData
-  accounts: solita.CreateAssetInstructionAccounts
+export type CreateTokenInfo = {
+  data: CreateTokenEventData
+  accounts: solita.CreateTokenInstructionAccounts
 }
 
-export type CreateAssetEvent = InstructionBase &
-  CreateAssetInfo & {
-    type: InstructionType.CreateAsset
+export type CreateTokenEvent = InstructionBase &
+  CreateTokenInfo & {
+    type: InstructionType.CreateToken
   }
 
 /*----------------------------------------------------------------------*/
 
-export type EditAssetPriceEventData = {
+export type EditTokenPriceEventData = {
   tokenPrice: number
 }
 
-export type EditAssetPriceInfo = {
-  data: EditAssetPriceEventData
-  accounts: solita.EditAssetPriceInstructionAccounts
+export type EditTokenPriceInfo = {
+  data: EditTokenPriceEventData
+  accounts: solita.EditTokenPriceInstructionAccounts
 }
 
-export type EditAssetPriceEvent = InstructionBase &
-  EditAssetPriceInfo & {
-    type: InstructionType.EditAssetPrice
+export type EditTokenPriceEvent = InstructionBase &
+  EditTokenPriceInfo & {
+    type: InstructionType.EditTokenPrice
   }
 
 /*----------------------------------------------------------------------*/
 
-export type BuyAssetEventData = {
+export type BuyTokenEventData = {
   timestamp: BN
 }
 
-export type BuyAssetInfo = {
-  data: BuyAssetEventData
-  accounts: solita.BuyAssetInstructionAccounts
+export type BuyTokenInfo = {
+  data: BuyTokenEventData
+  accounts: solita.BuyTokenInstructionAccounts
 }
 
-export type BuyAssetEvent = InstructionBase &
-  BuyAssetInfo & {
-    type: InstructionType.BuyAsset
+export type BuyTokenEvent = InstructionBase &
+  BuyTokenInfo & {
+    type: InstructionType.BuyToken
   }
 
 /*----------------------------------------------------------------------*/
 
-export type ShareAssetEventData = {
+export type ShareTokenEventData = {
   exemplars: number
 }
 
-export type ShareAssetInfo = {
-  data: ShareAssetEventData
-  accounts: solita.ShareAssetInstructionAccounts
+export type ShareTokenInfo = {
+  data: ShareTokenEventData
+  accounts: solita.ShareTokenInstructionAccounts
 }
 
-export type ShareAssetEvent = InstructionBase &
-  ShareAssetInfo & {
-    type: InstructionType.ShareAsset
+export type ShareTokenEvent = InstructionBase &
+  ShareTokenInfo & {
+    type: InstructionType.ShareToken
   }
 
 /*----------------------------------------------------------------------*/
@@ -113,24 +132,24 @@ export type RefundEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type UseAssetInfo = {
-  accounts: solita.UseAssetInstructionAccounts
+export type UseTokenInfo = {
+  accounts: solita.UseTokenInstructionAccounts
 }
 
-export type UseAssetEvent = InstructionBase &
-  UseAssetInfo & {
-    type: InstructionType.UseAsset
+export type UseTokenEvent = InstructionBase &
+  UseTokenInfo & {
+    type: InstructionType.UseToken
   }
 
 /*----------------------------------------------------------------------*/
 
-export type DeleteAssetInfo = {
-  accounts: solita.DeleteAssetInstructionAccounts
+export type DeletetokenInfo = {
+  accounts: solita.DeletetokenInstructionAccounts
 }
 
-export type DeleteAssetEvent = InstructionBase &
-  DeleteAssetInfo & {
-    type: InstructionType.DeleteAsset
+export type DeletetokenEvent = InstructionBase &
+  DeletetokenInfo & {
+    type: InstructionType.Deletetoken
   }
 
 /*----------------------------------------------------------------------*/
@@ -145,22 +164,26 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
   InstructionType | undefined
 >([
   [
-    Buffer.from(solita.createAssetInstructionDiscriminator).toString('ascii'),
-    InstructionType.CreateAsset,
+    Buffer.from(solita.createAppInstructionDiscriminator).toString('ascii'),
+    InstructionType.CreateApp,
   ],
   [
-    Buffer.from(solita.editAssetPriceInstructionDiscriminator).toString(
+    Buffer.from(solita.createTokenInstructionDiscriminator).toString('ascii'),
+    InstructionType.CreateToken,
+  ],
+  [
+    Buffer.from(solita.editTokenPriceInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.EditAssetPrice,
+    InstructionType.EditTokenPrice,
   ],
   [
-    Buffer.from(solita.buyAssetInstructionDiscriminator).toString('ascii'),
-    InstructionType.BuyAsset,
+    Buffer.from(solita.buyTokenInstructionDiscriminator).toString('ascii'),
+    InstructionType.BuyToken,
   ],
   [
-    Buffer.from(solita.shareAssetInstructionDiscriminator).toString('ascii'),
-    InstructionType.ShareAsset,
+    Buffer.from(solita.shareTokenInstructionDiscriminator).toString('ascii'),
+    InstructionType.ShareToken,
   ],
   [
     Buffer.from(solita.withdrawFundsInstructionDiscriminator).toString('ascii'),
@@ -171,52 +194,56 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.Refund,
   ],
   [
-    Buffer.from(solita.useAssetInstructionDiscriminator).toString('ascii'),
-    InstructionType.UseAsset,
+    Buffer.from(solita.useTokenInstructionDiscriminator).toString('ascii'),
+    InstructionType.UseToken,
   ],
   [
-    Buffer.from(solita.deleteAssetInstructionDiscriminator).toString('ascii'),
-    InstructionType.DeleteAsset,
+    Buffer.from(solita.deletetokenInstructionDiscriminator).toString('ascii'),
+    InstructionType.Deletetoken,
   ],
 ])
 export const IX_DATA_LAYOUT: Partial<Record<InstructionType, any>> = {
-  [InstructionType.CreateAsset]: solita.createAssetStruct,
-  [InstructionType.EditAssetPrice]: solita.editAssetPriceStruct,
-  [InstructionType.BuyAsset]: solita.buyAssetStruct,
-  [InstructionType.ShareAsset]: solita.shareAssetStruct,
+  [InstructionType.CreateApp]: solita.createAppStruct,
+  [InstructionType.CreateToken]: solita.createTokenStruct,
+  [InstructionType.EditTokenPrice]: solita.editTokenPriceStruct,
+  [InstructionType.BuyToken]: solita.buyTokenStruct,
+  [InstructionType.ShareToken]: solita.shareTokenStruct,
   [InstructionType.WithdrawFunds]: solita.withdrawFundsStruct,
   [InstructionType.Refund]: solita.refundStruct,
-  [InstructionType.UseAsset]: solita.useAssetStruct,
-  [InstructionType.DeleteAsset]: solita.deleteAssetStruct,
+  [InstructionType.UseToken]: solita.useTokenStruct,
+  [InstructionType.Deletetoken]: solita.deletetokenStruct,
 }
 
 export const IX_ACCOUNTS_LAYOUT: Partial<Record<InstructionType, any>> = {
-  [InstructionType.CreateAsset]: solita.CreateAssetAccounts,
-  [InstructionType.EditAssetPrice]: solita.EditAssetPriceAccounts,
-  [InstructionType.BuyAsset]: solita.BuyAssetAccounts,
-  [InstructionType.ShareAsset]: solita.ShareAssetAccounts,
+  [InstructionType.CreateApp]: solita.CreateAppAccounts,
+  [InstructionType.CreateToken]: solita.CreateTokenAccounts,
+  [InstructionType.EditTokenPrice]: solita.EditTokenPriceAccounts,
+  [InstructionType.BuyToken]: solita.BuyTokenAccounts,
+  [InstructionType.ShareToken]: solita.ShareTokenAccounts,
   [InstructionType.WithdrawFunds]: solita.WithdrawFundsAccounts,
   [InstructionType.Refund]: solita.RefundAccounts,
-  [InstructionType.UseAsset]: solita.UseAssetAccounts,
-  [InstructionType.DeleteAsset]: solita.DeleteAssetAccounts,
+  [InstructionType.UseToken]: solita.UseTokenAccounts,
+  [InstructionType.Deletetoken]: solita.DeletetokenAccounts,
 }
 
 export type ParsedEventsInfo =
-  | CreateAssetInfo
-  | EditAssetPriceInfo
-  | BuyAssetInfo
-  | ShareAssetInfo
+  | CreateAppInfo
+  | CreateTokenInfo
+  | EditTokenPriceInfo
+  | BuyTokenInfo
+  | ShareTokenInfo
   | WithdrawFundsInfo
   | RefundInfo
-  | UseAssetInfo
-  | DeleteAssetInfo
+  | UseTokenInfo
+  | DeletetokenInfo
 
 export type ParsedEvents =
-  | CreateAssetEvent
-  | EditAssetPriceEvent
-  | BuyAssetEvent
-  | ShareAssetEvent
+  | CreateAppEvent
+  | CreateTokenEvent
+  | EditTokenPriceEvent
+  | BuyTokenEvent
+  | ShareTokenEvent
   | WithdrawFundsEvent
   | RefundEvent
-  | UseAssetEvent
-  | DeleteAssetEvent
+  | UseTokenEvent
+  | DeletetokenEvent

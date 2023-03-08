@@ -3,7 +3,56 @@
   "name": "brick",
   "instructions": [
     {
-      "name": "createAsset",
+      "name": "createApp",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "app",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "app"
+              },
+              {
+                "kind": "arg",
+                "type": "string",
+                "path": "app_name"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "appName",
+          "type": "string"
+        },
+        {
+          "name": "feeBasisPoints",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "createToken",
       "accounts": [
         {
           "name": "metadataProgram",
@@ -31,7 +80,27 @@
           "isSigner": true
         },
         {
-          "name": "assetMint",
+          "name": "app",
+          "isMut": false,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "app"
+              },
+              {
+                "kind": "account",
+                "type": "string",
+                "account": "App",
+                "path": "app.app_name"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenMint",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -39,7 +108,7 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token_mint"
               },
               {
                 "kind": "arg",
@@ -50,7 +119,7 @@
           }
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -58,13 +127,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
                 "account": "Mint",
-                "path": "asset_mint"
+                "path": "token_mint"
               }
             ]
           }
@@ -94,7 +163,7 @@
                 "kind": "account",
                 "type": "publicKey",
                 "account": "Mint",
-                "path": "asset_mint"
+                "path": "token_mint"
               }
             ],
             "programId": {
@@ -111,7 +180,7 @@
           "type": "string"
         },
         {
-          "name": "appName",
+          "name": "offChainMetadata",
           "type": "string"
         },
         {
@@ -141,7 +210,7 @@
       ]
     },
     {
-      "name": "editAssetPrice",
+      "name": "editTokenPrice",
       "accounts": [
         {
           "name": "authority",
@@ -149,7 +218,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -157,13 +226,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
@@ -177,7 +246,7 @@
       ]
     },
     {
-      "name": "buyAsset",
+      "name": "buyToken",
       "accounts": [
         {
           "name": "systemProgram",
@@ -210,7 +279,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -218,19 +287,19 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
         },
         {
-          "name": "assetMint",
+          "name": "tokenMint",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -238,13 +307,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token_mint"
               },
               {
                 "kind": "account",
                 "type": "string",
-                "account": "Asset",
-                "path": "asset.off_chain_id"
+                "account": "TokenMetadata",
+                "path": "token.off_chain_id"
               }
             ]
           }
@@ -274,7 +343,7 @@
                 "kind": "account",
                 "type": "publicKey",
                 "account": "Mint",
-                "path": "asset_mint"
+                "path": "token_mint"
               },
               {
                 "kind": "account",
@@ -323,7 +392,7 @@
       ]
     },
     {
-      "name": "shareAsset",
+      "name": "shareToken",
       "accounts": [
         {
           "name": "systemProgram",
@@ -351,7 +420,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -359,19 +428,19 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
         },
         {
-          "name": "assetMint",
+          "name": "tokenMint",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -379,13 +448,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token_mint"
               },
               {
                 "kind": "account",
                 "type": "string",
-                "account": "Asset",
-                "path": "asset.off_chain_id"
+                "account": "TokenMetadata",
+                "path": "token.off_chain_id"
               }
             ]
           }
@@ -417,27 +486,32 @@
           "isSigner": true
         },
         {
-          "name": "asset",
-          "isMut": true,
+          "name": "app",
+          "isMut": false,
           "isSigner": false,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "app"
               },
               {
                 "kind": "account",
-                "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "type": "string",
+                "account": "App",
+                "path": "app.app_name"
               }
             ]
           }
         },
         {
-          "name": "assetMint",
+          "name": "appCreatorVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -445,13 +519,33 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token"
+              },
+              {
+                "kind": "account",
+                "type": "publicKey",
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenMint",
+          "isMut": true,
+          "isSigner": false,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "type": "string",
+                "value": "token_mint"
               },
               {
                 "kind": "account",
                 "type": "string",
-                "account": "Asset",
-                "path": "asset.off_chain_id"
+                "account": "TokenMetadata",
+                "path": "token.off_chain_id"
               }
             ]
           }
@@ -481,7 +575,7 @@
                 "kind": "account",
                 "type": "publicKey",
                 "account": "Mint",
-                "path": "asset_mint"
+                "path": "token_mint"
               },
               {
                 "kind": "account",
@@ -535,7 +629,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -543,19 +637,19 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
         },
         {
-          "name": "assetMint",
+          "name": "tokenMint",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -563,13 +657,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token_mint"
               },
               {
                 "kind": "account",
                 "type": "string",
-                "account": "Asset",
-                "path": "asset.off_chain_id"
+                "account": "TokenMetadata",
+                "path": "token.off_chain_id"
               }
             ]
           }
@@ -594,7 +688,7 @@
                 "kind": "account",
                 "type": "publicKey",
                 "account": "Mint",
-                "path": "asset_mint"
+                "path": "token_mint"
               },
               {
                 "kind": "account",
@@ -640,7 +734,7 @@
       "args": []
     },
     {
-      "name": "useAsset",
+      "name": "useToken",
       "accounts": [
         {
           "name": "systemProgram",
@@ -668,7 +762,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -676,19 +770,19 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
         },
         {
-          "name": "assetMint",
+          "name": "tokenMint",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -696,13 +790,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset_mint"
+                "value": "token_mint"
               },
               {
                 "kind": "account",
                 "type": "string",
-                "account": "Asset",
-                "path": "asset.off_chain_id"
+                "account": "TokenMetadata",
+                "path": "token.off_chain_id"
               }
             ]
           }
@@ -716,7 +810,7 @@
       "args": []
     },
     {
-      "name": "deleteAsset",
+      "name": "deletetoken",
       "accounts": [
         {
           "name": "authority",
@@ -724,7 +818,7 @@
           "isSigner": true
         },
         {
-          "name": "asset",
+          "name": "token",
           "isMut": true,
           "isSigner": false,
           "pda": {
@@ -732,13 +826,13 @@
               {
                 "kind": "const",
                 "type": "string",
-                "value": "asset"
+                "value": "token"
               },
               {
                 "kind": "account",
                 "type": "publicKey",
-                "account": "Asset",
-                "path": "asset.asset_mint"
+                "account": "TokenMetadata",
+                "path": "token.token_mint"
               }
             ]
           }
@@ -749,69 +843,25 @@
   ],
   "accounts": [
     {
-      "name": "Asset",
+      "name": "App",
       "type": {
         "kind": "struct",
         "fields": [
-          {
-            "name": "appName",
-            "type": "string"
-          },
-          {
-            "name": "offChainId",
-            "type": "string"
-          },
-          {
-            "name": "acceptedMint",
-            "type": "publicKey"
-          },
-          {
-            "name": "assetMint",
-            "type": "publicKey"
-          },
           {
             "name": "authority",
             "type": "publicKey"
           },
           {
-            "name": "refundTimespan",
-            "type": "u64"
-          },
-          {
-            "name": "price",
-            "type": "u32"
-          },
-          {
-            "name": "sold",
-            "type": "u32"
-          },
-          {
-            "name": "used",
-            "type": "u32"
-          },
-          {
-            "name": "shared",
-            "type": "u32"
-          },
-          {
-            "name": "refunded",
-            "type": "u32"
-          },
-          {
-            "name": "exemplars",
-            "type": "i32"
+            "name": "feeBasisPoints",
+            "type": "u16"
           },
           {
             "name": "bump",
             "type": "u8"
           },
           {
-            "name": "mintBump",
-            "type": "u8"
-          },
-          {
-            "name": "metadataBump",
-            "type": "u8"
+            "name": "appName",
+            "type": "string"
           }
         ]
       }
@@ -822,7 +872,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "assetMint",
+            "name": "tokenMint",
             "type": "publicKey"
           },
           {
@@ -855,6 +905,127 @@
           }
         ]
       }
+    },
+    {
+      "name": "TokenMetadata",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "offChainMetadata",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "app",
+            "type": "publicKey"
+          },
+          {
+            "name": "tokenMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "sellerConfig",
+            "type": {
+              "defined": "SellerConfig"
+            }
+          },
+          {
+            "name": "transactionsInfo",
+            "type": {
+              "defined": "TransactionsInfo"
+            }
+          },
+          {
+            "name": "bumps",
+            "type": {
+              "defined": "Bumps"
+            }
+          },
+          {
+            "name": "offChainId",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "SellerConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "refundTimespan",
+            "type": "u64"
+          },
+          {
+            "name": "price",
+            "type": "u32"
+          },
+          {
+            "name": "acceptedMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "exemplars",
+            "type": "i32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TransactionsInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sold",
+            "type": "u32"
+          },
+          {
+            "name": "used",
+            "type": "u32"
+          },
+          {
+            "name": "shared",
+            "type": "u32"
+          },
+          {
+            "name": "refunded",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bumps",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "mintBump",
+            "type": "u8"
+          },
+          {
+            "name": "metadataBump",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -880,36 +1051,51 @@
     },
     {
       "code": 6004,
+      "name": "StringTooLong",
+      "msg": "You are providing a string that is too long"
+    },
+    {
+      "code": 6005,
+      "name": "NumericalOverflow",
+      "msg": "Numerical Overflow happened"
+    },
+    {
+      "code": 6006,
+      "name": "IncorrectFee",
+      "msg": "You are setting a higher fee than allowed"
+    },
+    {
+      "code": 6007,
       "name": "IncorrectPaymentToken",
       "msg": "You are trying to pay a different mint than the one stated by the seller"
     },
     {
-      "code": 6005,
+      "code": 6008,
       "name": "IncorrectBuyerTokenAccountOnTransfer",
       "msg": "You are providing a wrong buyer token account, is where the funds come from to pay"
     },
     {
-      "code": 6006,
+      "code": 6009,
       "name": "IncorrectBuyerTokenAccountToStorePurchasedToken",
       "msg": "You are providing a wrong buyer token account, is where the access token will be received"
     },
     {
-      "code": 6007,
-      "name": "IncorrectAssetAuthority",
-      "msg": "You are not the owner of this asset account"
+      "code": 6010,
+      "name": "IncorrectTokenAuthority",
+      "msg": "You are not the owner of this token account"
     },
     {
-      "code": 6008,
+      "code": 6011,
       "name": "IncorrectPaymentAuthority",
       "msg": "You are not the owner of this payment account"
     },
     {
-      "code": 6009,
+      "code": 6012,
       "name": "IncorrectPaymentVault",
       "msg": "You are providing a worng payment vault"
     },
     {
-      "code": 6010,
+      "code": 6013,
       "name": "IncorrectReceiverTokenAccount",
       "msg": "You are providing an incorrect token account"
     }

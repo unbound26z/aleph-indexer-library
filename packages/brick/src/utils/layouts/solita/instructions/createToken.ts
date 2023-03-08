@@ -11,12 +11,12 @@ import * as web3 from '@solana/web3.js'
 
 /**
  * @category Instructions
- * @category CreateAsset
+ * @category CreateToken
  * @category generated
  */
-export type CreateAssetInstructionArgs = {
+export type CreateTokenInstructionArgs = {
   offChainId: string
-  appName: string
+  offChainMetadata: string
   refundTimespan: beet.bignum
   tokenPrice: number
   exemplars: number
@@ -26,18 +26,18 @@ export type CreateAssetInstructionArgs = {
 }
 /**
  * @category Instructions
- * @category CreateAsset
+ * @category CreateToken
  * @category generated
  */
-export const createAssetStruct = new beet.FixableBeetArgsStruct<
-  CreateAssetInstructionArgs & {
+export const createTokenStruct = new beet.FixableBeetArgsStruct<
+  CreateTokenInstructionArgs & {
     instructionDiscriminator: number[] /* size: 8 */
   }
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['offChainId', beet.utf8String],
-    ['appName', beet.utf8String],
+    ['offChainMetadata', beet.utf8String],
     ['refundTimespan', beet.u64],
     ['tokenPrice', beet.u32],
     ['exemplars', beet.i32],
@@ -45,57 +45,59 @@ export const createAssetStruct = new beet.FixableBeetArgsStruct<
     ['tokenSymbol', beet.utf8String],
     ['tokenUri', beet.utf8String],
   ],
-  'CreateAssetInstructionArgs',
+  'CreateTokenInstructionArgs',
 )
 /**
- * Accounts required by the _createAsset_ instruction
+ * Accounts required by the _createToken_ instruction
  *
  * @property [] metadataProgram
  * @property [_writable_, **signer**] authority
- * @property [_writable_] assetMint
- * @property [_writable_] asset
+ * @property [] app
+ * @property [_writable_] tokenMint
+ * @property [_writable_] token
  * @property [] acceptedMint
  * @property [_writable_] tokenMetadata
  * @category Instructions
- * @category CreateAsset
+ * @category CreateToken
  * @category generated
  */
-export type CreateAssetInstructionAccounts = {
+export type CreateTokenInstructionAccounts = {
   metadataProgram: web3.PublicKey
   systemProgram?: web3.PublicKey
   tokenProgram?: web3.PublicKey
   rent?: web3.PublicKey
   authority: web3.PublicKey
-  assetMint: web3.PublicKey
-  asset: web3.PublicKey
+  app: web3.PublicKey
+  tokenMint: web3.PublicKey
+  token: web3.PublicKey
   acceptedMint: web3.PublicKey
   tokenMetadata: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
-export const createAssetInstructionDiscriminator = [
-  28, 42, 120, 51, 7, 38, 156, 136,
+export const createTokenInstructionDiscriminator = [
+  84, 52, 204, 228, 24, 140, 234, 75,
 ]
 
 /**
- * Creates a _CreateAsset_ instruction.
+ * Creates a _CreateToken_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
  * @param args to provide as instruction data to the program
  *
  * @category Instructions
- * @category CreateAsset
+ * @category CreateToken
  * @category generated
  */
-export function createCreateAssetInstruction(
-  accounts: CreateAssetInstructionAccounts,
-  args: CreateAssetInstructionArgs,
+export function createCreateTokenInstruction(
+  accounts: CreateTokenInstructionAccounts,
+  args: CreateTokenInstructionArgs,
   programId = new web3.PublicKey(
     '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
   ),
 ) {
-  const [data] = createAssetStruct.serialize({
-    instructionDiscriminator: createAssetInstructionDiscriminator,
+  const [data] = createTokenStruct.serialize({
+    instructionDiscriminator: createTokenInstructionDiscriminator,
     ...args,
   })
   const keys: web3.AccountMeta[] = [
@@ -125,12 +127,17 @@ export function createCreateAssetInstruction(
       isSigner: true,
     },
     {
-      pubkey: accounts.assetMint,
+      pubkey: accounts.app,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.tokenMint,
       isWritable: true,
       isSigner: false,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.token,
       isWritable: true,
       isSigner: false,
     },

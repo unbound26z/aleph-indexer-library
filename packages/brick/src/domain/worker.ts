@@ -18,7 +18,7 @@ import {
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
-import { ParsedEvents } from '../utils/layouts/index.js'
+import { AccountType, ParsedEvents, PaymentArgs } from '../utils/layouts/index.js'
 import { BrickAccountStats, BrickAccountInfo } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
@@ -137,10 +137,36 @@ export default class WorkerDomain
   async getUserWithdrawalsAvailable(
     account: string,
   ): Promise<BrickAccountInfo[]> {
-    const infos = this.userDAL
-      .useIndex()
-      .getAllFromTo()
+    const actualTimestamp = Date.now()
+    const paymentsAccounts: BrickAccountInfo[] = []
+    for (const acc of Object.values(this.accounts)) {
+      if (
+        acc.info.type === AccountType.Payment && 
+        (acc.info.data as PaymentArgs).seller.toString() === account && 
+        actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
+      ) {
+        paymentsAccounts.push(acc.info)
+      }
+    }
 
-    return infos
+    return paymentsAccounts
+  }
+
+  async getUserRefundsAvailable(
+    account: string,
+  ): Promise<BrickAccountInfo[]> {
+    const actualTimestamp = Date.now()
+    const paymentsAccounts: BrickAccountInfo[] = []
+    for (const acc of Object.values(this.accounts)) {
+      if (
+        acc.info.type === AccountType.Payment && 
+        (acc.info.data as PaymentArgs).buyer.toString() === account &&
+        actualTimestamp < Number((acc.info.data as PaymentArgs).refundConsumedAt)
+      ) {
+        paymentsAccounts.push(acc.info)
+      }
+    }
+
+    return paymentsAccounts
   }
 }

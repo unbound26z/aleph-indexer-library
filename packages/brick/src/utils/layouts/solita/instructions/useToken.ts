@@ -11,86 +11,59 @@ import * as web3 from '@solana/web3.js'
 
 /**
  * @category Instructions
- * @category BuyAsset
+ * @category UseToken
  * @category generated
  */
-export type BuyAssetInstructionArgs = {
-  timestamp: beet.bignum
-}
-/**
- * @category Instructions
- * @category BuyAsset
- * @category generated
- */
-export const buyAssetStruct = new beet.BeetArgsStruct<
-  BuyAssetInstructionArgs & {
-    instructionDiscriminator: number[] /* size: 8 */
-  }
->(
-  [
-    ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['timestamp', beet.u64],
-  ],
-  'BuyAssetInstructionArgs',
+export const useTokenStruct = new beet.BeetArgsStruct<{
+  instructionDiscriminator: number[] /* size: 8 */
+}>(
+  [['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)]],
+  'UseTokenInstructionArgs',
 )
 /**
- * Accounts required by the _buyAsset_ instruction
+ * Accounts required by the _useToken_ instruction
  *
  * @property [] associatedTokenProgram
- * @property [] clock
  * @property [_writable_, **signer**] authority
- * @property [_writable_] asset
- * @property [_writable_] assetMint
- * @property [_writable_] buyerTransferVault
- * @property [] acceptedMint
- * @property [_writable_] payment
- * @property [_writable_] paymentVault
+ * @property [_writable_] token
+ * @property [_writable_] tokenMint
  * @property [_writable_] buyerTokenVault
  * @category Instructions
- * @category BuyAsset
+ * @category UseToken
  * @category generated
  */
-export type BuyAssetInstructionAccounts = {
+export type UseTokenInstructionAccounts = {
   systemProgram?: web3.PublicKey
   tokenProgram?: web3.PublicKey
   associatedTokenProgram: web3.PublicKey
   rent?: web3.PublicKey
-  clock: web3.PublicKey
   authority: web3.PublicKey
-  asset: web3.PublicKey
-  assetMint: web3.PublicKey
-  buyerTransferVault: web3.PublicKey
-  acceptedMint: web3.PublicKey
-  payment: web3.PublicKey
-  paymentVault: web3.PublicKey
+  token: web3.PublicKey
+  tokenMint: web3.PublicKey
   buyerTokenVault: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
-export const buyAssetInstructionDiscriminator = [
-  197, 37, 177, 1, 180, 23, 175, 98,
+export const useTokenInstructionDiscriminator = [
+  149, 40, 199, 254, 83, 150, 43, 26,
 ]
 
 /**
- * Creates a _BuyAsset_ instruction.
+ * Creates a _UseToken_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
- * @param args to provide as instruction data to the program
- *
  * @category Instructions
- * @category BuyAsset
+ * @category UseToken
  * @category generated
  */
-export function createBuyAssetInstruction(
-  accounts: BuyAssetInstructionAccounts,
-  args: BuyAssetInstructionArgs,
+export function createUseTokenInstruction(
+  accounts: UseTokenInstructionAccounts,
   programId = new web3.PublicKey(
     '84KfPcJAZhNSLMmSzgx3kDx3FfKfS3WK5u8FF8zks18S',
   ),
 ) {
-  const [data] = buyAssetStruct.serialize({
-    instructionDiscriminator: buyAssetInstructionDiscriminator,
-    ...args,
+  const [data] = useTokenStruct.serialize({
+    instructionDiscriminator: useTokenInstructionDiscriminator,
   })
   const keys: web3.AccountMeta[] = [
     {
@@ -114,42 +87,17 @@ export function createBuyAssetInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.clock,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
       pubkey: accounts.authority,
       isWritable: true,
       isSigner: true,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.token,
       isWritable: true,
       isSigner: false,
     },
     {
-      pubkey: accounts.assetMint,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.buyerTransferVault,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.acceptedMint,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.payment,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.paymentVault,
+      pubkey: accounts.tokenMint,
       isWritable: true,
       isSigner: false,
     },

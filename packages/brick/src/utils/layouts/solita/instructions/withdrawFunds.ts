@@ -24,8 +24,10 @@ export const withdrawFundsStruct = new beet.BeetArgsStruct<{
  * Accounts required by the _withdrawFunds_ instruction
  *
  * @property [_writable_, **signer**] authority
- * @property [_writable_] asset
- * @property [_writable_] assetMint
+ * @property [] app
+ * @property [_writable_] appCreatorVault
+ * @property [_writable_] token
+ * @property [_writable_] tokenMint
  * @property [_writable_] receiverVault
  * @property [_writable_] buyer
  * @property [_writable_] payment
@@ -37,8 +39,10 @@ export const withdrawFundsStruct = new beet.BeetArgsStruct<{
 export type WithdrawFundsInstructionAccounts = {
   tokenProgram?: web3.PublicKey
   authority: web3.PublicKey
-  asset: web3.PublicKey
-  assetMint: web3.PublicKey
+  app: web3.PublicKey
+  appCreatorVault: web3.PublicKey
+  token: web3.PublicKey
+  tokenMint: web3.PublicKey
   receiverVault: web3.PublicKey
   buyer: web3.PublicKey
   payment: web3.PublicKey
@@ -79,12 +83,22 @@ export function createWithdrawFundsInstruction(
       isSigner: true,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.app,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.appCreatorVault,
       isWritable: true,
       isSigner: false,
     },
     {
-      pubkey: accounts.assetMint,
+      pubkey: accounts.token,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.tokenMint,
       isWritable: true,
       isSigner: false,
     },

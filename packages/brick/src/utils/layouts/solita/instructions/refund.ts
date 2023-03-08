@@ -24,8 +24,8 @@ export const refundStruct = new beet.BeetArgsStruct<{
  * Accounts required by the _refund_ instruction
  *
  * @property [_writable_, **signer**] authority
- * @property [_writable_] asset
- * @property [_writable_] assetMint
+ * @property [_writable_] token
+ * @property [_writable_] tokenMint
  * @property [_writable_] receiverVault
  * @property [_writable_] payment
  * @property [_writable_] paymentVault
@@ -37,8 +37,8 @@ export const refundStruct = new beet.BeetArgsStruct<{
 export type RefundInstructionAccounts = {
   tokenProgram?: web3.PublicKey
   authority: web3.PublicKey
-  asset: web3.PublicKey
-  assetMint: web3.PublicKey
+  token: web3.PublicKey
+  tokenMint: web3.PublicKey
   receiverVault: web3.PublicKey
   payment: web3.PublicKey
   paymentVault: web3.PublicKey
@@ -77,12 +77,12 @@ export function createRefundInstruction(
       isSigner: true,
     },
     {
-      pubkey: accounts.asset,
+      pubkey: accounts.token,
       isWritable: true,
       isSigner: false,
     },
     {
-      pubkey: accounts.assetMint,
+      pubkey: accounts.tokenMint,
       isWritable: true,
       isSigner: false,
     },

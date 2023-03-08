@@ -1,7 +1,9 @@
-export * from './Asset.js'
+export * from './App.js'
 export * from './Payment.js'
+export * from './TokenMetadata.js'
 
-import { Asset } from './Asset.js'
+import { App } from './App.js'
 import { Payment } from './Payment.js'
+import { TokenMetadata } from './TokenMetadata.js'
 
-export const accountProviders = { Asset, Payment }
+export const accountProviders = { App, Payment, TokenMetadata }

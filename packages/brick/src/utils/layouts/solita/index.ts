@@ -1,50 +1,69 @@
 import { AccountMeta, PublicKey } from '@solana/web3.js'
 export * from './accounts/index.js'
 export * from './instructions/index.js'
+export * from './types/index.js'
 
-import { Asset, AssetArgs, Payment, PaymentArgs } from './accounts/index.js'
+import {
+  App,
+  AppArgs,
+  Payment,
+  PaymentArgs,
+  TokenMetadata,
+  TokenMetadataArgs,
+} from './accounts/index.js'
 
-export type CreateAssetInstruction = {
+import { SellerConfig, TransactionsInfo, Bumps } from './types/index.js'
+
+export type CreateAppInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const CreateAssetAccounts = [
+export const CreateAppAccounts = ['systemProgram', 'rent', 'authority', 'app']
+
+export type CreateTokenInstruction = {
+  programId: PublicKey
+  keys: AccountMeta[]
+  data: Buffer
+}
+
+export const CreateTokenAccounts = [
   'metadataProgram',
   'systemProgram',
   'tokenProgram',
   'rent',
   'authority',
-  'assetMint',
-  'asset',
+  'app',
+  'tokenMint',
+  'token',
   'acceptedMint',
   'tokenMetadata',
 ]
 
-export type EditAssetPriceInstruction = {
+export type EditTokenPriceInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const EditAssetPriceAccounts = ['authority', 'asset']
+export const EditTokenPriceAccounts = ['authority', 'token']
 
-export type BuyAssetInstruction = {
+export type BuyTokenInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const BuyAssetAccounts = [
+export const BuyTokenAccounts = [
   'systemProgram',
   'tokenProgram',
   'associatedTokenProgram',
   'rent',
   'clock',
   'authority',
-  'asset',
-  'assetMint',
+  'token',
+  'tokenMint',
   'buyerTransferVault',
   'acceptedMint',
   'payment',
@@ -52,20 +71,20 @@ export const BuyAssetAccounts = [
   'buyerTokenVault',
 ]
 
-export type ShareAssetInstruction = {
+export type ShareTokenInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const ShareAssetAccounts = [
+export const ShareTokenAccounts = [
   'systemProgram',
   'tokenProgram',
   'associatedTokenProgram',
   'rent',
   'authority',
-  'asset',
-  'assetMint',
+  'token',
+  'tokenMint',
   'receiverVault',
 ]
 
@@ -78,8 +97,10 @@ export type WithdrawFundsInstruction = {
 export const WithdrawFundsAccounts = [
   'tokenProgram',
   'authority',
-  'asset',
-  'assetMint',
+  'app',
+  'appCreatorVault',
+  'token',
+  'tokenMint',
   'receiverVault',
   'buyer',
   'payment',
@@ -95,48 +116,51 @@ export type RefundInstruction = {
 export const RefundAccounts = [
   'tokenProgram',
   'authority',
-  'asset',
-  'assetMint',
+  'token',
+  'tokenMint',
   'receiverVault',
   'payment',
   'paymentVault',
   'buyerTokenVault',
 ]
 
-export type UseAssetInstruction = {
+export type UseTokenInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const UseAssetAccounts = [
+export const UseTokenAccounts = [
   'systemProgram',
   'tokenProgram',
   'associatedTokenProgram',
   'rent',
   'authority',
-  'asset',
-  'assetMint',
+  'token',
+  'tokenMint',
   'buyerTokenVault',
 ]
 
-export type DeleteAssetInstruction = {
+export type DeletetokenInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const DeleteAssetAccounts = ['authority', 'asset']
+export const DeletetokenAccounts = ['authority', 'token']
 
 export type ParsedInstructions =
-  | CreateAssetInstruction
-  | EditAssetPriceInstruction
-  | BuyAssetInstruction
-  | ShareAssetInstruction
+  | CreateAppInstruction
+  | CreateTokenInstruction
+  | EditTokenPriceInstruction
+  | BuyTokenInstruction
+  | ShareTokenInstruction
   | WithdrawFundsInstruction
   | RefundInstruction
-  | UseAssetInstruction
-  | DeleteAssetInstruction
-export type ParsedAccounts = Asset | Payment
+  | UseTokenInstruction
+  | DeletetokenInstruction
+export type ParsedAccounts = App | Payment | TokenMetadata
 
-export type ParsedAccountsData = AssetArgs | PaymentArgs
+export type ParsedAccountsData = AppArgs | PaymentArgs | TokenMetadataArgs
+
+export type ParsedTypes = SellerConfig | TransactionsInfo | Bumps

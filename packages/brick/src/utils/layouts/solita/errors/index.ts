@@ -107,13 +107,76 @@ createErrorFromNameLookup.set(
 )
 
 /**
+ * StringTooLong: 'You are providing a string that is too long'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class StringTooLongError extends Error {
+  readonly code: number = 0x1774
+  readonly name: string = 'StringTooLong'
+  constructor() {
+    super('You are providing a string that is too long')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, StringTooLongError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1774, () => new StringTooLongError())
+createErrorFromNameLookup.set('StringTooLong', () => new StringTooLongError())
+
+/**
+ * NumericalOverflow: 'Numerical Overflow happened'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class NumericalOverflowError extends Error {
+  readonly code: number = 0x1775
+  readonly name: string = 'NumericalOverflow'
+  constructor() {
+    super('Numerical Overflow happened')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, NumericalOverflowError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1775, () => new NumericalOverflowError())
+createErrorFromNameLookup.set(
+  'NumericalOverflow',
+  () => new NumericalOverflowError(),
+)
+
+/**
+ * IncorrectFee: 'You are setting a higher fee than allowed'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class IncorrectFeeError extends Error {
+  readonly code: number = 0x1776
+  readonly name: string = 'IncorrectFee'
+  constructor() {
+    super('You are setting a higher fee than allowed')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, IncorrectFeeError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1776, () => new IncorrectFeeError())
+createErrorFromNameLookup.set('IncorrectFee', () => new IncorrectFeeError())
+
+/**
  * IncorrectPaymentToken: 'You are trying to pay a different mint than the one stated by the seller'
  *
  * @category Errors
  * @category generated
  */
 export class IncorrectPaymentTokenError extends Error {
-  readonly code: number = 0x1774
+  readonly code: number = 0x1777
   readonly name: string = 'IncorrectPaymentToken'
   constructor() {
     super(
@@ -125,7 +188,7 @@ export class IncorrectPaymentTokenError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1774, () => new IncorrectPaymentTokenError())
+createErrorFromCodeLookup.set(0x1777, () => new IncorrectPaymentTokenError())
 createErrorFromNameLookup.set(
   'IncorrectPaymentToken',
   () => new IncorrectPaymentTokenError(),
@@ -138,7 +201,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IncorrectBuyerTokenAccountOnTransferError extends Error {
-  readonly code: number = 0x1775
+  readonly code: number = 0x1778
   readonly name: string = 'IncorrectBuyerTokenAccountOnTransfer'
   constructor() {
     super(
@@ -151,7 +214,7 @@ export class IncorrectBuyerTokenAccountOnTransferError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1775,
+  0x1778,
   () => new IncorrectBuyerTokenAccountOnTransferError(),
 )
 createErrorFromNameLookup.set(
@@ -166,7 +229,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IncorrectBuyerTokenAccountToStorePurchasedTokenError extends Error {
-  readonly code: number = 0x1776
+  readonly code: number = 0x1779
   readonly name: string = 'IncorrectBuyerTokenAccountToStorePurchasedToken'
   constructor() {
     super(
@@ -182,7 +245,7 @@ export class IncorrectBuyerTokenAccountToStorePurchasedTokenError extends Error 
 }
 
 createErrorFromCodeLookup.set(
-  0x1776,
+  0x1779,
   () => new IncorrectBuyerTokenAccountToStorePurchasedTokenError(),
 )
 createErrorFromNameLookup.set(
@@ -191,26 +254,26 @@ createErrorFromNameLookup.set(
 )
 
 /**
- * IncorrectAssetAuthority: 'You are not the owner of this asset account'
+ * IncorrectTokenAuthority: 'You are not the owner of this token account'
  *
  * @category Errors
  * @category generated
  */
-export class IncorrectAssetAuthorityError extends Error {
-  readonly code: number = 0x1777
-  readonly name: string = 'IncorrectAssetAuthority'
+export class IncorrectTokenAuthorityError extends Error {
+  readonly code: number = 0x177a
+  readonly name: string = 'IncorrectTokenAuthority'
   constructor() {
-    super('You are not the owner of this asset account')
+    super('You are not the owner of this token account')
     if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, IncorrectAssetAuthorityError)
+      Error.captureStackTrace(this, IncorrectTokenAuthorityError)
     }
   }
 }
 
-createErrorFromCodeLookup.set(0x1777, () => new IncorrectAssetAuthorityError())
+createErrorFromCodeLookup.set(0x177a, () => new IncorrectTokenAuthorityError())
 createErrorFromNameLookup.set(
-  'IncorrectAssetAuthority',
-  () => new IncorrectAssetAuthorityError(),
+  'IncorrectTokenAuthority',
+  () => new IncorrectTokenAuthorityError(),
 )
 
 /**
@@ -220,7 +283,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IncorrectPaymentAuthorityError extends Error {
-  readonly code: number = 0x1778
+  readonly code: number = 0x177b
   readonly name: string = 'IncorrectPaymentAuthority'
   constructor() {
     super('You are not the owner of this payment account')
@@ -231,7 +294,7 @@ export class IncorrectPaymentAuthorityError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1778,
+  0x177b,
   () => new IncorrectPaymentAuthorityError(),
 )
 createErrorFromNameLookup.set(
@@ -246,7 +309,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IncorrectPaymentVaultError extends Error {
-  readonly code: number = 0x1779
+  readonly code: number = 0x177c
   readonly name: string = 'IncorrectPaymentVault'
   constructor() {
     super('You are providing a worng payment vault')
@@ -256,7 +319,7 @@ export class IncorrectPaymentVaultError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1779, () => new IncorrectPaymentVaultError())
+createErrorFromCodeLookup.set(0x177c, () => new IncorrectPaymentVaultError())
 createErrorFromNameLookup.set(
   'IncorrectPaymentVault',
   () => new IncorrectPaymentVaultError(),
@@ -269,7 +332,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IncorrectReceiverTokenAccountError extends Error {
-  readonly code: number = 0x177a
+  readonly code: number = 0x177d
   readonly name: string = 'IncorrectReceiverTokenAccount'
   constructor() {
     super('You are providing an incorrect token account')
@@ -280,7 +343,7 @@ export class IncorrectReceiverTokenAccountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x177a,
+  0x177d,
   () => new IncorrectReceiverTokenAccountError(),
 )
 createErrorFromNameLookup.set(
