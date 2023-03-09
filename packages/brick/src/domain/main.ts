@@ -8,7 +8,7 @@ import {
   AccountStats,
   Blockchain,
 } from '@aleph-indexer/framework'
-import { AccountType, ParsedEvents } from '../utils/layouts/index.js'
+import { AccountType, ParsedEvents, PaymentArgs, TokenMetadataArgs } from '../utils/layouts/index.js'
 import {
   GlobalBrickStats,
   BrickAccountStats,
@@ -56,13 +56,33 @@ export default class MainDomain
 
   async getAccounts(
     includeStats?: boolean,
+    app?: string
   ): Promise<Record<string, BrickAccountData>> {
     const accounts: Record<string, BrickAccountData> = {}
 
     await Promise.all(
       Array.from(this.accounts.solana || []).map(async (account) => {
         const actual = await this.getAccount(account, includeStats)
-        accounts[account] = actual as BrickAccountData
+        if (app) {
+          switch (actual.info.type) {
+            case AccountType.App:
+              if (app === actual.info.address) accounts[account] = actual as BrickAccountData
+            break
+            case AccountType.TokenMetadata:
+              const appName = (actual.info.data as TokenMetadataArgs).app.toString()
+              if (app === appName) accounts[account] = actual as BrickAccountData
+            break
+            case AccountType.Payment:
+              const tokenAddess = (actual.info.data as PaymentArgs).tokenAccount.toString()
+              const tokenAccount = await this.getAccount(tokenAddess)
+              const appN = (tokenAccount.info.data as TokenMetadataArgs).app.toString()
+              if (app === appN) accounts[account] = actual as BrickAccountData
+            break
+          }
+        }
+        else {
+          accounts[account] = actual as BrickAccountData
+        }
       }),
     )
 

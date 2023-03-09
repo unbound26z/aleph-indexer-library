@@ -77,7 +77,6 @@ export default class APISchema extends IndexerAPISchema {
             args: {
               account: { type: new GraphQLNonNull(GraphQLString) },
               types: { type: new GraphQLList(Types.ParsedEvents) },
-              app: { type: GraphQLString },
               startDate: { type: GraphQLFloat },
               endDate: { type: GraphQLFloat },
               limit: { type: GraphQLInt },

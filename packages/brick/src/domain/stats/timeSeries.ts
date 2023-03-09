@@ -1,6 +1,7 @@
 import {
   AccountTimeSeriesStatsManager,
   Blockchain,
+  IndexableEntityType,
   IndexerMsClient,
   StatsStateStorage,
   StatsTimeSeriesStorage,
@@ -46,10 +47,10 @@ export async function createAccountStats(
     statsStateDAL,
     statsTimeSeriesDAL,
   )
-
   return new AccountTimeSeriesStatsManager<BrickAccountStats>(
     {
       blockchainId,
+      type: IndexableEntityType.Transaction,
       account,
       series: [accessTimeSeries], // place your other aggregated stats here
       aggregate(args) {

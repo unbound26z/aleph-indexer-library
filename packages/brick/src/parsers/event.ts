@@ -11,17 +11,23 @@ import {
   TokenMetadataArgs,
   UseTokenInfo,
   UseTokenInstructionAccounts,
+  BuyTokenEvent,
+  BuyTokenInstructionAccounts,
+  BuyTokenInfo,
+  WithdrawFundsInstructionAccounts,
+  WithdrawFundsInfo,
+  WithdrawFundsEvent,
+  CreateAppInfo,
+  CreateAppEvent,
+  CreateAppInstructionAccounts,
 } from '../utils/layouts/index.js'
-import { Publish } from "aleph-sdk-ts/dist/messages/post"
-import { ItemType } from "aleph-sdk-ts/dist/messages/message";
-import { ImportAccountFromPrivateKey } from 'aleph-sdk-ts/dist/accounts/solana'
-import dotenv from 'dotenv'
-dotenv.config()
+import { Publish, Get } from "aleph-sdk-ts/dist/messages/post/index.js"
+import { ItemType } from "aleph-sdk-ts/dist/messages/message.js"
+import { SOLAccount } from 'aleph-sdk-ts/dist/accounts/solana.js'
+import { AlephDataSetContent } from '../types.js';
 
-export class EventParser {
-  protected account = ImportAccountFromPrivateKey(Uint8Array.from(process.env.MESSAGES_KEY.slice(0, 32)))
-  
-  async parse(ixCtx: SolanaParsedInstructionContext, accounts: Record<string, AccountDomain>): Promise<ParsedEvents> {
+export class EventParser {  
+  async parse(ixCtx: SolanaParsedInstructionContext, accounts: Record<string, AccountDomain>, account: SOLAccount): Promise<ParsedEvents> {
     const { instruction, parentTransaction, parentInstruction } = ixCtx
     const parsed = (instruction as SolanaParsedEvent<InstructionType, ParsedEventsInfo>)
       .parsed
@@ -34,39 +40,69 @@ export class EventParser {
       ? parentTransaction.blockTime * 1000
       : parentTransaction.slot
 
-    if (parsed.type == InstructionType.UseToken) {
-      const tokenAccount = (parsed.info.accounts as UseTokenInstructionAccounts).token.toString()
-      const signer = (accounts[tokenAccount].info.data as TokenMetadataArgs).authority.toString()
-
-      await Publish({
-        account: this.account,
-        postType: 'Permission',
-        content: {
-          offChainId: (accounts[tokenAccount].info.data as TokenMetadataArgs).offChainId.toString(), 
-          tokenAccount: tokenAccount,
-          signer: signer,
-        },
-        channel: 'Brick',
-        APIServer: 'https://api2.aleph.im',
-        inlineRequested: true,
-        storageEngine: ItemType.inline
-      })
-
+    const authority = parsed.info.accounts.authority.toString()
+    if (parsed.type === InstructionType.CreateApp) {
       return {
         id,
         timestamp,
         type: parsed.type,
-        account: tokenAccount,
-        signer: signer,
-        ...parsed.info as UseTokenInfo,
-      } as UseTokenEvent
+        account: (parsed.info.accounts as CreateAppInstructionAccounts).app.toString(),
+        signer: authority,
+        ...parsed.info as CreateAppInfo,
+      } as CreateAppEvent
     } else {
-      return {
-        id,
-        timestamp,
-        type: parsed.type,
-        ...parsed.info,
-      } as ParsedEvents
+      const tokenAccount = (parsed.info.accounts as UseTokenInstructionAccounts).token.toString()
+      if (parsed.type === InstructionType.UseToken) {
+        const seller = (accounts[tokenAccount].info.data as TokenMetadataArgs).authority.toString()
+        const appAddress = (accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
+        if (appAddress === '3zDf4PEpshwWuv5EL9NVwZ6wE5tKSqT6Erbr46zpeVuz') {
+          const hash1 = (accounts[tokenAccount].info.data as TokenMetadataArgs).offChainId.toString()
+          const hash2 = (accounts[tokenAccount].info.data as TokenMetadataArgs).offChainId2.toString()
+          const dataSet = await Get<AlephDataSetContent>({
+            types: 'Dataset',
+            pagination: 1,
+            page: 1,
+            hashes: [hash1 + hash2],
+            APIServer: "https://api2.aleph.im",
+          })
+          const timeseriesIds = dataSet.posts[0].content.timeseriesIDs
+          for (const id of timeseriesIds) {
+            await Publish({
+              account: account,
+              postType: 'Permission',
+              content: {
+                timeseriesID: id,
+                autorizer: seller, // solana account that lists the token
+                status: "GRANTED",
+                executionCount: 0,
+                maxExecutionCount: -1,
+                requestor: authority, // solana address that burns the token
+              },
+              channel: 'FISHNET_TEST_V1', // need the gud channel
+              APIServer: 'https://api2.aleph.im',
+              inlineRequested: true,
+              storageEngine: ItemType.inline
+            })
+          }
+        }
+        return {
+          id,
+          timestamp,
+          type: parsed.type,
+          account: tokenAccount,
+          signer: authority,
+          ...parsed.info as UseTokenInfo,
+        } as UseTokenEvent
+      } else {
+        return {
+          id,
+          timestamp,
+          type: parsed.type,
+          account: tokenAccount,
+          signer: authority,
+          ...parsed.info as ParsedEventsInfo,
+        } as ParsedEvents
+      }
     }
   }
 }

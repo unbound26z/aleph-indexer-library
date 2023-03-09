@@ -20,7 +20,6 @@ export type AccountsFilters = {
 export type EventsFilters = {
   account: string
   types?: InstructionType[]
-  app?: string,
   startDate?: number
   endDate?: number
   limit?: number
@@ -114,8 +113,9 @@ export class APIResolvers {
     types,
     accounts,
     includeStats,
+    app,
   }: AccountsFilters): Promise<BrickAccountData[]> {
-    const accountMap = await this.domain.getAccounts(includeStats)
+    const accountMap = await this.domain.getAccounts(includeStats, app)
 
     accounts =
       accounts ||
@@ -124,7 +124,7 @@ export class APIResolvers {
     let accountsData = accounts
       .map((address) => accountMap[address])
       .filter((account) => !!account)
-
+    
     if (types !== undefined) {
       accountsData = accountsData.filter(({ info }) =>
         types!.includes(info.type),

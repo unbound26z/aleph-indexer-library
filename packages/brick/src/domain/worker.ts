@@ -23,6 +23,8 @@ import { BrickAccountStats, BrickAccountInfo } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
 import { BRICK_PROGRAM_ID } from '../constants.js'
+import { ImportAccountFromPrivateKey } from 'aleph-sdk-ts/dist/accounts/solana.js'
+import { config } from '../utils/envs.js'
 
 export default class WorkerDomain
   extends IndexerWorkerDomain
@@ -97,11 +99,14 @@ export default class WorkerDomain
     context: ParserContext,
     ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    const parsedIxs = await Promise.all(ixsContext.map(async (ix) => await this.eventParser.parse(ix, this.accounts)))
+    if (config.MESSAGES_KEY) {
+      const solAccount = ImportAccountFromPrivateKey(Uint8Array.from(JSON.parse(config.MESSAGES_KEY)))
+      const parsedIxs = await Promise.all(ixsContext.map(async (ix) => await this.eventParser.parse(ix, this.accounts, solAccount)))
 
-    console.log(`indexing ${ixsContext.length} parsed ixs`)
-
-    await this.eventDAL.save(parsedIxs)
+      console.log(`indexing ${ixsContext.length} parsed ixs`)
+  
+      await this.eventDAL.save(parsedIxs)
+    }
   }
 
   // ------------- Custom impl methods -------------------
@@ -140,21 +145,23 @@ export default class WorkerDomain
   ): Promise<BrickAccountInfo[]> {
     const actualTimestamp = Date.now()
     const paymentsAccounts: BrickAccountInfo[] = []
-    for (const acc of Object.values(this.accounts)) {
-      if (
-        acc.info.type === AccountType.Payment && 
-        (acc.info.data as PaymentArgs).seller.toString() === account && 
-        actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
-      ) {
-        if (app) {
-          const tokenAccount = (acc.info.data as PaymentArgs).token_account.toString()
-          const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
-          if (this.accounts[app] && app == appAddress) {
+    if (config.MESSAGES_KEY) {
+      for (const acc of Object.values(this.accounts)) {
+        if (
+          acc.info.type === AccountType.Payment && 
+          (acc.info.data as PaymentArgs).seller.toString() === account && 
+          actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
+        ) {
+          if (app) {
+            const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
+            const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
+            if (this.accounts[app] && app === appAddress) {
+              paymentsAccounts.push(acc.info)
+            }
+          }
+          else {
             paymentsAccounts.push(acc.info)
           }
-        }
-        else {
-          paymentsAccounts.push(acc.info)
         }
       }
     }
@@ -174,7 +181,16 @@ export default class WorkerDomain
         (acc.info.data as PaymentArgs).buyer.toString() === account &&
         actualTimestamp < Number((acc.info.data as PaymentArgs).refundConsumedAt)
       ) {
-        paymentsAccounts.push(acc.info)
+        if (app) {
+          const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
+          const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
+          if (this.accounts[app] && app === appAddress) {
+            paymentsAccounts.push(acc.info)
+          }
+        }
+        else {
+          paymentsAccounts.push(acc.info)
+        }
       }
     }
 
