@@ -8,18 +8,12 @@ import {
   ParsedEventsInfo,
   InstructionType,
   UseTokenEvent,
-  TokenMetadataArgs,
   UseTokenInfo,
   UseTokenInstructionAccounts,
-  BuyTokenEvent,
-  BuyTokenInstructionAccounts,
-  BuyTokenInfo,
-  WithdrawFundsInstructionAccounts,
-  WithdrawFundsInfo,
-  WithdrawFundsEvent,
   CreateAppInfo,
   CreateAppEvent,
   CreateAppInstructionAccounts,
+  TokenMetadataWithId2,
 } from '../utils/layouts/index.js'
 import { Publish, Get } from "aleph-sdk-ts/dist/messages/post/index.js"
 import { ItemType } from "aleph-sdk-ts/dist/messages/message.js"
@@ -52,12 +46,13 @@ export class EventParser {
       } as CreateAppEvent
     } else {
       const tokenAccount = (parsed.info.accounts as UseTokenInstructionAccounts).token.toString()
+      console.log('authority', authority, tokenAccount)
       if (parsed.type === InstructionType.UseToken) {
-        const seller = (accounts[tokenAccount].info.data as TokenMetadataArgs).authority.toString()
-        const appAddress = (accounts[tokenAccount].info.data as TokenMetadataArgs).app.toString()
+        const seller = (accounts[tokenAccount].info.data as TokenMetadataWithId2).authority.toString()
+        const appAddress = (accounts[tokenAccount].info.data as TokenMetadataWithId2).app.toString()
         if (appAddress === '3zDf4PEpshwWuv5EL9NVwZ6wE5tKSqT6Erbr46zpeVuz') {
-          const hash1 = (accounts[tokenAccount].info.data as TokenMetadataArgs).offChainId.toString()
-          const hash2 = (accounts[tokenAccount].info.data as TokenMetadataArgs).offChainId2.toString()
+          const hash1 = (accounts[tokenAccount].info.data as TokenMetadataWithId2).offChainId.toString()
+          const hash2 = (accounts[tokenAccount].info.data as TokenMetadataWithId2).offChainId2.toString()
           const dataSet = await Get<AlephDataSetContent>({
             types: 'Dataset',
             pagination: 1,

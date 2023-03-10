@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLInt } from 'graphql'
+import { GraphQLInt } from 'graphql'
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -16,7 +16,7 @@ import { InstructionType } from '../utils/layouts/index.js'
 export const SellerConfig = new GraphQLObjectType({
   name: 'SellerConfig',
   fields: {
-    refundTimespan: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    refundTimespan: { type: GraphQLBigNumber },
     price: { type: new GraphQLNonNull(GraphQLInt) },
     acceptedMint: { type: new GraphQLNonNull(GraphQLString) },
     exemplars: { type: new GraphQLNonNull(GraphQLInt) },
@@ -45,12 +45,12 @@ export const Bumps = new GraphQLObjectType({
 // ------------------- STATS ---------------------------
 
 export const AccessTimeStats = new GraphQLObjectType({
-  name: 'MarinadeFinanceInfo',
+  name: 'AccessTimeStats',
   fields: {
     accesses: { type: new GraphQLNonNull(GraphQLInt) },
-    accessesByProgramId: { type: new GraphQLNonNull(GraphQLJSON) },
-    startTimestamp: { type: new GraphQLNonNull(GraphQLLong) },
-    endTimestamp: { type: new GraphQLNonNull(GraphQLLong) },
+    accessesByProgramId: { type: GraphQLJSON },
+    startTimestamp: { type: GraphQLLong },
+    endTimestamp: { type: GraphQLLong },
   },
 })
 
@@ -68,9 +68,9 @@ export const GlobalBrickStats = new GraphQLObjectType({
   fields: {
     totalAccounts: { type: new GraphQLNonNull(TotalAccounts) },
     totalAccesses: { type: new GraphQLNonNull(GraphQLInt) },
-    totalAccessesByProgramId: { type: new GraphQLNonNull(GraphQLJSON) },
-    startTimestamp: { type: new GraphQLNonNull(GraphQLLong) },
-    endTimestamp: { type: new GraphQLNonNull(GraphQLLong) },
+    totalAccessesByProgramId: { type: GraphQLJSON },
+    startTimestamp: { type: GraphQLLong },
+    endTimestamp: { type: GraphQLLong },
   },
 })
 
@@ -113,8 +113,8 @@ export const Payment = new GraphQLObjectType({
     seller: { type: new GraphQLNonNull(GraphQLString) },
     buyer: { type: new GraphQLNonNull(GraphQLString) },
     price: { type: new GraphQLNonNull(GraphQLInt) },
-    paymentTimestamp: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    refundConsumedAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    paymentTimestamp: { type: GraphQLBigNumber },
+    refundConsumedAt: { type: GraphQLBigNumber },
     bump: { type: new GraphQLNonNull(GraphQLInt) },
     bumpVault: { type: new GraphQLNonNull(GraphQLInt) },
   },
@@ -264,7 +264,7 @@ export const CreateTokenEventData = new GraphQLObjectType({
     offChainId: { type: new GraphQLNonNull(GraphQLString) },
     offChainId2: { type: new GraphQLNonNull(GraphQLString) },
     offChainMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    refundTimespan: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    refundTimespan: { type: GraphQLBigNumber },
     tokenPrice: { type: new GraphQLNonNull(GraphQLInt) },
     exemplars: { type: new GraphQLNonNull(GraphQLInt) },
     tokenName: { type: new GraphQLNonNull(GraphQLString) },
@@ -336,7 +336,7 @@ export const BuyTokenEventAccounts = new GraphQLObjectType({
 export const BuyTokenEventData = new GraphQLObjectType({
   name: 'BuyTokenEventData',
   fields: {
-    timestamp: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    timestamp: { type: GraphQLBigNumber },
   },
 })
 

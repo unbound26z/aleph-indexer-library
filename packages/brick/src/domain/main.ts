@@ -8,7 +8,7 @@ import {
   AccountStats,
   Blockchain,
 } from '@aleph-indexer/framework'
-import { AccountType, ParsedEvents, PaymentArgs, TokenMetadataArgs } from '../utils/layouts/index.js'
+import { AccountType, ParsedEvents, PaymentArgs, TokenMetadataWithId2 } from '../utils/layouts/index.js'
 import {
   GlobalBrickStats,
   BrickAccountStats,
@@ -28,7 +28,7 @@ export default class MainDomain
     protected discoverer: BrickDiscoverer = new BrickDiscoverer(),
   ) {
     super(context, {
-      discoveryInterval: 1000 * 60 * 60 * 1,
+      discoveryInterval: 1,
       stats: 1000 * 60 * 1,
     })
   }
@@ -69,13 +69,13 @@ export default class MainDomain
               if (app === actual.info.address) accounts[account] = actual as BrickAccountData
             break
             case AccountType.TokenMetadata:
-              const appName = (actual.info.data as TokenMetadataArgs).app.toString()
+              const appName = (actual.info.data as TokenMetadataWithId2).app.toString()
               if (app === appName) accounts[account] = actual as BrickAccountData
             break
             case AccountType.Payment:
               const tokenAddess = (actual.info.data as PaymentArgs).tokenAccount.toString()
               const tokenAccount = await this.getAccount(tokenAddess)
-              const appN = (tokenAccount.info.data as TokenMetadataArgs).app.toString()
+              const appN = (tokenAccount.info.data as TokenMetadataWithId2).app.toString()
               if (app === appN) accounts[account] = actual as BrickAccountData
             break
           }
