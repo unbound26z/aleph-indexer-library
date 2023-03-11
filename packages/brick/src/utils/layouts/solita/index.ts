@@ -161,6 +161,11 @@ export type ParsedInstructions =
   | DeletetokenInstruction
 export type ParsedAccounts = App | Payment | TokenMetadata
 
-export type ParsedAccountsData = AppArgs | PaymentArgs | TokenMetadataArgs
+export type ParsedTokenMetadata = Omit<TokenMetadataArgs, 'offChainId2' | 'offChainMetadata'> & {
+  offChainId2: string,
+  offChainMetadata: string,
+}
+
+export type ParsedAccountsData = AppArgs | PaymentArgs | ParsedTokenMetadata
 
 export type ParsedTypes = SellerConfig | TransactionsInfo | Bumps

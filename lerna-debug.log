@@ -1,0 +1,22 @@
+0 silly argv {
+0 silly argv   _: [ 'clean' ],
+0 silly argv   yes: true,
+0 silly argv   y: true,
+0 silly argv   lernaVersion: '5.6.2',
+0 silly argv   '$0': '/Users/riki/Developer/solana-indexer-library/node_modules/.bin/lerna'
+0 silly argv }
+1 notice cli v5.6.2
+2 verbose rootPath /Users/riki/Developer/solana-indexer-library
+3 error JSONError: Unexpected token ":" (0x3A) in JSON at position 659 while parsing near "...rt.finance/port-sdk\": \"^0.2.67\",\n    \"@s..." in packages/spl-lending/package.json
+3 error
+3 error [0m [90m 18 |[39m         [32m"@aleph-indexer/framework"[39m[33m:[39m [32m"aleph-im/aleph-indexer-framework#fix/invalid_date_ranges"[39m[33m,[39m[0m
+3 error [0m [90m 19 |[39m     [32m"@aleph-indexer/solana"[39m[33m:[39m[0m
+3 error [0m[31m[1m>[22m[39m[90m 20 |[39m     [32m"@port.finance/port-sdk"[39m[33m:[39m [32m"^0.2.67"[39m[33m,[39m[0m
+3 error [0m [90m    |[39m                             [31m[1m^[22m[39m[0m
+3 error [0m [90m 21 |[39m     [32m"@solendprotocol/solend-sdk"[39m[33m:[39m [32m"^0.7.0"[39m[0m
+3 error [0m [90m 22 |[39m   }[0m
+3 error [0m [90m 23 |[39m }[0m
+3 error
+3 error     at parseJson (/Users/riki/Developer/solana-indexer-library/node_modules/parse-json/index.js:29:21)
+3 error     at parse (/Users/riki/Developer/solana-indexer-library/node_modules/load-json-file/index.js:15:9)
+3 error     at module.exports (/Users/riki/Developer/solana-indexer-library/node_modules/load-json-file/index.js:18:47)

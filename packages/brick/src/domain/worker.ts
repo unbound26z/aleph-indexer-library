@@ -18,7 +18,7 @@ import {
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
-import { AccountType, ParsedEvents, PaymentArgs, TokenMetadataWithId2 } from '../utils/layouts/index.js'
+import { AccountType, ParsedEvents, PaymentArgs, ParsedTokenMetadata } from '../utils/layouts/index.js'
 import { BrickAccountStats, BrickAccountInfo } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
@@ -154,7 +154,7 @@ export default class WorkerDomain
         ) {
           if (app) {
             const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
-            const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataWithId2).app.toString()
+            const appAddress = (this.accounts[tokenAccount].info.data as ParsedTokenMetadata).app.toString()
             if (this.accounts[app] && app === appAddress) {
               paymentsAccounts.push(acc.info)
             }
@@ -183,7 +183,7 @@ export default class WorkerDomain
       ) {
         if (app) {
           const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
-          const appAddress = (this.accounts[tokenAccount].info.data as TokenMetadataWithId2).app.toString()
+          const appAddress = (this.accounts[tokenAccount].info.data as ParsedTokenMetadata).app.toString()
           if (this.accounts[app] && app === appAddress) {
             paymentsAccounts.push(acc.info)
           }

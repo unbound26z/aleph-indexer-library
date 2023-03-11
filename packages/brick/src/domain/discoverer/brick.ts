@@ -75,6 +75,14 @@ export default class BrickDiscoverer {
       if ((data as any).name instanceof String) name = (data as any).name
     }
 
+    if (type === AccountType.TokenMetadata) {
+      const offChainId2 = Buffer.from((data as TokenMetadataArgs).offChainId2)
+      data["offChainId2"] = offChainId2.toString('utf-8').trim()
+      const offChainMetadata = Buffer.from((data as TokenMetadataArgs).offChainMetadata)
+      data["offChainMetadata"] = offChainMetadata.toString('utf-8').trim()
+    }
+    console.log(data.offChainId2)
+
     return {
       name,
       programId: BRICK_PROGRAM_ID,
