@@ -10,7 +10,7 @@ import {
 } from '@aleph-indexer/framework'
 import { EventDALIndex, EventStorage } from '../../dal/event.js'
 import { ParsedEvents } from '../../utils/layouts/index.js'
-import { AccessTimeStats, BrickAccountStats } from '../../types.js'
+import { AccessTimeStats, BrickAccountStats, BrickEvent } from '../../types.js'
 import statsAggregator from './statsAggregator.js'
 import accessAggregator from './timeSeriesAggregator.js'
 
@@ -23,7 +23,7 @@ export async function createAccountStats(
   statsTimeSeriesDAL: StatsTimeSeriesStorage,
 ): Promise<AccountTimeSeriesStatsManager<BrickAccountStats>> {
   // @note: this aggregator is used to aggregate usage stats for the account
-  const accessTimeSeries = new TimeSeriesStats<ParsedEvents, AccessTimeStats>(
+  const accessTimeSeries = new TimeSeriesStats<BrickEvent, AccessTimeStats>(
     {
       type: 'access',
       startDate: 0,

@@ -8,6 +8,7 @@ import {
   GlobalBrickStats,
   BrickAccountInfo,
   BrickAccountData,
+  BrickEvent,
 } from '../types.js'
 
 export type AccountsFilters = {
@@ -58,13 +59,13 @@ export class APIResolvers {
     limit = 1000,
     skip = 0,
     reverse = true,
-  }: EventsFilters): Promise<ParsedEvents[]> {
+  }: EventsFilters): Promise<BrickEvent[]> {
     if (limit < 1 || limit > 1000)
       throw new Error('400 Bad Request: 1 <= limit <= 1000')
 
     const typesMap = types ? new Set(types) : undefined
 
-    const events: ParsedEvents[] = []
+    const events: BrickEvent[] = []
 
     const accountEvents = await this.domain.getAccountEventsByTime(
       account,

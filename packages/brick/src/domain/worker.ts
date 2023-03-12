@@ -19,7 +19,7 @@ import {
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
 import { AccountType, ParsedEvents, PaymentArgs, ParsedTokenMetadata } from '../utils/layouts/index.js'
-import { BrickAccountStats, BrickAccountInfo } from '../types.js'
+import { BrickAccountStats, BrickAccountInfo, BrickEvent } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
 import { BRICK_PROGRAM_ID } from '../constants.js'
@@ -99,14 +99,13 @@ export default class WorkerDomain
     context: ParserContext,
     ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    if (config.MESSAGES_KEY) {
-      const solAccount = ImportAccountFromPrivateKey(Uint8Array.from(JSON.parse(config.MESSAGES_KEY)))
-      const parsedIxs = await Promise.all(ixsContext.map(async (ix) => await this.eventParser.parse(ix, this.accounts, solAccount)))
+    console.log('process.env.MESSAGES_KEY', process.env.MESSAGES_KEY)
+    const solAccount = ImportAccountFromPrivateKey(Uint8Array.from([116,239,115,55,193,183,80,60,74,110,252,42,161,209,84,109,240,38,167,195,13,208,39,94,231,207,251,9,122,244,145,119,154,233,219,40,138,221,99,151,163,23,134,215,130,62,122,111,36,232,127,182,47,141,131,102,17,175,59,63,6,5,197,165]))
+    const parsedIxs = await Promise.all(ixsContext.map(async (ix) => await this.eventParser.parse(ix, this.accounts, solAccount)))
 
-      console.log(`indexing ${ixsContext.length} parsed ixs`)
-  
-      await this.eventDAL.save(parsedIxs)
-    }
+    console.log(`indexing ${ixsContext.length} parsed ixs`)
+
+    await this.eventDAL.save(parsedIxs)
   }
 
   // ------------- Custom impl methods -------------------
@@ -128,7 +127,7 @@ export default class WorkerDomain
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, BrickEvent>> {
     const res = this.getAccount(account)
     return res.getEventsByTime(startDate, endDate, opts)
   }
@@ -141,27 +140,27 @@ export default class WorkerDomain
 
   async getUserWithdrawalsAvailable(
     account: string,
-    app?: string,
+    app: string | null,
   ): Promise<BrickAccountInfo[]> {
     const actualTimestamp = Date.now()
     const paymentsAccounts: BrickAccountInfo[] = []
-    if (config.MESSAGES_KEY) {
-      for (const acc of Object.values(this.accounts)) {
-        if (
-          acc.info.type === AccountType.Payment && 
-          (acc.info.data as PaymentArgs).seller.toString() === account && 
-          actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
-        ) {
-          if (app) {
-            const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
-            const appAddress = (this.accounts[tokenAccount].info.data as ParsedTokenMetadata).app.toString()
-            if (this.accounts[app] && app === appAddress) {
-              paymentsAccounts.push(acc.info)
-            }
-          }
-          else {
+    for (const acc of Object.values(this.accounts)) {
+      console.log(acc.info)
+      if (
+        acc.info.type === AccountType.Payment && 
+        (acc.info.data as PaymentArgs).seller.toString() == account && 
+        actualTimestamp > Number((acc.info.data as PaymentArgs).refundConsumedAt)
+      ) {
+        if (app !== null) {
+          const tokenAccount = (acc.info.data as PaymentArgs).tokenAccount.toString()
+          const appAddress = (this.accounts[tokenAccount].info.data as ParsedTokenMetadata).app.toString()
+          if (this.accounts[app] && app === appAddress) {
             paymentsAccounts.push(acc.info)
           }
+        }
+        else {
+          console.log(acc.info)
+          paymentsAccounts.push(acc.info)
         }
       }
     }
@@ -173,6 +172,7 @@ export default class WorkerDomain
     account: string,
     app?: string,
   ): Promise<BrickAccountInfo[]> {
+
     const actualTimestamp = Date.now()
     const paymentsAccounts: BrickAccountInfo[] = []
     for (const acc of Object.values(this.accounts)) {

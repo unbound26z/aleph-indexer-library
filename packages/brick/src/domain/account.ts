@@ -7,7 +7,7 @@ import {
 } from '@aleph-indexer/framework'
 import { EventDALIndex, EventStorage } from '../dal/event.js'
 import { ParsedEvents } from '../utils/layouts/index.js'
-import { BrickAccountInfo, BrickAccountStats } from '../types.js'
+import { BrickAccountInfo, BrickAccountStats, BrickEvent } from '../types.js'
 
 export class AccountDomain {
   constructor(
@@ -35,7 +35,7 @@ export class AccountDomain {
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, BrickEvent>> {
     return this.eventDAL
       .useIndex(EventDALIndex.AccountTimestamp)
       .getAllFromTo(

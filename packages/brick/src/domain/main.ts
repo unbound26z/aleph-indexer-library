@@ -14,6 +14,7 @@ import {
   BrickAccountStats,
   BrickAccountData,
   BrickAccountInfo,
+  BrickEvent,
 } from '../types.js'
 import BrickDiscoverer from './discoverer/brick.js'
 
@@ -147,7 +148,7 @@ export default class MainDomain
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, BrickEvent>> {
     const stream = await this.context.apiClient
       .useBlockchain(Blockchain.Solana)
       .invokeDomainMethod({
@@ -156,7 +157,7 @@ export default class MainDomain
         args: [startDate, endDate, opts],
       })
 
-    return stream as StorageStream<string, ParsedEvents>
+    return stream as StorageStream<string, BrickEvent>
   }
 
   async updateStats(now: number): Promise<void> {

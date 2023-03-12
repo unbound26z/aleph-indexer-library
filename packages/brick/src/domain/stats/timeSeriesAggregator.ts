@@ -1,9 +1,9 @@
-import { AccessTimeStats } from '../../types.js'
+import { AccessTimeStats, BrickEvent } from '../../types.js'
 import { ParsedEvents } from '../../utils/layouts/index.js'
 
 export class AccessTimeSeriesAggregator {
   aggregate(
-    curr: ParsedEvents | AccessTimeStats,
+    curr: BrickEvent | AccessTimeStats,
     prev?: AccessTimeStats,
   ): AccessTimeStats {
     prev = this.prepareAccessStats(prev)
@@ -28,10 +28,10 @@ export class AccessTimeSeriesAggregator {
   // @note: We assume that curr data is sorted by time
   protected processAccessStats(
     acc: AccessTimeStats,
-    curr: ParsedEvents | AccessTimeStats,
+    curr: BrickEvent | AccessTimeStats,
   ): AccessTimeStats {
-    if ((curr as ParsedEvents).timestamp) {
-      const event = curr as ParsedEvents
+    if ((curr as BrickEvent).timestamp) {
+      const event = curr as BrickEvent
       let signer: string
       signer = event.signer as unknown as string
       acc.accesses++
@@ -79,8 +79,8 @@ export class AccessTimeSeriesAggregator {
   }
 
   protected isBrickEvent(
-    event: ParsedEvents | AccessTimeStats,
-  ): event is ParsedEvents {
+    event: BrickEvent | AccessTimeStats,
+  ): event is BrickEvent {
     return 'type' in event
   }
 }
