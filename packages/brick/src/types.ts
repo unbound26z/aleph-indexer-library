@@ -104,56 +104,121 @@ export type BrickEventBase = {
 
 export type BrickCreateApp = BrickEventBase & {
   parsed: {
-    info: CreateAppEventData & CreateAppInstructionAccounts
+    info: CreateAppEventData & {
+      systemProgram?: string
+      rent?: string
+      authority: string
+      app: string
+    }
     type: InstructionType.CreateApp
   }
 }
 
 export type BrickCreateToken = BrickEventBase & {
   parsed: {
-    info: CreateTokenEventData & CreateTokenInstructionAccounts
+    info: CreateTokenEventData & {
+      metadataProgram: string
+      systemProgram?: string
+      tokenProgram?: string
+      rent?: string
+      authority: string
+      app: string
+      tokenMint: string
+      token: string
+      acceptedMint: string
+      tokenMetadata: string
+    }
     type: InstructionType.CreateToken
   }
 }
 
 export type BrickEditTokenPrice = BrickEventBase & {
   parsed: {
-    info: EditTokenPriceEventData & EditTokenPriceInstructionAccounts
+    info: EditTokenPriceEventData & {
+      authority: string
+      token: string
+    }
     type: InstructionType.EditTokenPrice
   }
 }
 
 export type BrickBuyToken = BrickEventBase & {
   parsed: {
-    info: BuyTokenEventData & BuyTokenInstructionAccounts
+    info: BuyTokenEventData & {
+      systemProgram?: string
+      tokenProgram?: string
+      associatedTokenProgram: string
+      rent?: string
+      clock: string
+      authority: string
+      token: string
+      tokenMint: string
+      buyerTransferVault: string
+      acceptedMint: string
+      payment: string
+      paymentVault: string
+      buyerTokenVault: string
+    }
     type: InstructionType.BuyToken
   }
 }
 
 export type BrickShareToken = BrickEventBase & {
   parsed: {
-    info: ShareTokenEventData & ShareTokenInstructionAccounts
+    info: ShareTokenEventData & {
+      systemProgram?: string
+      tokenProgram?: string
+      associatedTokenProgram: string
+      rent?: string
+      authority: string
+      token: string
+      tokenMint: string
+      receiverVault: string
+    }
     type: InstructionType.ShareToken
   }
 }
 
 export type BrickWithdrawFunds = BrickEventBase & {
   parsed: {
-    info: WithdrawFundsInstructionAccounts
+    info: {
+      tokenProgram?: string
+      authority: string
+      app: string
+      appCreatorVault: string
+      token: string
+      tokenMint: string
+      receiverVault: string
+      buyer: string
+      payment: string
+      paymentVault: string
+    }
     type: InstructionType.WithdrawFunds
   }
 }
 
 export type BrickUseToken = BrickEventBase & {
   parsed: {
-    info: UseTokenInstructionAccounts
+    info: {    
+      systemProgram?: string
+      tokenProgram?: string
+      associatedTokenProgram: string
+      rent?: string
+      authority: string
+      token: string
+      tokenMint: string
+      buyerTokenVault: string
+    }
     type: InstructionType.UseToken
   }
 }
 
 export type BrickDeleteToken = BrickEventBase & {
   parsed: {
-    info: DeletetokenInstructionAccounts
+    info: {
+      authority: string
+      token: string
+    }
     type: InstructionType.Deletetoken
   }
 }
@@ -161,51 +226,115 @@ export type BrickDeleteToken = BrickEventBase & {
 export type BrickRawEvent = BrickCreateApp | BrickCreateToken | BrickEditTokenPrice | BrickBuyToken | BrickShareToken | BrickUseToken | BrickDeleteToken
 
 export type BrickCreateAppEvent = EventBase<InstructionType> & {
-  info: CreateAppEventData & CreateAppInstructionAccounts
+  info: CreateAppEventData & {
+    systemProgram?: string
+    rent?: string
+    authority: string
+    app: string
+  }
   signer: string
   account: string
 }
 
 export type BrickCreateTokenEvent = EventBase<InstructionType> & {
-  info: CreateTokenEventData & CreateTokenInstructionAccounts
+  info: CreateTokenEventData & {
+    metadataProgram: string
+    systemProgram?: string
+    tokenProgram?: string
+    rent?: string
+    authority: string
+    app: string
+    tokenMint: string
+    token: string
+    acceptedMint: string
+    tokenMetadata: string
+  }
   signer: string
   account: string
 }
-
 export type BrickEditTokenPriceEvent = EventBase<InstructionType> & {
-  info: EditTokenPriceEventData & EditTokenPriceInstructionAccounts
+  info: EditTokenPriceEventData & {
+    authority: string
+    token: string
+  }
   signer: string
   account: string
 }
 
 export type BrickBuyTokenEvent = EventBase<InstructionType> & {
-  info: BuyTokenEventData & BuyTokenInstructionAccounts
+  info: BuyTokenEventData & {
+    systemProgram?: string
+    tokenProgram?: string
+    associatedTokenProgram: string
+    rent?: string
+    clock: string
+    authority: string
+    token: string
+    tokenMint: string
+    buyerTransferVault: string
+    acceptedMint: string
+    payment: string
+    paymentVault: string
+    buyerTokenVault: string
+  }
   signer: string
   account: string
 }
 
 export type BrickShareTokenEvent = EventBase<InstructionType> & {
-  info: ShareTokenEventData & ShareTokenInstructionAccounts
+  info: ShareTokenEventData & {
+    systemProgram?: string
+    tokenProgram?: string
+    associatedTokenProgram: string
+    rent?: string
+    authority: string
+    token: string
+    tokenMint: string
+    receiverVault: string
+  }
   signer: string
   account: string
 }
 
 export type BrickWithdrawFundsEvent = EventBase<InstructionType> & {
-  info: WithdrawFundsInstructionAccounts
+  info: {
+    tokenProgram?: string
+    authority: string
+    app: string
+    appCreatorVault: string
+    token: string
+    tokenMint: string
+    receiverVault: string
+    buyer: string
+    payment: string
+    paymentVault: string
+  }
   signer: string
   account: string
 }
 
 export type BrickUseTokenEvent = EventBase<InstructionType> & {
-  info: UseTokenInstructionAccounts
+  info: {    
+    systemProgram?: string
+    tokenProgram?: string
+    associatedTokenProgram: string
+    rent?: string
+    authority: string
+    token: string
+    tokenMint: string
+    buyerTokenVault: string
+  }
   signer: string
   account: string
 }
 
 export type BrickDeleteTokenEvent = EventBase<InstructionType> & {
-  info: DeletetokenInstructionAccounts
+  info: {
+    authority: string
+    token: string
+  }
   signer: string
   account: string
 }
 
-export type BrickEvent = BrickCreateAppEvent
+export type BrickEvent = BrickCreateAppEvent | BrickCreateTokenEvent | BrickEditTokenPriceEvent | BrickBuyTokenEvent | BrickShareTokenEvent | BrickWithdrawFundsEvent | BrickUseTokenEvent | BrickDeleteTokenEvent

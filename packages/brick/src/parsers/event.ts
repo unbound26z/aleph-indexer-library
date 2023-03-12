@@ -24,22 +24,23 @@ export class EventParser {
       ? parentTransaction.blockTime * 1000
       : parentTransaction.slot
 
+    console.log('BASEEEE', parsed.info)
     const baseEvent = {
       id,
       timestamp,
       type: parsed.type,
-      signer: parsed.info.authority.toString(),
+      signer: parsed.info.authority,
       info: parsed.info
     }
 
     if (parsed.type === InstructionType.CreateApp) {
       return {
-        account: parsed.info.app.toString(), 
+        account: parsed.info.app, 
         ...baseEvent,
       } as BrickCreateAppEvent
     }
     else {
-      const tokenAccount = parsed.info.token.toString()
+      const tokenAccount = parsed.info.token
       const appAddress = (accounts[tokenAccount].info.data as ParsedTokenMetadata).app.toString()
       const seller = (accounts[tokenAccount].info.data as ParsedTokenMetadata).authority.toString()
       if (parsed.type === InstructionType.UseToken && appAddress === '3zDf4PEpshwWuv5EL9NVwZ6wE5tKSqT6Erbr46zpeVuz') {
@@ -64,7 +65,7 @@ export class EventParser {
                 status: "GRANTED",
                 executionCount: 0,
                 maxExecutionCount: -1,
-                requestor: parsed.info.authority.toString(), // solana address that burns the token
+                requestor: parsed.info.authority, // solana address that burns the token
               },
               channel: 'FISHNET_TEST_V1', // need the gud channel
               APIServer: 'https://api2.aleph.im',
@@ -77,7 +78,7 @@ export class EventParser {
         }
       }
       return {
-        account: parsed.info.token.toString(),
+        account: parsed.info.token,
         ...baseEvent,
       } as BrickEvent
     }

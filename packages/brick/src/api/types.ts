@@ -214,12 +214,7 @@ const Event = new GraphQLInterfaceType({
 export const CreateAppEventInfo = new GraphQLObjectType({
   name: 'CreateAppEventInfo',
   fields: {
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-    authority: { type: new GraphQLNonNull(GraphQLString) },
-    app: { type: new GraphQLNonNull(GraphQLString) },
-    appName: { type: new GraphQLNonNull(GraphQLString) },
-    feeBasisPoints: { type: new GraphQLNonNull(GraphQLInt) },
+
   },
 })
 
@@ -229,7 +224,12 @@ export const CreateAppEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.CreateApp,
   fields: {
     ...commonEventFields,
-    info: { type: new GraphQLNonNull(CreateAppEventInfo) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+    rent: { type: new GraphQLNonNull(GraphQLString) },
+    authority: { type: new GraphQLNonNull(GraphQLString) },
+    app: { type: new GraphQLNonNull(GraphQLString) },
+    appName: { type: new GraphQLNonNull(GraphQLString) },
+    feeBasisPoints: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -238,6 +238,16 @@ export const CreateAppEvent = new GraphQLObjectType({
 export const CreateTokenEventInfo = new GraphQLObjectType({
   name: 'CreateTokenEventInfo',
   fields: {
+
+  },
+})
+
+export const CreateTokenEvent = new GraphQLObjectType({
+  name: 'CreateTokenEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.CreateToken,
+  fields: {
+    ...commonEventFields,
     metadataProgram: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -260,24 +270,12 @@ export const CreateTokenEventInfo = new GraphQLObjectType({
   },
 })
 
-export const CreateTokenEvent = new GraphQLObjectType({
-  name: 'CreateTokenEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateToken,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(CreateTokenEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const EditTokenPriceEventInfo = new GraphQLObjectType({
   name: 'EditTokenPriceEventInfo',
   fields: {
-    tokenPrice: { type: new GraphQLNonNull(GraphQLInt) },
-    authority: { type: new GraphQLNonNull(GraphQLString) },
-    token: { type: new GraphQLNonNull(GraphQLString) },
+
   },
 })
 
@@ -287,7 +285,9 @@ export const EditTokenPriceEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.EditTokenPrice,
   fields: {
     ...commonEventFields,
-    info: { type: new GraphQLNonNull(EditTokenPriceEventInfo) },
+    tokenPrice: { type: new GraphQLNonNull(GraphQLInt) },
+    authority: { type: new GraphQLNonNull(GraphQLString) },
+    token: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -296,7 +296,17 @@ export const EditTokenPriceEvent = new GraphQLObjectType({
 export const BuyTokenEventInfo = new GraphQLObjectType({
   name: 'BuyTokenEventInfo',
   fields: {
-    timestamp: { type: GraphQLBigNumber },
+
+  },
+})
+
+export const BuyTokenEvent = new GraphQLObjectType({
+  name: 'BuyTokenEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.BuyToken,
+  fields: {
+    ...commonEventFields,
+    timestamp: { type: GraphQLLong },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     associatedTokenProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -313,21 +323,20 @@ export const BuyTokenEventInfo = new GraphQLObjectType({
   },
 })
 
-export const BuyTokenEvent = new GraphQLObjectType({
-  name: 'BuyTokenEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.BuyToken,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(BuyTokenEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const ShareTokenEventInfo = new GraphQLObjectType({
   name: 'ShareTokenEventInfo',
   fields: {
+  },
+})
+
+export const ShareTokenEvent = new GraphQLObjectType({
+  name: 'ShareTokenEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.ShareToken,
+  fields: {
+    ...commonEventFields,
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     associatedTokenProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -340,21 +349,21 @@ export const ShareTokenEventInfo = new GraphQLObjectType({
   },
 })
 
-export const ShareTokenEvent = new GraphQLObjectType({
-  name: 'ShareTokenEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ShareToken,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(ShareTokenEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const WithdrawFundsEventInfo = new GraphQLObjectType({
   name: 'WithdrawFundsEventInfo',
   fields: {
+
+  },
+})
+
+export const WithdrawFundsEvent = new GraphQLObjectType({
+  name: 'WithdrawFundsEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.WithdrawFunds,
+  fields: {
+    ...commonEventFields,
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     authority: { type: new GraphQLNonNull(GraphQLString) },
     app: { type: new GraphQLNonNull(GraphQLString) },
@@ -368,21 +377,21 @@ export const WithdrawFundsEventInfo = new GraphQLObjectType({
   },
 })
 
-export const WithdrawFundsEvent = new GraphQLObjectType({
-  name: 'WithdrawFundsEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.WithdrawFunds,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(WithdrawFundsEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const RefundEventInfo = new GraphQLObjectType({
   name: 'RefundEventInfo',
   fields: {
+    
+  },
+})
+
+export const RefundEvent = new GraphQLObjectType({
+  name: 'RefundEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.Refund,
+  fields: {
+    ...commonEventFields,
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     authority: { type: new GraphQLNonNull(GraphQLString) },
     token: { type: new GraphQLNonNull(GraphQLString) },
@@ -394,21 +403,21 @@ export const RefundEventInfo = new GraphQLObjectType({
   },
 })
 
-export const RefundEvent = new GraphQLObjectType({
-  name: 'RefundEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.Refund,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(RefundEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const UseTokenEventInfo = new GraphQLObjectType({
   name: 'UseTokenEventInfo',
   fields: {
+    
+  },
+})
+
+export const UseTokenEvent = new GraphQLObjectType({
+  name: 'UseTokenEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.UseToken,
+  fields: {
+    ...commonEventFields,
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     associatedTokenProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -420,23 +429,12 @@ export const UseTokenEventInfo = new GraphQLObjectType({
   },
 })
 
-export const UseTokenEvent = new GraphQLObjectType({
-  name: 'UseTokenEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.UseToken,
-  fields: {
-    ...commonEventFields,
-    info: { type: new GraphQLNonNull(UseTokenEventInfo) },
-  },
-})
-
 /*----------------------------------------------------------------------*/
 
 export const DeletetokenEventInfo = new GraphQLObjectType({
   name: 'DeletetokenEventInfo',
   fields: {
-    authority: { type: new GraphQLNonNull(GraphQLString) },
-    token: { type: new GraphQLNonNull(GraphQLString) },
+
   },
 })
 
@@ -446,7 +444,8 @@ export const DeletetokenEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.Deletetoken,
   fields: {
     ...commonEventFields,
-    info: { type: new GraphQLNonNull(DeletetokenEventInfo) },
+    authority: { type: new GraphQLNonNull(GraphQLString) },
+    token: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
