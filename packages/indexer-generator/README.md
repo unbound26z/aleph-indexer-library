@@ -81,7 +81,10 @@ Get all accounts, their addresses, Anchor type and contents:
             basisPoints
           }
         }
-        # and other fields, see generated GraphQL schema
+      }
+      ... on TicketAccountData {
+        beneficiary,
+        stateAddress
       }
     }
   }
@@ -93,7 +96,7 @@ Get the current progress of the indexer. Accurate means that the indexer fetched
 that account, progress tells you how much percent of all transactions have been fetched and processed.
 ```graphql
 {
-  accountState(account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC") {
+  accountState(account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC", blockchain: solana, type: transaction) {
     accurate
     progress
     pending
@@ -106,7 +109,7 @@ that account, progress tells you how much percent of all transactions have been 
 Get accesses in the last hour, day, week or in total:
 ```graphql
 {
-  accountStats(account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC") {
+  accountStats(account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC", blockchain: solana) {
     stats {
       last1h {
         accesses
@@ -129,11 +132,11 @@ Get accesses in the last hour, day, week or in total:
 Get aggregated accesses by signing wallet and month:
 ```graphql
 {
-  accountTimeSeriesStats(timeFrame:Month, account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC", type: "access") {
+  accountTimeSeriesStats(timeFrame:Month, account: "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC", type: "access", blockchain: solana) {
     series {
       date
       value {
-        ...on MarinadeFinanceInfo {
+        ...on AccessTimeStats {
           accessesByProgramId
         }
       }
@@ -152,27 +155,27 @@ Get the latest 1000 processed instructions:
     type
     signer
     ...on OrderUnstakeEvent {
-      data {
+      info {
         msolAmount
       }
     }
     ...on AddLiquidityEvent {
-      data {
+      info {
         lamports
       }
     }
     ...on DepositEvent {
-      data {
+      info {
         lamports
       }
     }
     ...on LiquidUnstakeEvent {
-      data {
+      info {
         msolAmount
       }
     }
     ...on RemoveLiquidityEvent {
-      data {
+      info {
         tokens
       }
     }

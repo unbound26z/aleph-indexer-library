@@ -4,6 +4,7 @@ export function renderLayoutsFiles(
   filename: string,
   instructionsView: ViewInstructions | undefined,
   accountsView: ViewAccounts | undefined,
+  Name: string
 ): string[] {
   const NAME = filename.toUpperCase()
   const name = filename.toLowerCase()
@@ -62,14 +63,14 @@ export const ACCOUNTS_DATA_LAYOUT: Record<
 
   let ixLayouts = ''
   if (instructionsView && instructionsView.instructions.length > 0) {
-    ixLayouts += `import { EventBase } from '@aleph-indexer/framework'
+    ixLayouts += `import { EventBase } from '@aleph-indexer/framework';
 import * as solita from './solita/index.js'
 `
     for (const otherImport of instructionsView.imports.otherImports) {
-      if (isBN(otherImport))
+      if (isPubkey(otherImport))
         ixLayouts += `import { PublicKey } from '@solana/web3.js'
 `
-      if (isPubkey(otherImport))
+      if (isBN(otherImport))
         ixLayouts += `import BN from 'bn.js'
 `
     }
@@ -78,93 +79,86 @@ import * as solita from './solita/index.js'
 export enum InstructionType { 
 `
     for (const instruction of instructionsView.instructions) {
-      ixLayouts += `   ${instruction.name} = '${instruction.name}Event',
+      ixLayouts += `   ${instruction.name} = '${instruction.name}',
 `
     }
     ixLayouts += `}
 
-export type InstructionBase = EventBase<InstructionType> & {
-        programId: string
-        signer: string
-        account: string
+export type RawInstructionBase = {
+  parsed: unknown
+  program: string
+  programId: string
 }
 
-/*-----------------------* CUSTOM EVENTS TYPES *-----------------------*/
+/*-----------------------* CUSTOM RAW INSTRUCTION TYPES *-----------------------*/
 
 `
     for (const instruction of instructionsView.instructions) {
-      let definedData = false
-
-      if (instruction.args.length > 0) {
-        for (const arg of instruction.args) {
-          for (const definedImport of instructionsView.imports.definedImports) {
-            if (arg.tsType === definedImport) definedData = true
-          }
-        }
-        if (definedData) {
+      if (instruction.accounts.length > 0) {
+        ixLayouts += `export type ${instruction.name}AccountsInstruction = {`
+        for (const account of instruction.accounts) {
           ixLayouts += `
-
-export type ${instruction.name}Info = {`
-          if (instruction.args.length > 0) {
-            if (instruction.args.length === 1) {
-              ixLayouts += ` 
-        data: solita.${instruction.args[0].tsType}
-`
-            } else {
-              ixLayouts += ` 
-        data: solita.${instruction.name}InstructionArgs
-`
-            }
-          }
-          if (instruction.accounts.length > 0) {
-            ixLayouts += `accounts: solita.${instruction.name}InstructionAccounts
-`
-          }
-
-          ixLayouts += `}`
-        } else {
-          ixLayouts += `export type ${instruction.name}EventData = {`
-          for (const arg of instruction.args) {
-            ixLayouts += ` 
-        ${arg.name}: ${arg.tsType}`
-          }
-          ixLayouts += `}
-
-export type ${instruction.name}Info = {
-        data: ${instruction.name}EventData
-`
-
-          if (instruction.accounts.length > 0) {
-            ixLayouts += `accounts: solita.${instruction.name}InstructionAccounts
-`
-          }
-
-          ixLayouts += `}`
+  ${account.name}: string`
         }
-      } else {
         ixLayouts += `
+}
 
-export type ${instruction.name}Info = {
 `
-        if (instruction.accounts.length > 0) {
-          ixLayouts += `accounts: solita.${instruction.name}InstructionAccounts
-`
-        }
-        ixLayouts += `}`
       }
+
+      ixLayouts += `
+export type ${instruction.name}Info = `
+      if (instruction.args.length > 0) ixLayouts += `solita.${instruction.name}InstructionArgs`
+      if (instruction.args.length > 0 && instruction.accounts.length > 0) ixLayouts += ` & `
+      if (instruction.accounts.length > 0) ixLayouts += `${instruction.name}AccountsInstruction`
+
       ixLayouts += `
 
-export type ${instruction.name}Event = InstructionBase &
-        ${instruction.name}Info & {
-                type: InstructionType.${instruction.name}
-        }
-
-/*----------------------------------------------------------------------*/
+export type Raw${instruction.name} = RawInstructionBase & {
+  parsed: {
+    info: ${instruction.name}Info
+    type: InstructionType.${instruction.name}
+  }
+}
 
 `
     }
 
-    ixLayouts += `
+    ixLayouts += `export type RawInstructionsInfo = 
+`
+    for (const instruction of instructionsView.instructions) {
+      ixLayouts += `   | ${instruction.name}Info
+`
+    }
+
+    ixLayouts += `       
+    export type RawInstruction = 
+`
+    for (const instruction of instructionsView.instructions) {
+      ixLayouts += `   | Raw${instruction.name}
+`
+    }
+
+    for (const instruction of instructionsView.instructions) {
+      ixLayouts += `
+export type ${instruction.name}Event = EventBase<InstructionType> & {
+  info: ${instruction.name}Info
+  signer: string
+  account: string
+}
+`
+    }
+
+    ixLayouts += `       
+    export type ${Name}Event = 
+`
+    for (const instruction of instructionsView.instructions) {
+      ixLayouts += `   | ${instruction.name}Event
+`
+    }
+
+    ixLayouts += `/*----------------------------------------------------------------------*/
+
 export function getInstructionType(data: Buffer): InstructionType | undefined {
   const discriminator = data.slice(0, 8)
   return IX_METHOD_CODE.get(discriminator.toString('ascii'))
@@ -206,25 +200,9 @@ export const IX_ACCOUNTS_LAYOUT: Partial<Record<InstructionType, any>> = {
       ixLayouts += `   [InstructionType.${instruction.name}]: solita.${instruction.name}Accounts,
 `
     }
-
-    ixLayouts += `}
-    
-export type ParsedEventsInfo = 
-`
-    for (const instruction of instructionsView.instructions) {
-      ixLayouts += `   | ${instruction.name}Info
-`
-    }
-
-    ixLayouts += `       
-export type ParsedEvents = 
-`
-    for (const instruction of instructionsView.instructions) {
-      ixLayouts += `   | ${instruction.name}Event
-`
-    }
   }
-
+  ixLayouts += `}`
+  
   let indexLayouts = `export * from './instructions.js'
 export * from './solita/index.js'
 `
@@ -240,7 +218,7 @@ import {
 
 export default {
   [${NAME}_PROGRAM_ID]: {
-    name: '${name}',
+    name: '${name.replace('_', '-')}',
     programID: ${NAME}_PROGRAM_ID,
     accountLayoutMap: IX_ACCOUNTS_LAYOUT,
     dataLayoutMap: IX_DATA_LAYOUT,

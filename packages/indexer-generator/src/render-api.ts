@@ -17,7 +17,7 @@ export function renderApiFiles(
   const resolversApi = `import MainDomain from '../domain/main.js'
 import {
   AccountType,
-  ParsedEvents,
+  ${Name}Event,
   InstructionType,
 } from '../utils/layouts/index.js'
 import {
@@ -60,13 +60,13 @@ export class APIResolvers {
     limit = 1000,
     skip = 0,
     reverse = true,
-  }: EventsFilters): Promise<ParsedEvents[]> {
+  }: EventsFilters): Promise<${Name}Event[]> {
     if (limit < 1 || limit > 1000)
       throw new Error('400 Bad Request: 1 <= limit <= 1000')
 
     const typesMap = types ? new Set(types) : undefined
 
-    const events: ParsedEvents[] = []
+    const events: ${Name}Event[] = []
 
     const accountEvents = await this.domain.getAccountEventsByTime(
       account,
@@ -186,7 +186,7 @@ export default class APISchema extends IndexerAPISchema {
             type: Types.Events,
             args: {
               account: { type: new GraphQLNonNull(GraphQLString) },
-              types: { type: new GraphQLList(Types.ParsedEvents) },
+              types: { type: new GraphQLList(Types.${Name}Event) },
               startDate: { type: GraphQLFloat },
               endDate: { type: GraphQLFloat },
               limit: { type: GraphQLInt },
@@ -228,7 +228,7 @@ import { InstructionType } from '../utils/layouts/index.js'
 // ------------------- TYPES ---------------------------
 
 `
-  if (accounts && instructions && types) {
+  if (types) {
     for (const type of types.enums) {
       apiTypes += `
 export const ${type.name} = new GraphQLEnumType({
@@ -258,13 +258,14 @@ export const ${type.name} = new GraphQLObjectType({
       })
 `
     }
-
+  }
+  if (accounts && instructions) {
     apiTypes += `
 
 // ------------------- STATS ---------------------------
 
 export const AccessTimeStats = new GraphQLObjectType({
-  name: 'MarinadeFinanceInfo',
+  name: 'AccessTimeStats',
   fields: {
     accesses: { type: new GraphQLNonNull(GraphQLInt) },
     accessesByProgramId: { type: new GraphQLNonNull(GraphQLJSON) },
@@ -399,12 +400,12 @@ export const AccountsInfo = new GraphQLList(${Name}AccountsInfo)
 
 // ------------------- EVENTS --------------------------
 
-export const ParsedEvents = new GraphQLEnumType({
-  name: 'ParsedEvents',
+export const ${Name}Event = new GraphQLEnumType({
+  name: '${Name}Event',
   values: {
 `
     for (const instruction of instructions.instructions) {
-      apiTypes += `${instruction.name}Event: { value: '${instruction.name}Event' },
+      apiTypes += `${instruction.name}: { value: '${instruction.name}' },
 `
     }
 
@@ -414,7 +415,7 @@ export const ParsedEvents = new GraphQLEnumType({
 const commonEventFields = {
   id: { type: new GraphQLNonNull(GraphQLString) },
   timestamp: { type: GraphQLLong },
-  type: { type: new GraphQLNonNull(ParsedEvents) },
+  type: { type: new GraphQLNonNull(${Name}Event) },
   account: { type: new GraphQLNonNull(GraphQLString) },
   signer: { type: new GraphQLNonNull(GraphQLString) },
 }
@@ -430,90 +431,38 @@ const Event = new GraphQLInterfaceType({
 
 `
     for (const instruction of instructions.instructions) {
-      let definedData = false
-
-      if (instruction.accounts.length > 0) {
-        apiTypes += ` export const ${instruction.name}EventAccounts = new GraphQLObjectType({
-name: '${instruction.name}EventAccounts',
-fields: {
+      apiTypes += `export const ${instruction.name}Info = new GraphQLObjectType({
+  name: '${instruction.name}Info',
+  fields: {
 `
+      if (instruction.accounts.length > 0) {
         for (const account of instruction.accounts) {
           apiTypes += `${account.name}: { type: new GraphQLNonNull(GraphQLString) },
 `
         }
-        apiTypes += `}
-})
-
-`
       }
       if (instruction.args.length > 0) {
         for (const arg of instruction.args) {
-          for (const definedImport of instructions.imports.definedImports) {
-            if (arg.tsType === definedImport) definedData = true
-          }
-        }
-
-        if (definedData) {
-          apiTypes += `export const ${instruction.name}Event = new GraphQLObjectType({
-  name: '${instruction.name}Event',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.${instruction.name},
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(${instruction.args[0].graphQLType}) },`
-          if (instruction.accounts.length > 0)
-            apiTypes += `
-    accounts: { type: new GraphQLNonNull(${instruction.name}EventAccounts) },`
-          apiTypes += `
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-`
-        } else {
-          apiTypes += `export const ${instruction.name}EventData = new GraphQLObjectType({
-  name: '${instruction.name}EventData',
-  fields: {
-`
-          for (const arg of instruction.args) {
-            apiTypes += `${arg.name}: { type: new GraphQLNonNull(${arg.graphQLType}) },
-`
-          }
-          apiTypes += `}
-})                
-            
-export const ${instruction.name}Event = new GraphQLObjectType({
-  name: '${instruction.name}Event',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.${instruction.name},
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(${instruction.name}EventData) },
-    accounts: { type: new GraphQLNonNull(${instruction.name}EventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
+          apiTypes += `${arg.name}: { type: new GraphQLNonNull(${arg.graphQLType}) },
 `
         }
-      } else {
-        apiTypes += `           
-export const ${instruction.name}Event = new GraphQLObjectType({
-  name: '${instruction.name}Event',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.${instruction.name},
-  fields: {
-    ...commonEventFields,
-    accounts: { type: new GraphQLNonNull(${instruction.name}EventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-`
       }
+      apiTypes += `},
+})
+      
+export const ${instruction.name}Event = new GraphQLObjectType({
+  name: '${instruction.name}Event',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.${instruction.name},
+  fields: {
+    ...commonEventFields,
+    info: { type: new GraphQLNonNull(${instruction.name}Info)}
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+`
     }
     apiTypes += `export const Events = new GraphQLList(Event)
 

@@ -43,7 +43,7 @@ async function main() {
   }
   if (options.file) {
     const programName: string = options.file
-    paths = paths ?? new Paths(`./`, programName)
+    paths = paths ?? new Paths(`./`, programName.replace('_', '-'))
     const idl: Idl = JSON.parse(
       readFileSync(paths.idlFile(programName), 'utf8'),
     )
@@ -75,7 +75,7 @@ async function main() {
                 address: options.address,
               }
             }
-            paths = paths ?? new Paths(`./`, idl.name)
+            paths = paths ?? new Paths(`./`, idl.name.replace('_', '-'))
             await generate(
               idl,
               paths,

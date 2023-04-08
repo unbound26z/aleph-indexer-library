@@ -10,6 +10,7 @@ export function renderStatsFiles(
   const timeSeries = `import {
   AccountTimeSeriesStatsManager,
   Blockchain,
+  IndexableEntityType,
   IndexerMsClient,
   StatsStateStorage,
   StatsTimeSeriesStorage,
@@ -17,7 +18,7 @@ export function renderStatsFiles(
   TimeSeriesStats,
 } from '@aleph-indexer/framework'
 import { EventDALIndex, EventStorage } from '../../dal/event.js'
-import { ParsedEvents } from '../../utils/layouts/index.js'
+import { ${Name}Event } from '../../utils/layouts/index.js'
 import { AccessTimeStats, ${Name}AccountStats } from '../../types.js'
 import statsAggregator from './statsAggregator.js'
 import accessAggregator from './timeSeriesAggregator.js'
@@ -32,7 +33,7 @@ export async function createAccountStats(
 ): Promise<AccountTimeSeriesStatsManager<${Name}AccountStats>> {
     
   // @note: this aggregator is used to aggregate usage stats for the account
-  const accessTimeSeries = new TimeSeriesStats<ParsedEvents, AccessTimeStats>(
+  const accessTimeSeries = new TimeSeriesStats<${Name}Event, AccessTimeStats>(
     {
       type: 'access',
       startDate: 0,
@@ -60,6 +61,7 @@ export async function createAccountStats(
   return new AccountTimeSeriesStatsManager<${Name}AccountStats>(
     {
       blockchainId,
+      type: IndexableEntityType.Transaction,
       account,
       series: [accessTimeSeries],  // place your other aggregated stats here
       aggregate(args) {
@@ -75,11 +77,11 @@ export async function createAccountStats(
   let timeSeriesAggregator = ''
   if (instructions) {
     timeSeriesAggregator = `import { AccessTimeStats } from '../../types.js'
-import { ParsedEvents } from '../../utils/layouts/index.js'
+import { ${Name}Event } from '../../utils/layouts/index.js'
 
 export class AccessTimeSeriesAggregator {
   aggregate(    
-    curr: ParsedEvents | AccessTimeStats,
+    curr: ${Name}Event | AccessTimeStats,
     prev?: AccessTimeStats,
   ): AccessTimeStats {
     prev = this.prepareAccessStats(prev)
@@ -104,10 +106,10 @@ export class AccessTimeSeriesAggregator {
   // @note: We assume that curr data is sorted by time
   protected processAccessStats(
     acc: AccessTimeStats,
-    curr: ParsedEvents | AccessTimeStats,
+    curr: ${Name}Event | AccessTimeStats,
   ): AccessTimeStats {
-    if ((curr as ParsedEvents).timestamp) {
-      const event = curr as ParsedEvents
+    if ((curr as ${Name}Event).timestamp) {
+      const event = curr as ${Name}Event
       let signer: string;
       signer = event.signer as unknown as string
       acc.accesses++
@@ -154,8 +156,8 @@ export class AccessTimeSeriesAggregator {
   }
 
   protected is${Name}Event(
-    event: ParsedEvents | AccessTimeStats,
-  ): event is ParsedEvents {
+    event: ${Name}Event | AccessTimeStats,
+  ): event is ${Name}Event {
     return 'type' in event
   }
 }
@@ -237,7 +239,7 @@ export default statsAggregator
 
   const mockDAL = `import { createStatsStateDAL, createStatsTimeSeriesDAL } from "@aleph-indexer/framework";
 import { createEventDAL } from "../../../dal/event";
-import { InstructionType, ParsedEvents } from "../../../utils/layouts";
+import { InstructionType, ${Name}Event } from "../../../utils/layouts";
 import * as fs from "fs";
 import { ${NAME}_PROGRAM_ID } from "../../../constants";
 import { DateTime, Interval } from "luxon";
@@ -284,7 +286,7 @@ function getRandomInstructionType() {
 }
 
 // generate random events
-function generateEvent(interval?: Interval): ParsedEvents {
+function generateEvent(interval?: Interval): ${Name}Event {
   if (!interval) {
     interval = Interval.fromDateTimes(
       new Date(2019, 1, 1),
@@ -314,12 +316,12 @@ function generateEvent(interval?: Interval): ParsedEvents {
 } from "@aleph-indexer/framework";
 import { DateTime, Interval } from "luxon";
 import { EventStorage } from "../../../dal/event";
-import { ParsedEvents } from "../../../utils/layouts";
+import { ${Name}Event } from "../../../utils/layouts";
 
 export async function mockMainIndexer(eventDAL: EventStorage) {
     const events = await eventDAL.getAll()
-    let earliest: ParsedEvents = {} as any
-    let latest: ParsedEvents = {} as any
+    let earliest: ${Name}Event = {} as any
+    let latest: ${Name}Event = {} as any
     for await (const event of events) {
       if(event.value.timestamp < earliest.timestamp || !earliest.timestamp) {
         earliest = event.value
@@ -345,7 +347,7 @@ import { createAccountStats}  from '../timeSeries.js'
 import { mockEventDAL, mockStatsStateDAL, mockStatsTimeSeriesDAL } from '../__mocks__/DAL.js'
 import { mockMainIndexer } from "../__mocks__/indexer.js";
 import { DateTime, Interval } from "luxon";
-import { ParsedEvents } from "../../../utils/layouts/index.js";
+import { ${Name}Event } from "../../../utils/layouts/index.js";
 import { EventStorage } from "../../../dal/event.js";
 import { TimeFrame } from "@aleph-indexer/framework/dist/src/utils";
 // jest.useFakeTimers()
@@ -376,7 +378,7 @@ describe('AccountTimeSeries', () => {
 
     const events = await eventDAL.getAll()
     let eventCnt = 0
-    let earliest: ParsedEvents = {} as any
+    let earliest: ${Name}Event = {} as any
     for await (const event of events) {
       eventCnt++;
       if(event.value.timestamp < earliest.timestamp || !earliest.timestamp) {

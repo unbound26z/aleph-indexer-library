@@ -1,4 +1,4 @@
-import { StorageStream } from '@aleph-indexer/core'
+import { StorageStream, Utils } from '@aleph-indexer/core'
 import {
   IndexerDomainContext,
   AccountIndexerConfigWithMeta,
@@ -18,7 +18,7 @@ import {
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
-import { ParsedEvents } from '../utils/layouts/index.js'
+import { MarinadeFinanceEvent } from '../utils/layouts/index.js'
 import {
   MarinadeFinanceAccountStats,
   MarinadeFinanceAccountInfo,
@@ -94,21 +94,23 @@ export default class WorkerDomain
   ): Promise<boolean> {
     return (
       isParsedIx(entity.instruction) &&
-      entity.instruction.programId === this.programId
+      entity.instruction.programId === MARINADE_FINANCE_PROGRAM_ID
     )
   }
 
   async solanaIndexInstructions(
-    context: { account: string; startDate: number; endDate: number },
-    entities: SolanaParsedInstructionContext[],
+    context: ParserContext,
+    ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    const parsedIxs = entities.map((entity) =>
-      this.eventParser.parse(entity, context),
-    )
+    if ('account' in context) {
+      const parsedIxs = ixsContext.map((ix) =>
+        this.eventParser.parse(ix, context.account),
+      )
 
-    console.log(`indexing ${entities.length} parsed ixs`)
+      console.log(`indexing ${ixsContext.length} parsed ixs`)
 
-    await this.eventDAL.save(parsedIxs)
+      await this.eventDAL.save(parsedIxs)
+    }
   }
 
   // ------------- Custom impl methods -------------------
@@ -125,12 +127,12 @@ export default class WorkerDomain
     return res.getStats()
   }
 
-  async getAccountEventsByTime(
+  getAccountEventsByTime(
     account: string,
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, MarinadeFinanceEvent>> {
     const res = this.getAccount(account)
     return res.getEventsByTime(startDate, endDate, opts)
   }

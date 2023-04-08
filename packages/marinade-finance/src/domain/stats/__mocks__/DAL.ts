@@ -3,7 +3,7 @@ import {
   createStatsTimeSeriesDAL,
 } from '@aleph-indexer/framework'
 import { createEventDAL } from '../../../dal/event'
-import { InstructionType, ParsedEvents } from '../../../utils/layouts'
+import { InstructionType, MarinadeFinanceEvent } from '../../../utils/layouts'
 import * as fs from 'fs'
 import { MARINADE_FINANCE_PROGRAM_ID } from '../../../constants'
 import { DateTime, Interval } from 'luxon'
@@ -13,7 +13,7 @@ export async function mockEventDAL(
   eventConfig: { interval?: Interval; eventCnt: number },
 ) {
   const eventDAL = createEventDAL(
-    `packages/marinade-finance/src/domain/stats/__mocks__/data/${testName}`,
+    `packages/marinade_finance/src/domain/stats/__mocks__/data/${testName}`,
   )
   const all = await eventDAL.getAll()
   let i = 0
@@ -32,23 +32,23 @@ export async function mockEventDAL(
 
 export function mockStatsStateDAL(testName: string) {
   // delete the stats_state folder, if existent
-  const path = `packages/marinade-finance/src/domain/stats/__mocks__/data/${testName}/stats_state`
+  const path = `packages/marinade_finance/src/domain/stats/__mocks__/data/${testName}/stats_state`
   if (fs.existsSync(path)) {
     fs.rmdirSync(path, { recursive: true })
   }
   return createStatsStateDAL(
-    `packages/marinade-finance/src/domain/stats/__mocks__/data/${testName}`,
+    `packages/marinade_finance/src/domain/stats/__mocks__/data/${testName}`,
   )
 }
 
 export function mockStatsTimeSeriesDAL(testName: string) {
   // delete the stats_time_series folder, if existent
-  const path = `packages/marinade-finance/src/domain/stats/__mocks__/data/${testName}/stats_time_series`
+  const path = `packages/marinade_finance/src/domain/stats/__mocks__/data/${testName}/stats_time_series`
   if (fs.existsSync(path)) {
     fs.rmdirSync(path, { recursive: true })
   }
   return createStatsTimeSeriesDAL(
-    `packages/marinade-finance/src/domain/stats/__mocks__/data/${testName}`,
+    `packages/marinade_finance/src/domain/stats/__mocks__/data/${testName}`,
   )
 }
 
@@ -59,7 +59,7 @@ function getRandomInstructionType() {
 }
 
 // generate random events
-function generateEvent(interval?: Interval): ParsedEvents {
+function generateEvent(interval?: Interval): MarinadeFinanceEvent {
   if (!interval) {
     interval = Interval.fromDateTimes(new Date(2019, 1, 1), DateTime.now())
   }

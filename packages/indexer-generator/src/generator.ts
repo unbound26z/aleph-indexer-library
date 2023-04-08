@@ -53,7 +53,8 @@ export default async function generate(
   toGenerate: TemplateType[],
   address?: string,
 ): Promise<void> {
-  const Name = toCamelCase(idl.name)
+  const na_me = idl.name.replace('-', '_')
+  const Name = toCamelCase(na_me)
   if (idl.metadata.address) address = idl.metadata.address
   processIdl(idl)
 
@@ -81,7 +82,7 @@ export default async function generate(
 
   const [constants, types] = renderSrcFiles(
     Name,
-    idl.name,
+    na_me,
     instructionsView,
     address,
   )
@@ -136,7 +137,7 @@ export default async function generate(
     txV0,
     tx,
     layoutTest,
-  ] = renderLayoutsFiles(idl.name, instructionsView, accountsView)
+  ] = renderLayoutsFiles(na_me, instructionsView, accountsView, Name)
   try {
     if (accountLayouts) {
       writeFileSync(
@@ -203,7 +204,7 @@ export default async function generate(
   if (!existsSync(paths.testsDir(paths.parsersDir)))
     mkdirSync(paths.testsDir(paths.parsersDir))
 
-  const [event, eventTest] = renderParsersFiles(instructionsView)
+  const [event, eventTest] = renderParsersFiles(instructionsView, Name)
   try {
     writeFileSync(
       paths.parsersFile('event'),
@@ -220,7 +221,7 @@ export default async function generate(
 
   if (!existsSync(paths.dalDir)) mkdirSync(paths.dalDir)
 
-  const eventDal = renderDALFiles(instructionsView)
+  const eventDal = renderDALFiles(instructionsView, Name)
   try {
     writeFileSync(paths.dalFile('event'), format(eventDal, DEFAULT_FORMAT_OPTS))
   } catch (err) {
@@ -232,7 +233,7 @@ export default async function generate(
 
   const [account, worker, mainDomain] = renderDomainFiles(
     Name,
-    idl.name,
+    na_me,
     accountsView,
   )
   try {
@@ -266,7 +267,7 @@ export default async function generate(
     mockDAL,
     mockIndexer,
     timeSeriesTest,
-  ] = renderStatsFiles(Name, instructionsView, idl.name)
+  ] = renderStatsFiles(Name, instructionsView, na_me)
   try {
     writeFileSync(
       paths.statsFile('timeSeries'),
@@ -300,10 +301,10 @@ export default async function generate(
 
   if (!existsSync(paths.discovererDir)) mkdirSync(paths.discovererDir)
 
-  const discoverer = renderDiscovererFiles(Name, idl.name)
+  const discoverer = renderDiscovererFiles(Name, na_me)
   try {
     writeFileSync(
-      paths.discovererFile(idl.name),
+      paths.discovererFile(na_me),
       format(discoverer, DEFAULT_FORMAT_OPTS),
     )
   } catch (err) {

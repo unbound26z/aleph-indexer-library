@@ -17,7 +17,7 @@ export function renderSrcFiles(
 import { config } from '@aleph-indexer/core'
 
 export enum ProgramName {
-  ${Name} = '${name}',
+  ${Name} = '${name.replace('_', '-')}',
 }
 
 const DAY = 1000 * 60 * 60 * 24
@@ -39,7 +39,7 @@ export const ${NAME}_PROGRAM_ID_PK = new PublicKey(${NAME}_PROGRAM_ID)
 `
     }
 
-    types += `import { AccountType, ParsedEvents, ParsedAccountsData } from './utils/layouts/index.js'
+    types += `import { AccountType, ${Name}Event, ParsedAccountsData } from './utils/layouts/index.js'
 
 export type ${Name}AccountInfo = {
   name: string
@@ -82,7 +82,7 @@ export type ${Name}AccountStats = {
   last7d: AccessTimeStats
   total: AccessTimeStats
   accessingPrograms: Set<string>
-  lastRequest?: ParsedEvents
+  lastRequest?: ${Name}Event
 }
 
 export type HourlyStats = {

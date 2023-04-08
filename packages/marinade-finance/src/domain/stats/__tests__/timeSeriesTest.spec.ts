@@ -7,7 +7,7 @@ import {
 } from '../__mocks__/DAL.js'
 import { mockMainIndexer } from '../__mocks__/indexer.js'
 import { DateTime, Interval } from 'luxon'
-import { ParsedEvents } from '../../../utils/layouts/index.js'
+import { MarinadeFinanceEvent } from '../../../utils/layouts/index.js'
 import { EventStorage } from '../../../dal/event.js'
 import { TimeFrame } from '@aleph-indexer/framework/dist/src/utils'
 // jest.useFakeTimers()
@@ -49,7 +49,7 @@ describe('AccountTimeSeries', () => {
 
     const events = await eventDAL.getAll()
     let eventCnt = 0
-    let earliest: ParsedEvents = {} as any
+    let earliest: MarinadeFinanceEvent = {} as any
     for await (const event of events) {
       eventCnt++
       if (event.value.timestamp < earliest.timestamp || !earliest.timestamp) {

@@ -5,12 +5,12 @@ import {
 } from '@aleph-indexer/framework'
 import { DateTime, Interval } from 'luxon'
 import { EventStorage } from '../../../dal/event'
-import { ParsedEvents } from '../../../utils/layouts'
+import { MarinadeFinanceEvent } from '../../../utils/layouts'
 
 export async function mockMainIndexer(eventDAL: EventStorage) {
   const events = await eventDAL.getAll()
-  let earliest: ParsedEvents = {} as any
-  let latest: ParsedEvents = {} as any
+  let earliest: MarinadeFinanceEvent = {} as any
+  let latest: MarinadeFinanceEvent = {} as any
   for await (const event of events) {
     if (event.value.timestamp < earliest.timestamp || !earliest.timestamp) {
       earliest = event.value

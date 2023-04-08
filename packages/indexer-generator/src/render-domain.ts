@@ -15,7 +15,7 @@ import {
   AccountStats,
 } from '@aleph-indexer/framework'
 import { EventDALIndex, EventStorage } from '../dal/event.js'
-import { ParsedEvents } from '../utils/layouts/index.js'
+import { ${Name}Event } from '../utils/layouts/index.js'
 import { ${Name}AccountInfo, ${Name}AccountStats } from '../types.js'
 
 export class AccountDomain {
@@ -44,7 +44,7 @@ export class AccountDomain {
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, ${Name}Event>> {
     return this.eventDAL
       .useIndex(EventDALIndex.AccountTimestamp)
       .getAllFromTo(
@@ -65,16 +65,17 @@ import {
   createStatsTimeSeriesDAL,
   AccountTimeSeriesStats,
   AccountStatsFilters,
-  AccountStats,
+  AccountStats,  
+  ParserContext,
 } from '@aleph-indexer/framework'
 import {
   isParsedIx,
   SolanaIndexerWorkerDomainI,
-  SolanaInstructionContext,
+  SolanaParsedInstructionContext,
 } from '@aleph-indexer/solana'
 import { eventParser as eParser } from '../parsers/event.js'
 import { createEventDAL } from '../dal/event.js'
-import { ParsedEvents } from '../utils/layouts/index.js'
+import { ${Name}Event } from '../utils/layouts/index.js'
 import { ${Name}AccountStats, ${Name}AccountInfo } from '../types.js'
 import { AccountDomain } from './account.js'
 import { createAccountStats } from './stats/timeSeries.js'
@@ -135,22 +136,27 @@ export default class WorkerDomain
     return this.getAccountStats(account)
   }
 
-  async solanaFilterInstructions(
-    ixsContext: SolanaInstructionContext[],
-  ): Promise<SolanaInstructionContext[]> {
-    return ixsContext.filter(({ ix }) => {
-      return isParsedIx(ix) && ix.programId === this.programId
-    })
+  async solanaFilterInstruction(
+    context: ParserContext,
+    entity: SolanaParsedInstructionContext,
+  ): Promise<boolean> {
+    return (
+      isParsedIx(entity.instruction) &&
+      entity.instruction.programId === ${NAME}_PROGRAM_ID
+    )
   }
 
   async solanaIndexInstructions(
-    ixsContext: SolanaInstructionContext[],
+    context: ParserContext,
+    ixsContext: SolanaParsedInstructionContext[],
   ): Promise<void> {
-    const parsedIxs = ixsContext.map((ix) => this.eventParser.parse(ix))
+    if ('account' in context) {
+      const parsedIxs = ixsContext.map((ix) => this.eventParser.parse(ix, context.account))
 
-    console.log(\`indexing \${ixsContext.length} parsed ixs\`)
+      console.log(\`indexing \${ixsContext.length} parsed ixs\`)
 
-    await this.eventDAL.save(parsedIxs)
+      await this.eventDAL.save(parsedIxs)
+    }
   }
 
   // ------------- Custom impl methods -------------------
@@ -170,7 +176,7 @@ export default class WorkerDomain
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, ${Name}Event>> {
     const res = this.getAccount(account)
     return res.getEventsByTime(startDate, endDate, opts)
   }
@@ -196,7 +202,7 @@ import {
 import { `
 
   if (accounts) mainDomain += `AccountType, `
-  mainDomain += `ParsedEvents } from '../utils/layouts/index.js'
+  mainDomain += `${Name}Event } from '../utils/layouts/index.js'
 import {
   Global${Name}Stats,
   ${Name}AccountStats,
@@ -285,7 +291,7 @@ export default class MainDomain
     startDate: number,
     endDate: number,
     opts: any,
-  ): Promise<StorageStream<string, ParsedEvents>> {
+  ): Promise<StorageStream<string, ${Name}Event>> {
     const stream = await this.context.apiClient
       .useBlockchain(Blockchain.Solana)
       .invokeDomainMethod({
@@ -294,7 +300,7 @@ export default class MainDomain
         args: [startDate, endDate, opts],
       })
 
-    return stream as StorageStream<string, ParsedEvents>
+    return stream as StorageStream<string, ${Name}Event>
   }
 
   async updateStats(now: number): Promise<void> {
