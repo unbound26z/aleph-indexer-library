@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  club_program:
+    build: ../..
+    volumes:
+      - ~/indexer.data:/app/data:rw
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    env_file:
+      - ../../.env
+      - ./.env
+    environment:
+      - INDEXER=club_program
+      - LETSENCRYPT_HOST=club_program.api.aleph.cloud
+      - VIRTUAL_HOST=club_program.api.aleph.cloud
+      - VIRTUAL_PORT=8080
+      - SOLANA_RPC=
+    network_mode: bridge

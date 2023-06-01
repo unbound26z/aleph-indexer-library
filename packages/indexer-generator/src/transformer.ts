@@ -232,7 +232,15 @@ export default class IdlTransformer {
       }
     }
     if (this.isIdlDefined(type)) name = (type as IdlTypeDefined).defined
-    name = name.slice(0, 1).toLowerCase() + name.slice(1)
+    try {
+      name = name.slice(0, 1).toLowerCase() + name.slice(1)
+    } catch (error) {
+      console.log('NAME:', name)
+
+      name =
+        (name as any).vec.defined.slice(0, 1) +
+        (name as any).vec.defined.slice(1)
+    }
     return name
   }
 

@@ -29,6 +29,7 @@
     "docs": "typedoc --tsconfig ./tsconfig.json"
   },
   "dependencies": {
+    "@coral-xyz/borsh": "^0.27.0",
     "@project-serum/borsh": "^0.2.5",
     "@solana/spl-token-registry": "^0.2.7",
     "@solana/web3.js": "^1.42.0",
@@ -38,6 +39,7 @@
     "graphql-type-json": "^0.3.2",
     "lodash-es": "^4.17.21",
     "luxon": "^2.4.0",
+    "protobufjs": "^7.2.3",
     "typedoc": "^0.23.14"
   },
   "devDependencies": {

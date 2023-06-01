@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [ labeled ]
+    types: [labeled]
 
 jobs:
   clean:
@@ -32,7 +32,7 @@ jobs:
           tags: indexer-framework:latest
           outputs: type=docker,dest=/tmp/indexer-framework.tar
           build-args: |
-            INDEXER=spl-lending
+            INDEXER=club-program
       - name: Load image
         run: |
           docker load --input /tmp/indexer-framework.tar

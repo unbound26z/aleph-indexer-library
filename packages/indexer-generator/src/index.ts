@@ -49,7 +49,7 @@ async function main() {
     )
     if (!idl.metadata) {
       idl.metadata = {
-        address: 'PROGRAM PUBKEY',
+        address: 'UNQc364EDzKQqfSW1Fnhfam2fvsFGVdVqg77kpBqRSe',
       }
     }
     if (options.address) {
