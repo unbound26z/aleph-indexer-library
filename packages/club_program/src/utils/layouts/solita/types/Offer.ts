@@ -11,7 +11,6 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
 import { OfferStatus, offerStatusBeet } from './OfferStatus.js'
 import { OfferType, offerTypeBeet } from './OfferType.js'
 export type Offer = {
-  discriminator: number[] /* size: 8 */
   maker: web3.PublicKey
   treasury: web3.PublicKey
   offeredAmount: beet.bignum
@@ -34,7 +33,6 @@ export type Offer = {
  */
 export const offerBeet = new beet.FixableBeetArgsStruct<Offer>(
   [
-    ['discriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['maker', beetSolana.publicKey],
     ['treasury', beetSolana.publicKey],
     ['offeredAmount', beet.u64],

@@ -8,6 +8,7 @@
 import * as splToken from '@solana/spl-token'
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import { StakeOption, stakeOptionBeet } from '../types/StakeOption.js'
 
 /**
  * @category Instructions
@@ -15,9 +16,8 @@ import * as web3 from '@solana/web3.js'
  * @category generated
  */
 export type StakeTokensInstructionArgs = {
-  stakeIndex: number
   amount: beet.bignum
-  stakeOption: number
+  stakeOption: StakeOption
 }
 /**
  * @category Instructions
@@ -31,9 +31,8 @@ export const stakeTokensStruct = new beet.BeetArgsStruct<
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['stakeIndex', beet.u32],
     ['amount', beet.u64],
-    ['stakeOption', beet.u8],
+    ['stakeOption', stakeOptionBeet],
   ],
   'StakeTokensInstructionArgs',
 )

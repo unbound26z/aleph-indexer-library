@@ -39,7 +39,7 @@ export const reserveRightsStruct = new beet.FixableBeetArgsStruct<
  * @property [] clubData
  * @property [_writable_] treasuryData
  * @property [] memberData
- * @property [**signer**] payer
+ * @property [_writable_, **signer**] payer
  * @category Instructions
  * @category ReserveRights
  * @category generated
@@ -94,7 +94,7 @@ export function createReserveRightsInstruction(
     },
     {
       pubkey: accounts.payer,
-      isWritable: false,
+      isWritable: true,
       isSigner: true,
     },
     {

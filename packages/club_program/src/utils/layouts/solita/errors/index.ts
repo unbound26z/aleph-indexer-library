@@ -1391,39 +1391,13 @@ createErrorFromNameLookup.set(
 )
 
 /**
- * TransferProfitDataExpired: 'Transfer profit data needs to be updated in the same slot'
- *
- * @category Errors
- * @category generated
- */
-export class TransferProfitDataExpiredError extends Error {
-  readonly code: number = 0x17aa
-  readonly name: string = 'TransferProfitDataExpired'
-  constructor() {
-    super('Transfer profit data needs to be updated in the same slot')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, TransferProfitDataExpiredError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(
-  0x17aa,
-  () => new TransferProfitDataExpiredError(),
-)
-createErrorFromNameLookup.set(
-  'TransferProfitDataExpired',
-  () => new TransferProfitDataExpiredError(),
-)
-
-/**
  * WithdrawalGovernanceAlreadyCreated: 'Withdrawal governance for this club has already been created'
  *
  * @category Errors
  * @category generated
  */
 export class WithdrawalGovernanceAlreadyCreatedError extends Error {
-  readonly code: number = 0x17ab
+  readonly code: number = 0x17aa
   readonly name: string = 'WithdrawalGovernanceAlreadyCreated'
   constructor() {
     super('Withdrawal governance for this club has already been created')
@@ -1434,7 +1408,7 @@ export class WithdrawalGovernanceAlreadyCreatedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ab,
+  0x17aa,
   () => new WithdrawalGovernanceAlreadyCreatedError(),
 )
 createErrorFromNameLookup.set(
@@ -1449,7 +1423,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakingInProgressError extends Error {
-  readonly code: number = 0x17ac
+  readonly code: number = 0x17ab
   readonly name: string = 'StakingInProgress'
   constructor() {
     super('Staking already in progress')
@@ -1459,7 +1433,7 @@ export class StakingInProgressError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ac, () => new StakingInProgressError())
+createErrorFromCodeLookup.set(0x17ab, () => new StakingInProgressError())
 createErrorFromNameLookup.set(
   'StakingInProgress',
   () => new StakingInProgressError(),
@@ -1472,7 +1446,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidStakeAmountError extends Error {
-  readonly code: number = 0x17ad
+  readonly code: number = 0x17ac
   readonly name: string = 'InvalidStakeAmount'
   constructor() {
     super('Invalid stake amount parameter')
@@ -1482,7 +1456,7 @@ export class InvalidStakeAmountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ad, () => new InvalidStakeAmountError())
+createErrorFromCodeLookup.set(0x17ac, () => new InvalidStakeAmountError())
 createErrorFromNameLookup.set(
   'InvalidStakeAmount',
   () => new InvalidStakeAmountError(),
@@ -1495,7 +1469,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidStakeStartDateError extends Error {
-  readonly code: number = 0x17ae
+  readonly code: number = 0x17ad
   readonly name: string = 'InvalidStakeStartDate'
   constructor() {
     super('Invalid stake start date: Must select current date or future date')
@@ -1505,7 +1479,7 @@ export class InvalidStakeStartDateError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ae, () => new InvalidStakeStartDateError())
+createErrorFromCodeLookup.set(0x17ad, () => new InvalidStakeStartDateError())
 createErrorFromNameLookup.set(
   'InvalidStakeStartDate',
   () => new InvalidStakeStartDateError(),
@@ -1518,7 +1492,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidStakeEndDateError extends Error {
-  readonly code: number = 0x17af
+  readonly code: number = 0x17ae
   readonly name: string = 'InvalidStakeEndDate'
   constructor() {
     super(
@@ -1530,7 +1504,7 @@ export class InvalidStakeEndDateError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17af, () => new InvalidStakeEndDateError())
+createErrorFromCodeLookup.set(0x17ae, () => new InvalidStakeEndDateError())
 createErrorFromNameLookup.set(
   'InvalidStakeEndDate',
   () => new InvalidStakeEndDateError(),
@@ -1543,7 +1517,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakeCapOverflowError extends Error {
-  readonly code: number = 0x17b0
+  readonly code: number = 0x17af
   readonly name: string = 'StakeCapOverflow'
   constructor() {
     super('Stake cap overflow')
@@ -1553,7 +1527,7 @@ export class StakeCapOverflowError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b0, () => new StakeCapOverflowError())
+createErrorFromCodeLookup.set(0x17af, () => new StakeCapOverflowError())
 createErrorFromNameLookup.set(
   'StakeCapOverflow',
   () => new StakeCapOverflowError(),
@@ -1566,7 +1540,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotEnoughUnqTokensError extends Error {
-  readonly code: number = 0x17b1
+  readonly code: number = 0x17b0
   readonly name: string = 'NotEnoughUnqTokens'
   constructor() {
     super('Not Enought UNQ Tokens')
@@ -1576,7 +1550,7 @@ export class NotEnoughUnqTokensError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b1, () => new NotEnoughUnqTokensError())
+createErrorFromCodeLookup.set(0x17b0, () => new NotEnoughUnqTokensError())
 createErrorFromNameLookup.set(
   'NotEnoughUnqTokens',
   () => new NotEnoughUnqTokensError(),
@@ -1589,7 +1563,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakingHasntStartedYetError extends Error {
-  readonly code: number = 0x17b2
+  readonly code: number = 0x17b1
   readonly name: string = 'StakingHasntStartedYet'
   constructor() {
     super("Staking funding period hasn't started yet")
@@ -1599,7 +1573,7 @@ export class StakingHasntStartedYetError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b2, () => new StakingHasntStartedYetError())
+createErrorFromCodeLookup.set(0x17b1, () => new StakingHasntStartedYetError())
 createErrorFromNameLookup.set(
   'StakingHasntStartedYet',
   () => new StakingHasntStartedYetError(),
@@ -1612,7 +1586,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakingFundingEndedError extends Error {
-  readonly code: number = 0x17b3
+  readonly code: number = 0x17b2
   readonly name: string = 'StakingFundingEnded'
   constructor() {
     super('Staking funding period has ended')
@@ -1622,7 +1596,7 @@ export class StakingFundingEndedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b3, () => new StakingFundingEndedError())
+createErrorFromCodeLookup.set(0x17b2, () => new StakingFundingEndedError())
 createErrorFromNameLookup.set(
   'StakingFundingEnded',
   () => new StakingFundingEndedError(),
@@ -1635,7 +1609,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class UnstakePeriodHasntEndedError extends Error {
-  readonly code: number = 0x17b4
+  readonly code: number = 0x17b3
   readonly name: string = 'UnstakePeriodHasntEnded'
   constructor() {
     super("Unstake period is three weeks, and it hasn't ended")
@@ -1645,7 +1619,7 @@ export class UnstakePeriodHasntEndedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b4, () => new UnstakePeriodHasntEndedError())
+createErrorFromCodeLookup.set(0x17b3, () => new UnstakePeriodHasntEndedError())
 createErrorFromNameLookup.set(
   'UnstakePeriodHasntEnded',
   () => new UnstakePeriodHasntEndedError(),
@@ -1658,7 +1632,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakingWillBeOverError extends Error {
-  readonly code: number = 0x17b5
+  readonly code: number = 0x17b4
   readonly name: string = 'StakingWillBeOver'
   constructor() {
     super('Staking will be over by the time, unstaking period has ended')
@@ -1668,7 +1642,7 @@ export class StakingWillBeOverError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b5, () => new StakingWillBeOverError())
+createErrorFromCodeLookup.set(0x17b4, () => new StakingWillBeOverError())
 createErrorFromNameLookup.set(
   'StakingWillBeOver',
   () => new StakingWillBeOverError(),
@@ -1681,7 +1655,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidDepositAmountError extends Error {
-  readonly code: number = 0x17b6
+  readonly code: number = 0x17b5
   readonly name: string = 'InvalidDepositAmount'
   constructor() {
     super('Invalid deposit amount')
@@ -1691,7 +1665,7 @@ export class InvalidDepositAmountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b6, () => new InvalidDepositAmountError())
+createErrorFromCodeLookup.set(0x17b5, () => new InvalidDepositAmountError())
 createErrorFromNameLookup.set(
   'InvalidDepositAmount',
   () => new InvalidDepositAmountError(),
@@ -1704,7 +1678,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxNumberOfFinancialRecordsExceededError extends Error {
-  readonly code: number = 0x17b7
+  readonly code: number = 0x17b6
   readonly name: string = 'MaxNumberOfFinancialRecordsExceeded'
   constructor() {
     super('Cannot support with less than 1 tokens')
@@ -1715,7 +1689,7 @@ export class MaxNumberOfFinancialRecordsExceededError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17b7,
+  0x17b6,
   () => new MaxNumberOfFinancialRecordsExceededError(),
 )
 createErrorFromNameLookup.set(
@@ -1730,7 +1704,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxNumberOfActiveStakeRecordsError extends Error {
-  readonly code: number = 0x17b8
+  readonly code: number = 0x17b7
   readonly name: string = 'MaxNumberOfActiveStakeRecords'
   constructor() {
     super('Exceeds max number of active stakes')
@@ -1741,7 +1715,7 @@ export class MaxNumberOfActiveStakeRecordsError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17b8,
+  0x17b7,
   () => new MaxNumberOfActiveStakeRecordsError(),
 )
 createErrorFromNameLookup.set(
@@ -1756,7 +1730,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxStakeNameExceededError extends Error {
-  readonly code: number = 0x17b9
+  readonly code: number = 0x17b8
   readonly name: string = 'MaxStakeNameExceeded'
   constructor() {
     super('Max stake name exceeded')
@@ -1766,7 +1740,7 @@ export class MaxStakeNameExceededError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17b9, () => new MaxStakeNameExceededError())
+createErrorFromCodeLookup.set(0x17b8, () => new MaxStakeNameExceededError())
 createErrorFromNameLookup.set(
   'MaxStakeNameExceeded',
   () => new MaxStakeNameExceededError(),
@@ -1779,7 +1753,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxCapExceededError extends Error {
-  readonly code: number = 0x17ba
+  readonly code: number = 0x17b9
   readonly name: string = 'MaxCapExceeded'
   constructor() {
     super('Max cap exceeded!')
@@ -1789,7 +1763,7 @@ export class MaxCapExceededError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ba, () => new MaxCapExceededError())
+createErrorFromCodeLookup.set(0x17b9, () => new MaxCapExceededError())
 createErrorFromNameLookup.set('MaxCapExceeded', () => new MaxCapExceededError())
 
 /**
@@ -1799,7 +1773,7 @@ createErrorFromNameLookup.set('MaxCapExceeded', () => new MaxCapExceededError())
  * @category generated
  */
 export class StakingCanceledError extends Error {
-  readonly code: number = 0x17bb
+  readonly code: number = 0x17ba
   readonly name: string = 'StakingCanceled'
   constructor() {
     super('Staking canceled!')
@@ -1809,7 +1783,7 @@ export class StakingCanceledError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17bb, () => new StakingCanceledError())
+createErrorFromCodeLookup.set(0x17ba, () => new StakingCanceledError())
 createErrorFromNameLookup.set(
   'StakingCanceled',
   () => new StakingCanceledError(),
@@ -1822,7 +1796,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class AlreadyUnstakedError extends Error {
-  readonly code: number = 0x17bc
+  readonly code: number = 0x17bb
   readonly name: string = 'AlreadyUnstaked'
   constructor() {
     super('Already unstaked!')
@@ -1832,7 +1806,7 @@ export class AlreadyUnstakedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17bc, () => new AlreadyUnstakedError())
+createErrorFromCodeLookup.set(0x17bb, () => new AlreadyUnstakedError())
 createErrorFromNameLookup.set(
   'AlreadyUnstaked',
   () => new AlreadyUnstakedError(),
@@ -1845,7 +1819,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class CannotClaimBeforeFundingPeriodIsOverError extends Error {
-  readonly code: number = 0x17bd
+  readonly code: number = 0x17bc
   readonly name: string = 'CannotClaimBeforeFundingPeriodIsOver'
   constructor() {
     super('Cannot claim before stake funding period is over!')
@@ -1856,7 +1830,7 @@ export class CannotClaimBeforeFundingPeriodIsOverError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17bd,
+  0x17bc,
   () => new CannotClaimBeforeFundingPeriodIsOverError(),
 )
 createErrorFromNameLookup.set(
@@ -1871,7 +1845,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakePeriodHasntEndedError extends Error {
-  readonly code: number = 0x17be
+  readonly code: number = 0x17bd
   readonly name: string = 'StakePeriodHasntEnded'
   constructor() {
     super("Stake period hasn't ended")
@@ -1881,7 +1855,7 @@ export class StakePeriodHasntEndedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17be, () => new StakePeriodHasntEndedError())
+createErrorFromCodeLookup.set(0x17bd, () => new StakePeriodHasntEndedError())
 createErrorFromNameLookup.set(
   'StakePeriodHasntEnded',
   () => new StakePeriodHasntEndedError(),
@@ -1894,7 +1868,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class StakeStatusNeedsToBeInProgressError extends Error {
-  readonly code: number = 0x17bf
+  readonly code: number = 0x17be
   readonly name: string = 'StakeStatusNeedsToBeInProgress'
   constructor() {
     super('Stake status needs to be InProgress')
@@ -1905,7 +1879,7 @@ export class StakeStatusNeedsToBeInProgressError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17bf,
+  0x17be,
   () => new StakeStatusNeedsToBeInProgressError(),
 )
 createErrorFromNameLookup.set(
@@ -1920,7 +1894,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongRewardTokenAccountError extends Error {
-  readonly code: number = 0x17c0
+  readonly code: number = 0x17bf
   readonly name: string = 'WrongRewardTokenAccount'
   constructor() {
     super('Stake status needs to be InProgress')
@@ -1930,7 +1904,7 @@ export class WrongRewardTokenAccountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17c0, () => new WrongRewardTokenAccountError())
+createErrorFromCodeLookup.set(0x17bf, () => new WrongRewardTokenAccountError())
 createErrorFromNameLookup.set(
   'WrongRewardTokenAccount',
   () => new WrongRewardTokenAccountError(),
@@ -1943,7 +1917,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotFundingStatusError extends Error {
-  readonly code: number = 0x17c1
+  readonly code: number = 0x17c0
   readonly name: string = 'NotFundingStatus'
   constructor() {
     super('StakeConfig must be in Funding status to be changed to InProgress')
@@ -1953,7 +1927,7 @@ export class NotFundingStatusError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17c1, () => new NotFundingStatusError())
+createErrorFromCodeLookup.set(0x17c0, () => new NotFundingStatusError())
 createErrorFromNameLookup.set(
   'NotFundingStatus',
   () => new NotFundingStatusError(),
@@ -1966,7 +1940,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class SellPermissionConfigFullError extends Error {
-  readonly code: number = 0x17c2
+  readonly code: number = 0x17c1
   readonly name: string = 'SellPermissionConfigFull'
   constructor() {
     super('Sell permission config full')
@@ -1976,7 +1950,7 @@ export class SellPermissionConfigFullError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17c2, () => new SellPermissionConfigFullError())
+createErrorFromCodeLookup.set(0x17c1, () => new SellPermissionConfigFullError())
 createErrorFromNameLookup.set(
   'SellPermissionConfigFull',
   () => new SellPermissionConfigFullError(),
@@ -1989,7 +1963,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongProposalUpdateAuthororityError extends Error {
-  readonly code: number = 0x17c3
+  readonly code: number = 0x17c2
   readonly name: string = 'WrongProposalUpdateAuthorority'
   constructor() {
     super('Wrong proposal update authority')
@@ -2000,7 +1974,7 @@ export class WrongProposalUpdateAuthororityError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17c3,
+  0x17c2,
   () => new WrongProposalUpdateAuthororityError(),
 )
 createErrorFromNameLookup.set(
@@ -2015,7 +1989,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidDepositRecordIndexError extends Error {
-  readonly code: number = 0x17c4
+  readonly code: number = 0x17c3
   readonly name: string = 'InvalidDepositRecordIndex'
   constructor() {
     super(
@@ -2028,7 +2002,7 @@ export class InvalidDepositRecordIndexError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17c4,
+  0x17c3,
   () => new InvalidDepositRecordIndexError(),
 )
 createErrorFromNameLookup.set(
@@ -2043,7 +2017,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongDepositRecordOwnerError extends Error {
-  readonly code: number = 0x17c5
+  readonly code: number = 0x17c4
   readonly name: string = 'WrongDepositRecordOwner'
   constructor() {
     super('The payer of the transaction is not the owner of DepositRecord')
@@ -2053,7 +2027,7 @@ export class WrongDepositRecordOwnerError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17c5, () => new WrongDepositRecordOwnerError())
+createErrorFromCodeLookup.set(0x17c4, () => new WrongDepositRecordOwnerError())
 createErrorFromNameLookup.set(
   'WrongDepositRecordOwner',
   () => new WrongDepositRecordOwnerError(),
@@ -2066,7 +2040,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongDepositRecordKeyError extends Error {
-  readonly code: number = 0x17c6
+  readonly code: number = 0x17c5
   readonly name: string = 'WrongDepositRecordKey'
   constructor() {
     super('The payer of the transaction is not the owner of DepositRecord')
@@ -2076,7 +2050,7 @@ export class WrongDepositRecordKeyError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17c6, () => new WrongDepositRecordKeyError())
+createErrorFromCodeLookup.set(0x17c5, () => new WrongDepositRecordKeyError())
 createErrorFromNameLookup.set(
   'WrongDepositRecordKey',
   () => new WrongDepositRecordKeyError(),
@@ -2089,7 +2063,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidMaxAmountPerFundraiseError extends Error {
-  readonly code: number = 0x17c7
+  readonly code: number = 0x17c6
   readonly name: string = 'InvalidMaxAmountPerFundraise'
   constructor() {
     super('The maximum amount of SOLs per fundraise is 200')
@@ -2100,7 +2074,7 @@ export class InvalidMaxAmountPerFundraiseError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17c7,
+  0x17c6,
   () => new InvalidMaxAmountPerFundraiseError(),
 )
 createErrorFromNameLookup.set(
@@ -2115,7 +2089,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxNumberOfMembersExceededError extends Error {
-  readonly code: number = 0x17c8
+  readonly code: number = 0x17c7
   readonly name: string = 'MaxNumberOfMembersExceeded'
   constructor() {
     super('The maximum amount of members per club is 99')
@@ -2126,7 +2100,7 @@ export class MaxNumberOfMembersExceededError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17c8,
+  0x17c7,
   () => new MaxNumberOfMembersExceededError(),
 )
 createErrorFromNameLookup.set(
@@ -2141,7 +2115,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidMinAmountPerFundraiseError extends Error {
-  readonly code: number = 0x17c9
+  readonly code: number = 0x17c8
   readonly name: string = 'InvalidMinAmountPerFundraise'
   constructor() {
     super('The minimum amount of SOLs per fundraise is 200')
@@ -2152,7 +2126,7 @@ export class InvalidMinAmountPerFundraiseError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17c9,
+  0x17c8,
   () => new InvalidMinAmountPerFundraiseError(),
 )
 createErrorFromNameLookup.set(
@@ -2167,7 +2141,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongOwnerOfTokenAccountError extends Error {
-  readonly code: number = 0x17ca
+  readonly code: number = 0x17c9
   readonly name: string = 'WrongOwnerOfTokenAccount'
   constructor() {
     super('Wrong owner of NFT Token Account')
@@ -2177,7 +2151,7 @@ export class WrongOwnerOfTokenAccountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ca, () => new WrongOwnerOfTokenAccountError())
+createErrorFromCodeLookup.set(0x17c9, () => new WrongOwnerOfTokenAccountError())
 createErrorFromNameLookup.set(
   'WrongOwnerOfTokenAccount',
   () => new WrongOwnerOfTokenAccountError(),
@@ -2190,7 +2164,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class SpaceAlreadyAllocatedError extends Error {
-  readonly code: number = 0x17cb
+  readonly code: number = 0x17ca
   readonly name: string = 'SpaceAlreadyAllocated'
   constructor() {
     super('Space already reallocated')
@@ -2200,7 +2174,7 @@ export class SpaceAlreadyAllocatedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17cb, () => new SpaceAlreadyAllocatedError())
+createErrorFromCodeLookup.set(0x17ca, () => new SpaceAlreadyAllocatedError())
 createErrorFromNameLookup.set(
   'SpaceAlreadyAllocated',
   () => new SpaceAlreadyAllocatedError(),
@@ -2213,7 +2187,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongAmountOnTheNftAccountError extends Error {
-  readonly code: number = 0x17cc
+  readonly code: number = 0x17cb
   readonly name: string = 'WrongAmountOnTheNftAccount'
   constructor() {
     super('The amount of token on the NFT Token Account must be 1')
@@ -2224,7 +2198,7 @@ export class WrongAmountOnTheNftAccountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17cc,
+  0x17cb,
   () => new WrongAmountOnTheNftAccountError(),
 )
 createErrorFromNameLookup.set(
@@ -2239,7 +2213,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongNftMintForStakingError extends Error {
-  readonly code: number = 0x17cd
+  readonly code: number = 0x17cc
   readonly name: string = 'WrongNftMintForStaking'
   constructor() {
     super("Mint account doesn't match the token account provided for staking")
@@ -2249,7 +2223,7 @@ export class WrongNftMintForStakingError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17cd, () => new WrongNftMintForStakingError())
+createErrorFromCodeLookup.set(0x17cc, () => new WrongNftMintForStakingError())
 createErrorFromNameLookup.set(
   'WrongNftMintForStaking',
   () => new WrongNftMintForStakingError(),
@@ -2262,7 +2236,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongUniverseMetadataForMintError extends Error {
-  readonly code: number = 0x17ce
+  readonly code: number = 0x17cd
   readonly name: string = 'WrongUniverseMetadataForMint'
   constructor() {
     super("UniverseMetadata doesn't match the provided mint")
@@ -2273,7 +2247,7 @@ export class WrongUniverseMetadataForMintError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ce,
+  0x17cd,
   () => new WrongUniverseMetadataForMintError(),
 )
 createErrorFromNameLookup.set(
@@ -2288,7 +2262,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class UniverseLevelLowError extends Error {
-  readonly code: number = 0x17cf
+  readonly code: number = 0x17ce
   readonly name: string = 'UniverseLevelLow'
   constructor() {
     super('Universe level too low to stake')
@@ -2298,7 +2272,7 @@ export class UniverseLevelLowError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17cf, () => new UniverseLevelLowError())
+createErrorFromCodeLookup.set(0x17ce, () => new UniverseLevelLowError())
 createErrorFromNameLookup.set(
   'UniverseLevelLow',
   () => new UniverseLevelLowError(),
@@ -2311,7 +2285,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NftStakeAccountInitializedError extends Error {
-  readonly code: number = 0x17d0
+  readonly code: number = 0x17cf
   readonly name: string = 'NftStakeAccountInitialized'
   constructor() {
     super('The PDA of the TokenAccount storing NFT is already initialized')
@@ -2322,7 +2296,7 @@ export class NftStakeAccountInitializedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17d0,
+  0x17cf,
   () => new NftStakeAccountInitializedError(),
 )
 createErrorFromNameLookup.set(
@@ -2337,7 +2311,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongStakedNftAddressError extends Error {
-  readonly code: number = 0x17d1
+  readonly code: number = 0x17d0
   readonly name: string = 'WrongStakedNftAddress'
   constructor() {
     super('The PDA of the TokenAccount storing NFT is wrong')
@@ -2347,7 +2321,7 @@ export class WrongStakedNftAddressError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d1, () => new WrongStakedNftAddressError())
+createErrorFromCodeLookup.set(0x17d0, () => new WrongStakedNftAddressError())
 createErrorFromNameLookup.set(
   'WrongStakedNftAddress',
   () => new WrongStakedNftAddressError(),
@@ -2360,7 +2334,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class LowerRarityError extends Error {
-  readonly code: number = 0x17d2
+  readonly code: number = 0x17d1
   readonly name: string = 'LowerRarity'
   constructor() {
     super('Universe NFT must be of higher rarity than the one already staked')
@@ -2370,7 +2344,7 @@ export class LowerRarityError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d2, () => new LowerRarityError())
+createErrorFromCodeLookup.set(0x17d1, () => new LowerRarityError())
 createErrorFromNameLookup.set('LowerRarity', () => new LowerRarityError())
 
 /**
@@ -2380,7 +2354,7 @@ createErrorFromNameLookup.set('LowerRarity', () => new LowerRarityError())
  * @category generated
  */
 export class NftClaimedError extends Error {
-  readonly code: number = 0x17d3
+  readonly code: number = 0x17d2
   readonly name: string = 'NftClaimed'
   constructor() {
     super('This NFT was already claimed')
@@ -2390,7 +2364,7 @@ export class NftClaimedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d3, () => new NftClaimedError())
+createErrorFromCodeLookup.set(0x17d2, () => new NftClaimedError())
 createErrorFromNameLookup.set('NftClaimed', () => new NftClaimedError())
 
 /**
@@ -2400,7 +2374,7 @@ createErrorFromNameLookup.set('NftClaimed', () => new NftClaimedError())
  * @category generated
  */
 export class WrongStakedTokensAddressError extends Error {
-  readonly code: number = 0x17d4
+  readonly code: number = 0x17d3
   readonly name: string = 'WrongStakedTokensAddress'
   constructor() {
     super('The PDA of the TokenAccount storing NFT is wrong')
@@ -2410,7 +2384,7 @@ export class WrongStakedTokensAddressError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d4, () => new WrongStakedTokensAddressError())
+createErrorFromCodeLookup.set(0x17d3, () => new WrongStakedTokensAddressError())
 createErrorFromNameLookup.set(
   'WrongStakedTokensAddress',
   () => new WrongStakedTokensAddressError(),
@@ -2423,7 +2397,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class CannotTransferOldStakedNftError extends Error {
-  readonly code: number = 0x17d5
+  readonly code: number = 0x17d4
   readonly name: string = 'CannotTransferOldStakedNft'
   constructor() {
     super('Failed to transfer old NFT to its owner')
@@ -2434,7 +2408,7 @@ export class CannotTransferOldStakedNftError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17d5,
+  0x17d4,
   () => new CannotTransferOldStakedNftError(),
 )
 createErrorFromNameLookup.set(
@@ -2449,7 +2423,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongNftReceiverTokenAccountError extends Error {
-  readonly code: number = 0x17d6
+  readonly code: number = 0x17d5
   readonly name: string = 'WrongNftReceiverTokenAccount'
   constructor() {
     super('Wrong NFT receiver TokenAccount passed')
@@ -2460,7 +2434,7 @@ export class WrongNftReceiverTokenAccountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17d6,
+  0x17d5,
   () => new WrongNftReceiverTokenAccountError(),
 )
 createErrorFromNameLookup.set(
@@ -2475,7 +2449,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongOwnerOfStakedNftError extends Error {
-  readonly code: number = 0x17d7
+  readonly code: number = 0x17d6
   readonly name: string = 'WrongOwnerOfStakedNft'
   constructor() {
     super('Wrong owner of the staked NFT')
@@ -2485,7 +2459,7 @@ export class WrongOwnerOfStakedNftError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d7, () => new WrongOwnerOfStakedNftError())
+createErrorFromCodeLookup.set(0x17d6, () => new WrongOwnerOfStakedNftError())
 createErrorFromNameLookup.set(
   'WrongOwnerOfStakedNft',
   () => new WrongOwnerOfStakedNftError(),
@@ -2498,7 +2472,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class AlreadyClaimedError extends Error {
-  readonly code: number = 0x17d8
+  readonly code: number = 0x17d7
   readonly name: string = 'AlreadyClaimed'
   constructor() {
     super('Already claimed your tokens')
@@ -2508,7 +2482,7 @@ export class AlreadyClaimedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d8, () => new AlreadyClaimedError())
+createErrorFromCodeLookup.set(0x17d7, () => new AlreadyClaimedError())
 createErrorFromNameLookup.set('AlreadyClaimed', () => new AlreadyClaimedError())
 
 /**
@@ -2518,7 +2492,7 @@ createErrorFromNameLookup.set('AlreadyClaimed', () => new AlreadyClaimedError())
  * @category generated
  */
 export class WrongStakeRecordOwnerError extends Error {
-  readonly code: number = 0x17d9
+  readonly code: number = 0x17d8
   readonly name: string = 'WrongStakeRecordOwner'
   constructor() {
     super('Wrong stake record owner')
@@ -2528,7 +2502,7 @@ export class WrongStakeRecordOwnerError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17d9, () => new WrongStakeRecordOwnerError())
+createErrorFromCodeLookup.set(0x17d8, () => new WrongStakeRecordOwnerError())
 createErrorFromNameLookup.set(
   'WrongStakeRecordOwner',
   () => new WrongStakeRecordOwnerError(),
@@ -2541,7 +2515,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidFinancialRecordAmountError extends Error {
-  readonly code: number = 0x17da
+  readonly code: number = 0x17d9
   readonly name: string = 'InvalidFinancialRecordAmount'
   constructor() {
     super('Invalid financial record amount')
@@ -2552,7 +2526,7 @@ export class InvalidFinancialRecordAmountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17da,
+  0x17d9,
   () => new InvalidFinancialRecordAmountError(),
 )
 createErrorFromNameLookup.set(
@@ -2567,7 +2541,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongCancelFinancialOfferAuthorityError extends Error {
-  readonly code: number = 0x17db
+  readonly code: number = 0x17da
   readonly name: string = 'WrongCancelFinancialOfferAuthority'
   constructor() {
     super('Signer has no authority to cancel this financial offer')
@@ -2578,7 +2552,7 @@ export class WrongCancelFinancialOfferAuthorityError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17db,
+  0x17da,
   () => new WrongCancelFinancialOfferAuthorityError(),
 )
 createErrorFromNameLookup.set(
@@ -2593,7 +2567,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongFinancialBuyerTokenMintError extends Error {
-  readonly code: number = 0x17dc
+  readonly code: number = 0x17db
   readonly name: string = 'WrongFinancialBuyerTokenMint'
   constructor() {
     super('Wrong financial buyer token mint')
@@ -2604,7 +2578,7 @@ export class WrongFinancialBuyerTokenMintError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17dc,
+  0x17db,
   () => new WrongFinancialBuyerTokenMintError(),
 )
 createErrorFromNameLookup.set(
@@ -2619,7 +2593,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotEnoughTokensToAcceptFinancialOfferError extends Error {
-  readonly code: number = 0x17dd
+  readonly code: number = 0x17dc
   readonly name: string = 'NotEnoughTokensToAcceptFinancialOffer'
   constructor() {
     super('Not enough tokens to accept financial offer')
@@ -2630,7 +2604,7 @@ export class NotEnoughTokensToAcceptFinancialOfferError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17dd,
+  0x17dc,
   () => new NotEnoughTokensToAcceptFinancialOfferError(),
 )
 createErrorFromNameLookup.set(
@@ -2645,7 +2619,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class CannotCreateFinancialOfferError extends Error {
-  readonly code: number = 0x17de
+  readonly code: number = 0x17dd
   readonly name: string = 'CannotCreateFinancialOffer'
   constructor() {
     super('Cannot create financial offer while a fundraise is active')
@@ -2656,7 +2630,7 @@ export class CannotCreateFinancialOfferError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17de,
+  0x17dd,
   () => new CannotCreateFinancialOfferError(),
 )
 createErrorFromNameLookup.set(
@@ -2671,7 +2645,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotDesignatedBuyerForFinancialOfferError extends Error {
-  readonly code: number = 0x17df
+  readonly code: number = 0x17de
   readonly name: string = 'NotDesignatedBuyerForFinancialOffer'
   constructor() {
     super('You are not the designated buyer for this financial offer')
@@ -2682,7 +2656,7 @@ export class NotDesignatedBuyerForFinancialOfferError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17df,
+  0x17de,
   () => new NotDesignatedBuyerForFinancialOfferError(),
 )
 createErrorFromNameLookup.set(
@@ -2697,7 +2671,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class FinancialOffersNotZeroError extends Error {
-  readonly code: number = 0x17e0
+  readonly code: number = 0x17df
   readonly name: string = 'FinancialOffersNotZero'
   constructor() {
     super(
@@ -2709,7 +2683,7 @@ export class FinancialOffersNotZeroError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17e0, () => new FinancialOffersNotZeroError())
+createErrorFromCodeLookup.set(0x17df, () => new FinancialOffersNotZeroError())
 createErrorFromNameLookup.set(
   'FinancialOffersNotZero',
   () => new FinancialOffersNotZeroError(),
@@ -2722,7 +2696,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongMagicEdenAccountsHolderError extends Error {
-  readonly code: number = 0x17e1
+  readonly code: number = 0x17e0
   readonly name: string = 'WrongMagicEdenAccountsHolder'
   constructor() {
     super('Wrong accounts holder for BuyNow on MagicEden')
@@ -2733,7 +2707,7 @@ export class WrongMagicEdenAccountsHolderError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e1,
+  0x17e0,
   () => new WrongMagicEdenAccountsHolderError(),
 )
 createErrorFromNameLookup.set(
@@ -2748,7 +2722,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoOfferAccountForMagicEdenError extends Error {
-  readonly code: number = 0x17e2
+  readonly code: number = 0x17e1
   readonly name: string = 'NoOfferAccountForMagicEden'
   constructor() {
     super('Wrong PDA passed as offer address for MagicEden BuyNow')
@@ -2759,7 +2733,7 @@ export class NoOfferAccountForMagicEdenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e2,
+  0x17e1,
   () => new NoOfferAccountForMagicEdenError(),
 )
 createErrorFromNameLookup.set(
@@ -2774,7 +2748,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoWantedTokenMintForMagicEdenBuyNowError extends Error {
-  readonly code: number = 0x17e3
+  readonly code: number = 0x17e2
   readonly name: string = 'NoWantedTokenMintForMagicEdenBuyNow'
   constructor() {
     super(
@@ -2787,7 +2761,7 @@ export class NoWantedTokenMintForMagicEdenBuyNowError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e3,
+  0x17e2,
   () => new NoWantedTokenMintForMagicEdenBuyNowError(),
 )
 createErrorFromNameLookup.set(
@@ -2802,7 +2776,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoEscrowedWantedTokenAccountForMagicEdenError extends Error {
-  readonly code: number = 0x17e4
+  readonly code: number = 0x17e3
   readonly name: string = 'NoEscrowedWantedTokenAccountForMagicEden'
   constructor() {
     super(
@@ -2818,7 +2792,7 @@ export class NoEscrowedWantedTokenAccountForMagicEdenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e4,
+  0x17e3,
   () => new NoEscrowedWantedTokenAccountForMagicEdenError(),
 )
 createErrorFromNameLookup.set(
@@ -2833,7 +2807,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoOfferedTokenMintForMagicEdenError extends Error {
-  readonly code: number = 0x17e5
+  readonly code: number = 0x17e4
   readonly name: string = 'NoOfferedTokenMintForMagicEden'
   constructor() {
     super('No offered_token_mint passed as remaining account')
@@ -2844,7 +2818,7 @@ export class NoOfferedTokenMintForMagicEdenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e5,
+  0x17e4,
   () => new NoOfferedTokenMintForMagicEdenError(),
 )
 createErrorFromNameLookup.set(
@@ -2859,7 +2833,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoMakerWantedTokenForMagicEdenError extends Error {
-  readonly code: number = 0x17e6
+  readonly code: number = 0x17e5
   readonly name: string = 'NoMakerWantedTokenForMagicEden'
   constructor() {
     super('No maker_wanted_token passed as remaining account')
@@ -2870,7 +2844,7 @@ export class NoMakerWantedTokenForMagicEdenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e6,
+  0x17e5,
   () => new NoMakerWantedTokenForMagicEdenError(),
 )
 createErrorFromNameLookup.set(
@@ -2885,7 +2859,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NoTokenProgramForMagicEdenError extends Error {
-  readonly code: number = 0x17e7
+  readonly code: number = 0x17e6
   readonly name: string = 'NoTokenProgramForMagicEden'
   constructor() {
     super('No token_program passed as remaining account')
@@ -2896,7 +2870,7 @@ export class NoTokenProgramForMagicEdenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e7,
+  0x17e6,
   () => new NoTokenProgramForMagicEdenError(),
 )
 createErrorFromNameLookup.set(
@@ -2911,7 +2885,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidFinancialRightsAmountError extends Error {
-  readonly code: number = 0x17e8
+  readonly code: number = 0x17e7
   readonly name: string = 'InvalidFinancialRightsAmount'
   constructor() {
     super('Invalid amount of financial rights to buy')
@@ -2922,7 +2896,7 @@ export class InvalidFinancialRightsAmountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e8,
+  0x17e7,
   () => new InvalidFinancialRightsAmountError(),
 )
 createErrorFromNameLookup.set(
@@ -2937,7 +2911,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class FinancialRightsAmountExceededError extends Error {
-  readonly code: number = 0x17e9
+  readonly code: number = 0x17e8
   readonly name: string = 'FinancialRightsAmountExceeded'
   constructor() {
     super('You do not have enough financial rights')
@@ -2948,7 +2922,7 @@ export class FinancialRightsAmountExceededError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17e9,
+  0x17e8,
   () => new FinancialRightsAmountExceededError(),
 )
 createErrorFromNameLookup.set(
@@ -2963,7 +2937,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongMeBuyNowMakerError extends Error {
-  readonly code: number = 0x17ea
+  readonly code: number = 0x17e9
   readonly name: string = 'WrongMeBuyNowMaker'
   constructor() {
     super('This is not the treasury that made this offer')
@@ -2973,7 +2947,7 @@ export class WrongMeBuyNowMakerError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ea, () => new WrongMeBuyNowMakerError())
+createErrorFromCodeLookup.set(0x17e9, () => new WrongMeBuyNowMakerError())
 createErrorFromNameLookup.set(
   'WrongMeBuyNowMaker',
   () => new WrongMeBuyNowMakerError(),
@@ -2986,7 +2960,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongMeSellMakerError extends Error {
-  readonly code: number = 0x17eb
+  readonly code: number = 0x17ea
   readonly name: string = 'WrongMeSellMaker'
   constructor() {
     super('This is not the vault that made this offer')
@@ -2996,7 +2970,7 @@ export class WrongMeSellMakerError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17eb, () => new WrongMeSellMakerError())
+createErrorFromCodeLookup.set(0x17ea, () => new WrongMeSellMakerError())
 createErrorFromNameLookup.set(
   'WrongMeSellMaker',
   () => new WrongMeSellMakerError(),
@@ -3009,7 +2983,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ProposalToBuyNowNotExecutedError extends Error {
-  readonly code: number = 0x17ec
+  readonly code: number = 0x17eb
   readonly name: string = 'ProposalToBuyNowNotExecuted'
   constructor() {
     super('Proposal to buy on magic eden needs to be executed')
@@ -3020,7 +2994,7 @@ export class ProposalToBuyNowNotExecutedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ec,
+  0x17eb,
   () => new ProposalToBuyNowNotExecutedError(),
 )
 createErrorFromNameLookup.set(
@@ -3035,7 +3009,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ProposalToSellNotExecutedError extends Error {
-  readonly code: number = 0x17ed
+  readonly code: number = 0x17ec
   readonly name: string = 'ProposalToSellNotExecuted'
   constructor() {
     super('Proposal to sell on magic eden needs to be executed')
@@ -3046,7 +3020,7 @@ export class ProposalToSellNotExecutedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ed,
+  0x17ec,
   () => new ProposalToSellNotExecutedError(),
 )
 createErrorFromNameLookup.set(
@@ -3061,7 +3035,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class FailedToParseDenominatedCurrencyAsMintError extends Error {
-  readonly code: number = 0x17ee
+  readonly code: number = 0x17ed
   readonly name: string = 'FailedToParseDenominatedCurrencyAsMint'
   constructor() {
     super('Wrong denominated currency token account mint')
@@ -3072,7 +3046,7 @@ export class FailedToParseDenominatedCurrencyAsMintError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ee,
+  0x17ed,
   () => new FailedToParseDenominatedCurrencyAsMintError(),
 )
 createErrorFromNameLookup.set(
@@ -3087,7 +3061,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongDenominatedCurrencyTokenAccountMintError extends Error {
-  readonly code: number = 0x17ef
+  readonly code: number = 0x17ee
   readonly name: string = 'WrongDenominatedCurrencyTokenAccountMint'
   constructor() {
     super('Wrong denominated currency token account mint')
@@ -3101,7 +3075,7 @@ export class WrongDenominatedCurrencyTokenAccountMintError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17ef,
+  0x17ee,
   () => new WrongDenominatedCurrencyTokenAccountMintError(),
 )
 createErrorFromNameLookup.set(
@@ -3116,7 +3090,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongDenominatedTokenAddressError extends Error {
-  readonly code: number = 0x17f0
+  readonly code: number = 0x17ef
   readonly name: string = 'WrongDenominatedTokenAddress'
   constructor() {
     super('Wrong denominated token address')
@@ -3127,7 +3101,7 @@ export class WrongDenominatedTokenAddressError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f0,
+  0x17ef,
   () => new WrongDenominatedTokenAddressError(),
 )
 createErrorFromNameLookup.set(
@@ -3142,7 +3116,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class FailedToSupportClubError extends Error {
-  readonly code: number = 0x17f1
+  readonly code: number = 0x17f0
   readonly name: string = 'FailedToSupportClub'
   constructor() {
     super('Failed to support club')
@@ -3152,7 +3126,7 @@ export class FailedToSupportClubError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17f1, () => new FailedToSupportClubError())
+createErrorFromCodeLookup.set(0x17f0, () => new FailedToSupportClubError())
 createErrorFromNameLookup.set(
   'FailedToSupportClub',
   () => new FailedToSupportClubError(),
@@ -3165,7 +3139,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class TransferGovernanceAlreadyCreatedError extends Error {
-  readonly code: number = 0x17f2
+  readonly code: number = 0x17f1
   readonly name: string = 'TransferGovernanceAlreadyCreated'
   constructor() {
     super('Transfer governance for this club has already been created')
@@ -3176,7 +3150,7 @@ export class TransferGovernanceAlreadyCreatedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f2,
+  0x17f1,
   () => new TransferGovernanceAlreadyCreatedError(),
 )
 createErrorFromNameLookup.set(
@@ -3191,7 +3165,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToInviteMemberError extends Error {
-  readonly code: number = 0x17f3
+  readonly code: number = 0x17f2
   readonly name: string = 'InvalidAuthorityToInviteMember'
   constructor() {
     super('Not a valid authority to invite a member')
@@ -3202,7 +3176,7 @@ export class InvalidAuthorityToInviteMemberError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f3,
+  0x17f2,
   () => new InvalidAuthorityToInviteMemberError(),
 )
 createErrorFromNameLookup.set(
@@ -3217,7 +3191,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToCancelOfferError extends Error {
-  readonly code: number = 0x17f4
+  readonly code: number = 0x17f3
   readonly name: string = 'InvalidAuthorityToCancelOffer'
   constructor() {
     super('Invalid authority to cancel P2P offer')
@@ -3228,7 +3202,7 @@ export class InvalidAuthorityToCancelOfferError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f4,
+  0x17f3,
   () => new InvalidAuthorityToCancelOfferError(),
 )
 createErrorFromNameLookup.set(
@@ -3243,7 +3217,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToCreateFundraiseError extends Error {
-  readonly code: number = 0x17f5
+  readonly code: number = 0x17f4
   readonly name: string = 'InvalidAuthorityToCreateFundraise'
   constructor() {
     super('Invalid authority to create fundraise')
@@ -3254,7 +3228,7 @@ export class InvalidAuthorityToCreateFundraiseError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f5,
+  0x17f4,
   () => new InvalidAuthorityToCreateFundraiseError(),
 )
 createErrorFromNameLookup.set(
@@ -3269,7 +3243,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidRoleToSupportError extends Error {
-  readonly code: number = 0x17f6
+  readonly code: number = 0x17f5
   readonly name: string = 'InvalidRoleToSupport'
   constructor() {
     super('Invalid role to perform the support club action')
@@ -3279,7 +3253,7 @@ export class InvalidRoleToSupportError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17f6, () => new InvalidRoleToSupportError())
+createErrorFromCodeLookup.set(0x17f5, () => new InvalidRoleToSupportError())
 createErrorFromNameLookup.set(
   'InvalidRoleToSupport',
   () => new InvalidRoleToSupportError(),
@@ -3292,7 +3266,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToFinishStakingError extends Error {
-  readonly code: number = 0x17f7
+  readonly code: number = 0x17f6
   readonly name: string = 'InvalidAuthorityToFinishStaking'
   constructor() {
     super('Invalid role to finish staking')
@@ -3303,7 +3277,7 @@ export class InvalidAuthorityToFinishStakingError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f7,
+  0x17f6,
   () => new InvalidAuthorityToFinishStakingError(),
 )
 createErrorFromNameLookup.set(
@@ -3318,7 +3292,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToInitializeStakingError extends Error {
-  readonly code: number = 0x17f8
+  readonly code: number = 0x17f7
   readonly name: string = 'InvalidAuthorityToInitializeStaking'
   constructor() {
     super('Invalid role to initialize staking')
@@ -3329,7 +3303,7 @@ export class InvalidAuthorityToInitializeStakingError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f8,
+  0x17f7,
   () => new InvalidAuthorityToInitializeStakingError(),
 )
 createErrorFromNameLookup.set(
@@ -3344,7 +3318,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToUpdateAllocationError extends Error {
-  readonly code: number = 0x17f9
+  readonly code: number = 0x17f8
   readonly name: string = 'InvalidAuthorityToUpdateAllocation'
   constructor() {
     super('Invalid authority to update allocation')
@@ -3355,7 +3329,7 @@ export class InvalidAuthorityToUpdateAllocationError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17f9,
+  0x17f8,
   () => new InvalidAuthorityToUpdateAllocationError(),
 )
 createErrorFromNameLookup.set(
@@ -3370,7 +3344,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidClubTypeError extends Error {
-  readonly code: number = 0x17fa
+  readonly code: number = 0x17f9
   readonly name: string = 'InvalidClubType'
   constructor() {
     super('Club type not implemented')
@@ -3380,7 +3354,7 @@ export class InvalidClubTypeError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17fa, () => new InvalidClubTypeError())
+createErrorFromCodeLookup.set(0x17f9, () => new InvalidClubTypeError())
 createErrorFromNameLookup.set(
   'InvalidClubType',
   () => new InvalidClubTypeError(),
@@ -3393,7 +3367,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidMintOfNftToBuyError extends Error {
-  readonly code: number = 0x17fb
+  readonly code: number = 0x17fa
   readonly name: string = 'InvalidMintOfNftToBuy'
   constructor() {
     super('The mint of the NFT that the offer was made for is different')
@@ -3403,7 +3377,7 @@ export class InvalidMintOfNftToBuyError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17fb, () => new InvalidMintOfNftToBuyError())
+createErrorFromCodeLookup.set(0x17fa, () => new InvalidMintOfNftToBuyError())
 createErrorFromNameLookup.set(
   'InvalidMintOfNftToBuy',
   () => new InvalidMintOfNftToBuyError(),
@@ -3416,7 +3390,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongAmountOfOfferedTokenError extends Error {
-  readonly code: number = 0x17fc
+  readonly code: number = 0x17fb
   readonly name: string = 'WrongAmountOfOfferedToken'
   constructor() {
     super('Wrong amount of offered token')
@@ -3427,7 +3401,7 @@ export class WrongAmountOfOfferedTokenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17fc,
+  0x17fb,
   () => new WrongAmountOfOfferedTokenError(),
 )
 createErrorFromNameLookup.set(
@@ -3442,7 +3416,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class CanNotUpdateGovernanceConfigError extends Error {
-  readonly code: number = 0x17fd
+  readonly code: number = 0x17fc
   readonly name: string = 'CanNotUpdateGovernanceConfig'
   constructor() {
     super('Can not update governance with proposals in voting state')
@@ -3453,7 +3427,7 @@ export class CanNotUpdateGovernanceConfigError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17fd,
+  0x17fc,
   () => new CanNotUpdateGovernanceConfigError(),
 )
 createErrorFromNameLookup.set(
@@ -3468,7 +3442,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class UpdateGovernanceProposalActiveError extends Error {
-  readonly code: number = 0x17fe
+  readonly code: number = 0x17fd
   readonly name: string = 'UpdateGovernanceProposalActive'
   constructor() {
     super('Update governance proposal active')
@@ -3479,7 +3453,7 @@ export class UpdateGovernanceProposalActiveError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x17fe,
+  0x17fd,
   () => new UpdateGovernanceProposalActiveError(),
 )
 createErrorFromNameLookup.set(
@@ -3494,7 +3468,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidProposalStateError extends Error {
-  readonly code: number = 0x17ff
+  readonly code: number = 0x17fe
   readonly name: string = 'InvalidProposalState'
   constructor() {
     super('Invalid proposal state')
@@ -3504,7 +3478,7 @@ export class InvalidProposalStateError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x17ff, () => new InvalidProposalStateError())
+createErrorFromCodeLookup.set(0x17fe, () => new InvalidProposalStateError())
 createErrorFromNameLookup.set(
   'InvalidProposalState',
   () => new InvalidProposalStateError(),
@@ -3517,7 +3491,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ChangeClubConfigGovernanceAlredyCreatedError extends Error {
-  readonly code: number = 0x1800
+  readonly code: number = 0x17ff
   readonly name: string = 'ChangeClubConfigGovernanceAlredyCreated'
   constructor() {
     super('Change club config governance alredy created')
@@ -3531,7 +3505,7 @@ export class ChangeClubConfigGovernanceAlredyCreatedError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1800,
+  0x17ff,
   () => new ChangeClubConfigGovernanceAlredyCreatedError(),
 )
 createErrorFromNameLookup.set(
@@ -3546,7 +3520,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidAuthorityToStartStakingError extends Error {
-  readonly code: number = 0x1801
+  readonly code: number = 0x1800
   readonly name: string = 'InvalidAuthorityToStartStaking'
   constructor() {
     super('Invalid role to start staking')
@@ -3557,7 +3531,7 @@ export class InvalidAuthorityToStartStakingError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1801,
+  0x1800,
   () => new InvalidAuthorityToStartStakingError(),
 )
 createErrorFromNameLookup.set(
@@ -3572,7 +3546,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidDepositRecordStateError extends Error {
-  readonly code: number = 0x1802
+  readonly code: number = 0x1801
   readonly name: string = 'InvalidDepositRecordState'
   constructor() {
     super('Invalid DepositRecord State')
@@ -3583,7 +3557,7 @@ export class InvalidDepositRecordStateError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1802,
+  0x1801,
   () => new InvalidDepositRecordStateError(),
 )
 createErrorFromNameLookup.set(
@@ -3598,7 +3572,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ReservedRightsCannotBeOverriddenError extends Error {
-  readonly code: number = 0x1803
+  readonly code: number = 0x1802
   readonly name: string = 'ReservedRightsCannotBeOverridden'
   constructor() {
     super('Reserved rights cannot be overridden')
@@ -3609,7 +3583,7 @@ export class ReservedRightsCannotBeOverriddenError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1803,
+  0x1802,
   () => new ReservedRightsCannotBeOverriddenError(),
 )
 createErrorFromNameLookup.set(
@@ -3624,7 +3598,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ReservedRightsCannotSetAfterFundraiseError extends Error {
-  readonly code: number = 0x1804
+  readonly code: number = 0x1803
   readonly name: string = 'ReservedRightsCannotSetAfterFundraise'
   constructor() {
     super('Reserved rights cannot be set after fundraise')
@@ -3635,7 +3609,7 @@ export class ReservedRightsCannotSetAfterFundraiseError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1804,
+  0x1803,
   () => new ReservedRightsCannotSetAfterFundraiseError(),
 )
 createErrorFromNameLookup.set(
@@ -3650,7 +3624,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class WrongTreasuryForClubError extends Error {
-  readonly code: number = 0x1805
+  readonly code: number = 0x1804
   readonly name: string = 'WrongTreasuryForClub'
   constructor() {
     super('Wrong treasury for club')
@@ -3660,7 +3634,7 @@ export class WrongTreasuryForClubError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1805, () => new WrongTreasuryForClubError())
+createErrorFromCodeLookup.set(0x1804, () => new WrongTreasuryForClubError())
 createErrorFromNameLookup.set(
   'WrongTreasuryForClub',
   () => new WrongTreasuryForClubError(),
@@ -3673,7 +3647,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotUniqueIndividualRightError extends Error {
-  readonly code: number = 0x1806
+  readonly code: number = 0x1805
   readonly name: string = 'NotUniqueIndividualRight'
   constructor() {
     super('Each pubkey for which individual rights is reserved must be unique')
@@ -3683,7 +3657,7 @@ export class NotUniqueIndividualRightError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1806, () => new NotUniqueIndividualRightError())
+createErrorFromCodeLookup.set(0x1805, () => new NotUniqueIndividualRightError())
 createErrorFromNameLookup.set(
   'NotUniqueIndividualRight',
   () => new NotUniqueIndividualRightError(),
@@ -3696,7 +3670,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class IndividualRightNotExistsError extends Error {
-  readonly code: number = 0x1807
+  readonly code: number = 0x1806
   readonly name: string = 'IndividualRightNotExists'
   constructor() {
     super('Individual right for authority does not exist')
@@ -3706,7 +3680,7 @@ export class IndividualRightNotExistsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1807, () => new IndividualRightNotExistsError())
+createErrorFromCodeLookup.set(0x1806, () => new IndividualRightNotExistsError())
 createErrorFromNameLookup.set(
   'IndividualRightNotExists',
   () => new IndividualRightNotExistsError(),
@@ -3719,7 +3693,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class NotEnoughVoteRightsError extends Error {
-  readonly code: number = 0x1808
+  readonly code: number = 0x1807
   readonly name: string = 'NotEnoughVoteRights'
   constructor() {
     super('Not enought vote rights to vote on this proposal')
@@ -3729,7 +3703,7 @@ export class NotEnoughVoteRightsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1808, () => new NotEnoughVoteRightsError())
+createErrorFromCodeLookup.set(0x1807, () => new NotEnoughVoteRightsError())
 createErrorFromNameLookup.set(
   'NotEnoughVoteRights',
   () => new NotEnoughVoteRightsError(),
@@ -3742,7 +3716,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class CannotAddAndRemoveAllocationError extends Error {
-  readonly code: number = 0x1809
+  readonly code: number = 0x1808
   readonly name: string = 'CannotAddAndRemoveAllocation'
   constructor() {
     super('You cannot add and remove allocation at the same time')
@@ -3753,7 +3727,7 @@ export class CannotAddAndRemoveAllocationError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x1809,
+  0x1808,
   () => new CannotAddAndRemoveAllocationError(),
 )
 createErrorFromNameLookup.set(
@@ -3768,7 +3742,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidFundraiseCapAmountError extends Error {
-  readonly code: number = 0x180a
+  readonly code: number = 0x1809
   readonly name: string = 'InvalidFundraiseCapAmount'
   constructor() {
     super('Invalid fundraise cap amount')
@@ -3779,12 +3753,182 @@ export class InvalidFundraiseCapAmountError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x180a,
+  0x1809,
   () => new InvalidFundraiseCapAmountError(),
 )
 createErrorFromNameLookup.set(
   'InvalidFundraiseCapAmount',
   () => new InvalidFundraiseCapAmountError(),
+)
+
+/**
+ * WrongGovernanceForProposalType: 'The passed governance doesn't match the proposal type'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class WrongGovernanceForProposalTypeError extends Error {
+  readonly code: number = 0x180a
+  readonly name: string = 'WrongGovernanceForProposalType'
+  constructor() {
+    super("The passed governance doesn't match the proposal type")
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, WrongGovernanceForProposalTypeError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(
+  0x180a,
+  () => new WrongGovernanceForProposalTypeError(),
+)
+createErrorFromNameLookup.set(
+  'WrongGovernanceForProposalType',
+  () => new WrongGovernanceForProposalTypeError(),
+)
+
+/**
+ * WrongProposalStatus: 'Proposal status error'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class WrongProposalStatusError extends Error {
+  readonly code: number = 0x180b
+  readonly name: string = 'WrongProposalStatus'
+  constructor() {
+    super('Proposal status error')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, WrongProposalStatusError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x180b, () => new WrongProposalStatusError())
+createErrorFromNameLookup.set(
+  'WrongProposalStatus',
+  () => new WrongProposalStatusError(),
+)
+
+/**
+ * WrongOfferStatus: 'Offer status error'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class WrongOfferStatusError extends Error {
+  readonly code: number = 0x180c
+  readonly name: string = 'WrongOfferStatus'
+  constructor() {
+    super('Offer status error')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, WrongOfferStatusError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x180c, () => new WrongOfferStatusError())
+createErrorFromNameLookup.set(
+  'WrongOfferStatus',
+  () => new WrongOfferStatusError(),
+)
+
+/**
+ * NoActiveProposalsForGovernanceAllowed: 'No active proposals for governance allowed'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class NoActiveProposalsForGovernanceAllowedError extends Error {
+  readonly code: number = 0x180d
+  readonly name: string = 'NoActiveProposalsForGovernanceAllowed'
+  constructor() {
+    super('No active proposals for governance allowed')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, NoActiveProposalsForGovernanceAllowedError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(
+  0x180d,
+  () => new NoActiveProposalsForGovernanceAllowedError(),
+)
+createErrorFromNameLookup.set(
+  'NoActiveProposalsForGovernanceAllowed',
+  () => new NoActiveProposalsForGovernanceAllowedError(),
+)
+
+/**
+ * InvalidRealmForClub: 'Realm isn't valid for club'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidRealmForClubError extends Error {
+  readonly code: number = 0x180e
+  readonly name: string = 'InvalidRealmForClub'
+  constructor() {
+    super("Realm isn't valid for club")
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidRealmForClubError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x180e, () => new InvalidRealmForClubError())
+createErrorFromNameLookup.set(
+  'InvalidRealmForClub',
+  () => new InvalidRealmForClubError(),
+)
+
+/**
+ * NoActiveProposalsAllowed: 'There should be no active proposals'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class NoActiveProposalsAllowedError extends Error {
+  readonly code: number = 0x180f
+  readonly name: string = 'NoActiveProposalsAllowed'
+  constructor() {
+    super('There should be no active proposals')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, NoActiveProposalsAllowedError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x180f, () => new NoActiveProposalsAllowedError())
+createErrorFromNameLookup.set(
+  'NoActiveProposalsAllowed',
+  () => new NoActiveProposalsAllowedError(),
+)
+
+/**
+ * WrongProposalTypeForInstruction: 'Cannot insert that instruction in this type of proposal'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class WrongProposalTypeForInstructionError extends Error {
+  readonly code: number = 0x1810
+  readonly name: string = 'WrongProposalTypeForInstruction'
+  constructor() {
+    super('Cannot insert that instruction in this type of proposal')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, WrongProposalTypeForInstructionError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(
+  0x1810,
+  () => new WrongProposalTypeForInstructionError(),
+)
+createErrorFromNameLookup.set(
+  'WrongProposalTypeForInstruction',
+  () => new WrongProposalTypeForInstructionError(),
 )
 
 /**
@@ -3794,7 +3938,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class VotingProposalExistsError extends Error {
-  readonly code: number = 0x180b
+  readonly code: number = 0x1811
   readonly name: string = 'VotingProposalExists'
   constructor() {
     super('Voting proposals exist in this club')
@@ -3804,10 +3948,292 @@ export class VotingProposalExistsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x180b, () => new VotingProposalExistsError())
+createErrorFromCodeLookup.set(0x1811, () => new VotingProposalExistsError())
 createErrorFromNameLookup.set(
   'VotingProposalExists',
   () => new VotingProposalExistsError(),
+)
+
+/**
+ * InvalidFinancialRecord: 'Invalid financial record'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidFinancialRecordError extends Error {
+  readonly code: number = 0x1812
+  readonly name: string = 'InvalidFinancialRecord'
+  constructor() {
+    super('Invalid financial record')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidFinancialRecordError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1812, () => new InvalidFinancialRecordError())
+createErrorFromNameLookup.set(
+  'InvalidFinancialRecord',
+  () => new InvalidFinancialRecordError(),
+)
+
+/**
+ * InvalidTreasuryCount: 'Invalid treasury count'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidTreasuryCountError extends Error {
+  readonly code: number = 0x1813
+  readonly name: string = 'InvalidTreasuryCount'
+  constructor() {
+    super('Invalid treasury count')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidTreasuryCountError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1813, () => new InvalidTreasuryCountError())
+createErrorFromNameLookup.set(
+  'InvalidTreasuryCount',
+  () => new InvalidTreasuryCountError(),
+)
+
+/**
+ * InvalidFinancialPower: 'Invalid financial power'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidFinancialPowerError extends Error {
+  readonly code: number = 0x1814
+  readonly name: string = 'InvalidFinancialPower'
+  constructor() {
+    super('Invalid financial power')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidFinancialPowerError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1814, () => new InvalidFinancialPowerError())
+createErrorFromNameLookup.set(
+  'InvalidFinancialPower',
+  () => new InvalidFinancialPowerError(),
+)
+
+/**
+ * InvalidWithdrawal: 'Invalid withdraw'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidWithdrawalError extends Error {
+  readonly code: number = 0x1815
+  readonly name: string = 'InvalidWithdrawal'
+  constructor() {
+    super('Invalid withdraw')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidWithdrawalError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1815, () => new InvalidWithdrawalError())
+createErrorFromNameLookup.set(
+  'InvalidWithdrawal',
+  () => new InvalidWithdrawalError(),
+)
+
+/**
+ * InvalidWithdrawalAmount: 'Invalid withdraw amount'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidWithdrawalAmountError extends Error {
+  readonly code: number = 0x1816
+  readonly name: string = 'InvalidWithdrawalAmount'
+  constructor() {
+    super('Invalid withdraw amount')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidWithdrawalAmountError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1816, () => new InvalidWithdrawalAmountError())
+createErrorFromNameLookup.set(
+  'InvalidWithdrawalAmount',
+  () => new InvalidWithdrawalAmountError(),
+)
+
+/**
+ * InvalidTokenOwnerRecord: 'Invalid token owner record provided'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidTokenOwnerRecordError extends Error {
+  readonly code: number = 0x1817
+  readonly name: string = 'InvalidTokenOwnerRecord'
+  constructor() {
+    super('Invalid token owner record provided')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidTokenOwnerRecordError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1817, () => new InvalidTokenOwnerRecordError())
+createErrorFromNameLookup.set(
+  'InvalidTokenOwnerRecord',
+  () => new InvalidTokenOwnerRecordError(),
+)
+
+/**
+ * InvalidClubName: 'Invalid club name'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidClubNameError extends Error {
+  readonly code: number = 0x1818
+  readonly name: string = 'InvalidClubName'
+  constructor() {
+    super('Invalid club name')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidClubNameError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1818, () => new InvalidClubNameError())
+createErrorFromNameLookup.set(
+  'InvalidClubName',
+  () => new InvalidClubNameError(),
+)
+
+/**
+ * WrongCommunityWeightAddinProgram: 'Community weight addin program is wrong'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class WrongCommunityWeightAddinProgramError extends Error {
+  readonly code: number = 0x1819
+  readonly name: string = 'WrongCommunityWeightAddinProgram'
+  constructor() {
+    super('Community weight addin program is wrong')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, WrongCommunityWeightAddinProgramError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(
+  0x1819,
+  () => new WrongCommunityWeightAddinProgramError(),
+)
+createErrorFromNameLookup.set(
+  'WrongCommunityWeightAddinProgram',
+  () => new WrongCommunityWeightAddinProgramError(),
+)
+
+/**
+ * InvalidPercentage: 'Invalid percentage amount'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidPercentageError extends Error {
+  readonly code: number = 0x181a
+  readonly name: string = 'InvalidPercentage'
+  constructor() {
+    super('Invalid percentage amount')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidPercentageError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x181a, () => new InvalidPercentageError())
+createErrorFromNameLookup.set(
+  'InvalidPercentage',
+  () => new InvalidPercentageError(),
+)
+
+/**
+ * MemberNotWhitelisted: 'Member not added to whitelistings'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class MemberNotWhitelistedError extends Error {
+  readonly code: number = 0x181b
+  readonly name: string = 'MemberNotWhitelisted'
+  constructor() {
+    super('Member not added to whitelistings')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, MemberNotWhitelistedError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x181b, () => new MemberNotWhitelistedError())
+createErrorFromNameLookup.set(
+  'MemberNotWhitelisted',
+  () => new MemberNotWhitelistedError(),
+)
+
+/**
+ * AdminDoesntExist: 'Admin does not exist'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class AdminDoesntExistError extends Error {
+  readonly code: number = 0x181c
+  readonly name: string = 'AdminDoesntExist'
+  constructor() {
+    super('Admin does not exist')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, AdminDoesntExistError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x181c, () => new AdminDoesntExistError())
+createErrorFromNameLookup.set(
+  'AdminDoesntExist',
+  () => new AdminDoesntExistError(),
+)
+
+/**
+ * InvalidInstructionForClub: 'Invalid instruction for club'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidInstructionForClubError extends Error {
+  readonly code: number = 0x181d
+  readonly name: string = 'InvalidInstructionForClub'
+  constructor() {
+    super('Invalid instruction for club')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidInstructionForClubError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(
+  0x181d,
+  () => new InvalidInstructionForClubError(),
+)
+createErrorFromNameLookup.set(
+  'InvalidInstructionForClub',
+  () => new InvalidInstructionForClubError(),
 )
 
 /**
@@ -3817,7 +4243,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class SellPermissionRangeOverlapError extends Error {
-  readonly code: number = 0x180c
+  readonly code: number = 0x181e
   readonly name: string = 'SellPermissionRangeOverlap'
   constructor() {
     super('Sell permission range overlap')
@@ -3828,7 +4254,7 @@ export class SellPermissionRangeOverlapError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x180c,
+  0x181e,
   () => new SellPermissionRangeOverlapError(),
 )
 createErrorFromNameLookup.set(
@@ -3843,7 +4269,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxNumberOfSellPermissionExceededError extends Error {
-  readonly code: number = 0x180d
+  readonly code: number = 0x181f
   readonly name: string = 'MaxNumberOfSellPermissionExceeded'
   constructor() {
     super('Sell permission number exceeded')
@@ -3854,7 +4280,7 @@ export class MaxNumberOfSellPermissionExceededError extends Error {
 }
 
 createErrorFromCodeLookup.set(
-  0x180d,
+  0x181f,
   () => new MaxNumberOfSellPermissionExceededError(),
 )
 createErrorFromNameLookup.set(
@@ -3863,141 +4289,29 @@ createErrorFromNameLookup.set(
 )
 
 /**
- * InvalidFinancialRecord: 'Invalid financial record'
+ * InvalidSellPermissionRange: 'Sell permission from must be less than to'
  *
  * @category Errors
  * @category generated
  */
-export class InvalidFinancialRecordError extends Error {
-  readonly code: number = 0x180e
-  readonly name: string = 'InvalidFinancialRecord'
+export class InvalidSellPermissionRangeError extends Error {
+  readonly code: number = 0x1820
+  readonly name: string = 'InvalidSellPermissionRange'
   constructor() {
-    super('Invalid financial record')
+    super('Sell permission from must be less than to')
     if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidFinancialRecordError)
+      Error.captureStackTrace(this, InvalidSellPermissionRangeError)
     }
   }
 }
 
-createErrorFromCodeLookup.set(0x180e, () => new InvalidFinancialRecordError())
-createErrorFromNameLookup.set(
-  'InvalidFinancialRecord',
-  () => new InvalidFinancialRecordError(),
+createErrorFromCodeLookup.set(
+  0x1820,
+  () => new InvalidSellPermissionRangeError(),
 )
-
-/**
- * InvalidTreasuryCount: 'Invalid treasury count'
- *
- * @category Errors
- * @category generated
- */
-export class InvalidTreasuryCountError extends Error {
-  readonly code: number = 0x180f
-  readonly name: string = 'InvalidTreasuryCount'
-  constructor() {
-    super('Invalid treasury count')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidTreasuryCountError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x180f, () => new InvalidTreasuryCountError())
 createErrorFromNameLookup.set(
-  'InvalidTreasuryCount',
-  () => new InvalidTreasuryCountError(),
-)
-
-/**
- * InvalidFinancialPower: 'Invalid financial power'
- *
- * @category Errors
- * @category generated
- */
-export class InvalidFinancialPowerError extends Error {
-  readonly code: number = 0x1810
-  readonly name: string = 'InvalidFinancialPower'
-  constructor() {
-    super('Invalid financial power')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidFinancialPowerError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x1810, () => new InvalidFinancialPowerError())
-createErrorFromNameLookup.set(
-  'InvalidFinancialPower',
-  () => new InvalidFinancialPowerError(),
-)
-
-/**
- * InvalidWithdrawal: 'Invalid withdraw'
- *
- * @category Errors
- * @category generated
- */
-export class InvalidWithdrawalError extends Error {
-  readonly code: number = 0x1811
-  readonly name: string = 'InvalidWithdrawal'
-  constructor() {
-    super('Invalid withdraw')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidWithdrawalError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x1811, () => new InvalidWithdrawalError())
-createErrorFromNameLookup.set(
-  'InvalidWithdrawal',
-  () => new InvalidWithdrawalError(),
-)
-
-/**
- * InvalidWithdrawalAmount: 'Invalid withdraw amount'
- *
- * @category Errors
- * @category generated
- */
-export class InvalidWithdrawalAmountError extends Error {
-  readonly code: number = 0x1812
-  readonly name: string = 'InvalidWithdrawalAmount'
-  constructor() {
-    super('Invalid withdraw amount')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidWithdrawalAmountError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x1812, () => new InvalidWithdrawalAmountError())
-createErrorFromNameLookup.set(
-  'InvalidWithdrawalAmount',
-  () => new InvalidWithdrawalAmountError(),
-)
-
-/**
- * InvalidTokenOwnerRecord: 'Invalid token owner record provided'
- *
- * @category Errors
- * @category generated
- */
-export class InvalidTokenOwnerRecordError extends Error {
-  readonly code: number = 0x1813
-  readonly name: string = 'InvalidTokenOwnerRecord'
-  constructor() {
-    super('Invalid token owner record provided')
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, InvalidTokenOwnerRecordError)
-    }
-  }
-}
-
-createErrorFromCodeLookup.set(0x1813, () => new InvalidTokenOwnerRecordError())
-createErrorFromNameLookup.set(
-  'InvalidTokenOwnerRecord',
-  () => new InvalidTokenOwnerRecordError(),
+  'InvalidSellPermissionRange',
+  () => new InvalidSellPermissionRangeError(),
 )
 
 /**

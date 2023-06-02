@@ -8,16 +8,12 @@ export type EventStorage = EntityStorage<ParsedEvents>
 // in this vector you can include the properties of several
 // events that are BN in order to be able to cast them
 const mappedBNProps: string[] = [
-  'depositAmount',
-  'offeredAmount',
-  'wantedAmount',
-  'amount',
-  'withdrawalAmount',
   'capAmount',
+  'amount',
   'amountOfRights',
   'price',
   'amountToBuy',
-  'transferAmount',
+  'usdcAmount',
 ]
 
 // in this vector you can include the properties of several

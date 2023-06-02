@@ -51,11 +51,11 @@ export async function createAccountStats(
   return new AccountTimeSeriesStatsManager<ClubProgramAccountStats>(
     {
       blockchainId,
+      account,
       series: [accessTimeSeries], // place your other aggregated stats here
       aggregate(args) {
         return statsAggregator.aggregate(args)
       },
-      account,
       type: IndexableEntityType.State,
     },
     indexerApi,

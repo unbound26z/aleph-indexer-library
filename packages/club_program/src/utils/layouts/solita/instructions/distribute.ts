@@ -45,7 +45,6 @@ export const distributeStruct = new beet.FixableBeetArgsStruct<
  * @property [] escrowProgram
  * @property [_writable_] treasury
  * @property [_writable_] tokenLedger
- * @property [_writable_] ledgerEntry
  * @property [_writable_] profit
  * @property [_writable_] vault
  * @property [_writable_] profitToken
@@ -63,7 +62,6 @@ export type DistributeInstructionAccounts = {
   escrowProgram: web3.PublicKey
   treasury: web3.PublicKey
   tokenLedger: web3.PublicKey
-  ledgerEntry: web3.PublicKey
   profit: web3.PublicKey
   vault: web3.PublicKey
   profitToken: web3.PublicKey
@@ -131,11 +129,6 @@ export function createDistributeInstruction(
     },
     {
       pubkey: accounts.tokenLedger,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.ledgerEntry,
       isWritable: true,
       isSigner: false,
     },

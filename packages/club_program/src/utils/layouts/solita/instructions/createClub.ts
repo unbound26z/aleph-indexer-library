@@ -8,6 +8,8 @@
 import * as splToken from '@solana/spl-token'
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import { ClubType, clubTypeBeet } from '../types/ClubType.js'
+import { RolesDto, rolesDtoBeet } from '../types/RolesDto.js'
 import { KycConfig, kycConfigBeet } from '../types/KycConfig.js'
 
 /**
@@ -17,8 +19,8 @@ import { KycConfig, kycConfigBeet } from '../types/KycConfig.js'
  */
 export type CreateClubInstructionArgs = {
   clubName: string
-  clubType: number
-  roles: Uint8Array[]
+  clubType: ClubType
+  roles: RolesDto[]
   ownerRole: string
   defaultRole: beet.COption<string>
   kycConfig: beet.COption<KycConfig>
@@ -36,8 +38,8 @@ export const createClubStruct = new beet.FixableBeetArgsStruct<
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['clubName', beet.utf8String],
-    ['clubType', beet.u8],
-    ['roles', beet.array(beet.bytes)],
+    ['clubType', clubTypeBeet],
+    ['roles', beet.array(rolesDtoBeet)],
     ['ownerRole', beet.utf8String],
     ['defaultRole', beet.coption(beet.utf8String)],
     ['kycConfig', beet.coption(kycConfigBeet)],
@@ -47,15 +49,9 @@ export const createClubStruct = new beet.FixableBeetArgsStruct<
 /**
  * Accounts required by the _createClub_ instruction
  *
- * @property [_writable_] realm
- * @property [] ogRealm
- * @property [_writable_] realmAuthority
- * @property [_writable_] communityTokenHoldingAddress
- * @property [_writable_] realmConfig
+ * @property [] realm
+ * @property [] realmConfig
  * @property [_writable_] tokenOwnerRecord
- * @property [] splGovernanceProgram
- * @property [] voterWeightProgram
- * @property [_writable_] communityTokenMint
  * @property [_writable_] clubData
  * @property [_writable_] memberData
  * @property [_writable_, **signer**] payer
@@ -65,14 +61,8 @@ export const createClubStruct = new beet.FixableBeetArgsStruct<
  */
 export type CreateClubInstructionAccounts = {
   realm: web3.PublicKey
-  ogRealm: web3.PublicKey
-  realmAuthority: web3.PublicKey
-  communityTokenHoldingAddress: web3.PublicKey
   realmConfig: web3.PublicKey
   tokenOwnerRecord: web3.PublicKey
-  splGovernanceProgram: web3.PublicKey
-  voterWeightProgram: web3.PublicKey
-  communityTokenMint: web3.PublicKey
   clubData: web3.PublicKey
   memberData: web3.PublicKey
   payer: web3.PublicKey
@@ -108,46 +98,16 @@ export function createCreateClubInstruction(
   const keys: web3.AccountMeta[] = [
     {
       pubkey: accounts.realm,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.ogRealm,
       isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.realmAuthority,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.communityTokenHoldingAddress,
-      isWritable: true,
       isSigner: false,
     },
     {
       pubkey: accounts.realmConfig,
-      isWritable: true,
+      isWritable: false,
       isSigner: false,
     },
     {
       pubkey: accounts.tokenOwnerRecord,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.splGovernanceProgram,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.voterWeightProgram,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.communityTokenMint,
       isWritable: true,
       isSigner: false,
     },

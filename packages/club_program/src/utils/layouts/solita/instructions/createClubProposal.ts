@@ -7,7 +7,7 @@
 
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
-import * as beetSolana from '@metaplex-foundation/beet-solana'
+import { ProposalType, proposalTypeBeet } from '../types/ProposalType.js'
 
 /**
  * @category Instructions
@@ -15,12 +15,11 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
  * @category generated
  */
 export type CreateClubProposalInstructionArgs = {
-  chainId: string
   useDeny: boolean
-  offeredAmount: beet.bignum
-  wantedAmount: beet.bignum
-  action: number
-  dedicatedTaker: beet.COption<web3.PublicKey>
+  proposalType: ProposalType
+  name: string
+  description: string
+  options: string[]
 }
 /**
  * @category Instructions
@@ -34,12 +33,11 @@ export const createClubProposalStruct = new beet.FixableBeetArgsStruct<
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['chainId', beet.utf8String],
     ['useDeny', beet.bool],
-    ['offeredAmount', beet.u64],
-    ['wantedAmount', beet.u64],
-    ['action', beet.u8],
-    ['dedicatedTaker', beet.coption(beetSolana.publicKey)],
+    ['proposalType', proposalTypeBeet],
+    ['name', beet.utf8String],
+    ['description', beet.utf8String],
+    ['options', beet.array(beet.utf8String)],
   ],
   'CreateClubProposalInstructionArgs',
 )
@@ -51,21 +49,16 @@ export const createClubProposalStruct = new beet.FixableBeetArgsStruct<
  * @property [] governanceAuthority
  * @property [] realmConfig
  * @property [_writable_] proposal
- * @property [_writable_] proposalTransactionAddress
  * @property [_writable_] tokenOwnerRecord
  * @property [] splGovernanceProgram
  * @property [] communityTokenMint
  * @property [_writable_, **signer**] payer
  * @property [] voterWeightRecord
- * @property [_writable_] offer
- * @property [_writable_] makerOfferedTokens
- * @property [_writable_] escrowedWantedTokens
- * @property [] makerWantedAuthority
- * @property [] makerOfferedAuthority
+ * @property [_writable_] maxVoterWeightRecord
  * @property [] treasuryData
- * @property [] proposalMetadata
+ * @property [_writable_] proposalMetadata
  * @property [] clubData
- * @property [] wantedTokensMint
+ * @property [] memberData
  * @category Instructions
  * @category CreateClubProposal
  * @category generated
@@ -76,21 +69,16 @@ export type CreateClubProposalInstructionAccounts = {
   governanceAuthority: web3.PublicKey
   realmConfig: web3.PublicKey
   proposal: web3.PublicKey
-  proposalTransactionAddress: web3.PublicKey
   tokenOwnerRecord: web3.PublicKey
   splGovernanceProgram: web3.PublicKey
   communityTokenMint: web3.PublicKey
   payer: web3.PublicKey
   voterWeightRecord: web3.PublicKey
-  offer: web3.PublicKey
-  makerOfferedTokens: web3.PublicKey
-  escrowedWantedTokens: web3.PublicKey
-  makerWantedAuthority: web3.PublicKey
-  makerOfferedAuthority: web3.PublicKey
+  maxVoterWeightRecord: web3.PublicKey
   treasuryData: web3.PublicKey
   proposalMetadata: web3.PublicKey
   clubData: web3.PublicKey
-  wantedTokensMint: web3.PublicKey
+  memberData: web3.PublicKey
   systemProgram?: web3.PublicKey
   rent?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
@@ -146,11 +134,6 @@ export function createCreateClubProposalInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.proposalTransactionAddress,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
       pubkey: accounts.tokenOwnerRecord,
       isWritable: true,
       isSigner: false,
@@ -176,28 +159,8 @@ export function createCreateClubProposalInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.offer,
+      pubkey: accounts.maxVoterWeightRecord,
       isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.makerOfferedTokens,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.escrowedWantedTokens,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.makerWantedAuthority,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.makerOfferedAuthority,
-      isWritable: false,
       isSigner: false,
     },
     {
@@ -207,7 +170,7 @@ export function createCreateClubProposalInstruction(
     },
     {
       pubkey: accounts.proposalMetadata,
-      isWritable: false,
+      isWritable: true,
       isSigner: false,
     },
     {
@@ -216,7 +179,7 @@ export function createCreateClubProposalInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.wantedTokensMint,
+      pubkey: accounts.memberData,
       isWritable: false,
       isSigner: false,
     },

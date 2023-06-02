@@ -8,6 +8,7 @@
 import * as web3 from '@solana/web3.js'
 import * as beet from '@metaplex-foundation/beet'
 import * as beetSolana from '@metaplex-foundation/beet-solana'
+import { MemberStatus, memberStatusBeet } from '../types/MemberStatus.js'
 
 /**
  * Arguments used to create {@link AllowedMemberData}
@@ -18,7 +19,7 @@ export type AllowedMemberDataArgs = {
   clubData: web3.PublicKey
   memberPubkey: web3.PublicKey
   isMember: boolean
-  status: number
+  status: MemberStatus
   role: string
   joinedAt: beet.bignum
   joinedAtSlot: beet.bignum
@@ -37,7 +38,7 @@ export class AllowedMemberData implements AllowedMemberDataArgs {
     readonly clubData: web3.PublicKey,
     readonly memberPubkey: web3.PublicKey,
     readonly isMember: boolean,
-    readonly status: number,
+    readonly status: MemberStatus,
     readonly role: string,
     readonly joinedAt: beet.bignum,
     readonly joinedAtSlot: beet.bignum,
@@ -166,7 +167,7 @@ export class AllowedMemberData implements AllowedMemberDataArgs {
       clubData: this.clubData.toBase58(),
       memberPubkey: this.memberPubkey.toBase58(),
       isMember: this.isMember,
-      status: this.status,
+      status: 'MemberStatus.' + MemberStatus[this.status],
       role: this.role,
       joinedAt: (() => {
         const x = <{ toNumber: () => number }>this.joinedAt
@@ -209,7 +210,7 @@ export const allowedMemberDataBeet = new beet.FixableBeetStruct<
     ['clubData', beetSolana.publicKey],
     ['memberPubkey', beetSolana.publicKey],
     ['isMember', beet.bool],
-    ['status', beet.u8],
+    ['status', memberStatusBeet],
     ['role', beet.utf8String],
     ['joinedAt', beet.i64],
     ['joinedAtSlot', beet.u64],

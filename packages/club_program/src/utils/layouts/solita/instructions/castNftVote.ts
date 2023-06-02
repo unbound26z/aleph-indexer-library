@@ -25,7 +25,7 @@ export const castNftVoteStruct = new beet.BeetArgsStruct<{
  * @property [] realm
  * @property [_writable_] voterWeightRecord
  * @property [] memberData
- * @property [] clubData
+ * @property [] treasuryData
  * @property [_writable_, **signer**] payer
  * @property [] proposal
  * @category Instructions
@@ -36,7 +36,7 @@ export type CastNftVoteInstructionAccounts = {
   realm: web3.PublicKey
   voterWeightRecord: web3.PublicKey
   memberData: web3.PublicKey
-  clubData: web3.PublicKey
+  treasuryData: web3.PublicKey
   payer: web3.PublicKey
   proposal: web3.PublicKey
   systemProgram?: web3.PublicKey
@@ -79,7 +79,7 @@ export function createCastNftVoteInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.clubData,
+      pubkey: accounts.treasuryData,
       isWritable: false,
       isSigner: false,
     },

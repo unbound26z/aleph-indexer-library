@@ -6,20 +6,28 @@ export * from './types/index.js'
 import {
   ClubData,
   ClubDataArgs,
+  WhitelistingData,
+  WhitelistingDataArgs,
+  Admins,
+  AdminsArgs,
+  ClubVault,
+  ClubVaultArgs,
   ClubVaultData,
   ClubVaultDataArgs,
+  Withdrawal,
+  WithdrawalArgs,
+  WithdrawalData,
+  WithdrawalDataArgs,
   FundraiseConfig,
   FundraiseConfigArgs,
   FinancialRecord,
   FinancialRecordArgs,
   FinancialRecordOffer,
   FinancialRecordOfferArgs,
-  FinancialRecordDepricated,
-  FinancialRecordDepricatedArgs,
-  MagicEdenData,
-  MagicEdenDataArgs,
   MaxVoterWeightRecord,
   MaxVoterWeightRecordArgs,
+  VoterWeightRecord,
+  VoterWeightRecordArgs,
   AllowedMemberData,
   AllowedMemberDataArgs,
   NftVoteRecord,
@@ -30,16 +38,10 @@ import {
   StakeConfigArgs,
   StakeRecord,
   StakeRecordArgs,
-  TransferProfitData,
-  TransferProfitDataArgs,
   TreasuryData,
   TreasuryDataArgs,
   UniverseMetadata,
   UniverseMetadataArgs,
-  VoterWeightRecord,
-  VoterWeightRecordArgs,
-  WithdrawalData,
-  WithdrawalDataArgs,
 } from './accounts/index.js'
 
 import {
@@ -47,20 +49,25 @@ import {
   KycConfig,
   RolesDto,
   UpdateRoleWeight,
+  AdminConfig,
+  FundraiseFeeConfig,
+  OtcFeeConfig,
+  Offer,
   CustomAllocation,
   Allocation,
   TradedRight,
   DepositRecord,
-  Order,
-  UpdateMemberDto,
-  Offer,
-  SellPermissionDto,
-  NftStakeRecord,
+  SellPermission,
+  UpdateGovernanceConfigInput,
   GovernanceConfig,
+  UpdateMemberDto,
+  NftStakeRecord,
   IndividualRight,
   ReservedRights,
-  SellPermission,
-  AddSpcInstructionData,
+  GovernanceDto,
+  SellPermissionDto,
+  TreasuryRoleConfig,
+  TreasuryRolesDto,
   SetGovCfgDto,
   KycError,
   KycLocation,
@@ -69,22 +76,29 @@ import {
   UpdateMembersForRole,
   ClubAction,
   SupportType,
-  TradedRightType,
-  ProfitType,
-  UpdateAllocationAction,
-  MagicEdenInstruction,
-  MemberStatus,
+  WhitelistingAction,
+  AdminPermission,
+  AdminStatus,
   OfferStatus,
   OfferType,
-  ProposalAction,
+  InitializeType,
+  TradedRightType,
+  UpdateAllocationAction,
+  FundraiseAction,
+  GovernanceType,
+  VoteThresholdPercentage,
+  VoteTipping,
+  MemberStatus,
   ProposalType,
   ProposalStatus,
+  ProposalAction,
+  ProposalUpdateStatus,
   StakePeriodType,
   StakeStatus,
   StakeOption,
   UNQNftRarity,
-  VoteThresholdPercentage,
-  VoteTipping,
+  TreasuryAction,
+  AllowType,
   Rarity,
   VoterWeightAction,
 } from './types/index.js'
@@ -97,14 +111,8 @@ export type CreateClubInstruction = {
 
 export const CreateClubAccounts = [
   'realm',
-  'ogRealm',
-  'realmAuthority',
-  'communityTokenHoldingAddress',
   'realmConfig',
   'tokenOwnerRecord',
-  'splGovernanceProgram',
-  'voterWeightProgram',
-  'communityTokenMint',
   'clubData',
   'memberData',
   'payer',
@@ -113,68 +121,44 @@ export const CreateClubAccounts = [
   'systemProgram',
 ]
 
-export type CreateClubVaultInstruction = {
+export type CreateGovernanceInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const CreateClubVaultAccounts = [
-  'clubData',
-  'memberData',
+export const CreateGovernanceAccounts = [
   'splGovernanceProgram',
+  'realm',
+  'realmConfig',
+  'tokenOwnerRecord',
+  'voterWeightRecord',
   'payer',
+  'memberData',
+  'clubData',
+  'treasuryData',
+  'systemProgram',
+]
+
+export type CreateTreasuryInstruction = {
+  programId: PublicKey
+  keys: AccountMeta[]
+  data: Buffer
+}
+
+export const CreateTreasuryAccounts = [
+  'payer',
+  'treasury',
+  'treasuryData',
+  'profit',
+  'memberData',
+  'clubData',
   'vaultData',
   'vault',
-  'treasury',
-  'systemProgram',
-]
-
-export type CreateTreasuryGovernanceInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateTreasuryGovernanceAccounts = [
-  'splGovernanceProgram',
+  'financialRecord',
   'realm',
-  'realmConfig',
-  'realmAuthority',
-  'payer',
+  'splGovernance',
   'tokenOwnerRecord',
-  'governance',
-  'voterWeightRecord',
-  'treasury',
-  'profit',
-  'treasuryData',
-  'memberData',
-  'clubData',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type AddSellPermissionInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const AddSellPermissionAccounts = [
-  'splGovernanceProgram',
-  'realm',
-  'realmConfig',
-  'realmAuthority',
-  'payer',
-  'tokenOwnerRecord',
-  'governance',
-  'governedSpc',
-  'voterWeightRecord',
-  'treasury',
-  'treasuryData',
-  'memberData',
-  'clubData',
   'tokenProgram',
   'systemProgram',
 ]
@@ -186,14 +170,14 @@ export type SupportClubInstruction = {
 }
 
 export const SupportClubAccounts = [
-  'realm',
   'memberData',
   'fundraiseConfig',
-  'financialRecord',
   'treasuryData',
   'clubData',
   'treasury',
+  'financialRecord',
   'payer',
+  'tokenOwnerRecord',
   'tokenProgram',
   'systemProgram',
 ]
@@ -227,21 +211,16 @@ export const CreateClubProposalAccounts = [
   'governanceAuthority',
   'realmConfig',
   'proposal',
-  'proposalTransactionAddress',
   'tokenOwnerRecord',
   'splGovernanceProgram',
   'communityTokenMint',
   'payer',
   'voterWeightRecord',
-  'offer',
-  'makerOfferedTokens',
-  'escrowedWantedTokens',
-  'makerWantedAuthority',
-  'makerOfferedAuthority',
+  'maxVoterWeightRecord',
   'treasuryData',
   'proposalMetadata',
   'clubData',
-  'wantedTokensMint',
+  'memberData',
   'systemProgram',
   'rent',
 ]
@@ -256,6 +235,7 @@ export const AllowMemberAccounts = [
   'memberData',
   'payer',
   'clubData',
+  'realm',
   'systemProgram',
 ]
 
@@ -283,11 +263,9 @@ export type AcceptMembershipInstruction = {
 }
 
 export const AcceptMembershipAccounts = [
+  'realm',
   'memberData',
   'payer',
-  'realm',
-  'communityTokenMint',
-  'splGovernanceProgram',
   'tokenOwnerRecord',
   'clubData',
   'systemProgram',
@@ -308,38 +286,6 @@ export const CancelInvitationAccounts = [
   'systemProgram',
 ]
 
-export type CreateFundraiseInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateFundraiseAccounts = [
-  'memberData',
-  'treasuryData',
-  'treasury',
-  'fundraiseConfig',
-  'payer',
-  'clubData',
-  'systemProgram',
-]
-
-export type FinishFundraiseInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const FinishFundraiseAccounts = [
-  'memberData',
-  'treasuryData',
-  'treasury',
-  'fundraiseConfig',
-  'clubData',
-  'payer',
-  'systemProgram',
-]
-
 export type UpdateVoterWeightInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
@@ -353,153 +299,26 @@ export const UpdateVoterWeightAccounts = [
   'memberData',
   'clubData',
   'payer',
-  'maxVoterWeightRecord',
-  'proposalMetadata',
-  'proposal',
   'systemProgram',
 ]
 
-export type ExecuteTransactionInstruction = {
+export type ExecuteProposalInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const ExecuteTransactionAccounts = [
+export const ExecuteProposalAccounts = [
   'governance',
-  'realm',
   'proposal',
   'proposalTransaction',
   'splGovernanceProgram',
   'payer',
   'proposalMetadata',
-  'offer',
-  'makerOfferedTokens',
-  'escrowedWantedTokenAccount',
-  'maker',
-  'escrowedOfferedTokens',
-  'offeredTokensMint',
-  'wantedTokensMint',
-  'escrowProgram',
-  'treasury',
-  'clubData',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type CancelEscrowInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CancelEscrowAccounts = [
-  'realm',
-  'payer',
-  'memberData',
-  'offer',
-  'makerOfferedTokens',
-  'maker',
-  'escrowedWantedTokens',
-  'escrowedOfferedTokens',
-  'escrowProgram',
-  'treasury',
-  'clubData',
-  'proposal',
-  'tokenProgram',
-  'systemProgram',
-]
-
-export type CreateProposalMetadataInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateProposalMetadataAccounts = [
-  'realm',
-  'clubData',
-  'proposal',
-  'proposalMetadata',
-  'memberData',
-  'governance',
-  'payer',
-  'treasuryData',
-  'systemProgram',
-]
-
-export type CreateWithdrawalProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateWithdrawalProposalAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalTransactionAddress',
-  'tokenOwnerRecord',
-  'splGovernanceProgram',
-  'communityTokenMint',
-  'payer',
-  'voterWeightRecord',
   'treasury',
   'treasuryData',
-  'treasuryToken',
-  'withdrawal',
-  'withdrawalData',
-  'withdrawalMint',
-  'proposalMetadata',
   'clubData',
-  'systemProgram',
-  'rent',
   'tokenProgram',
-]
-
-export type ExecuteWithdrawalTransactionInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteWithdrawalTransactionAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalMetadata',
-  'splGovernanceProgram',
-  'payer',
-  'treasury',
-  'treasuryToken',
-  'treasuryData',
-  'withdrawal',
-  'withdrawalData',
-  'withdrawalMint',
-  'proposalTransaction',
-  'transferProfitData',
-  'clubData',
-  'escrowProgram',
-  'systemProgram',
-  'tokenProgram',
-  'rent',
-]
-
-export type UpdateVoterWeightForGovernanceInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const UpdateVoterWeightForGovernanceAccounts = [
-  'realm',
-  'voterWeightRecord',
-  'memberData',
-  'clubData',
-  'payer',
   'systemProgram',
 ]
 
@@ -517,7 +336,6 @@ export const DistributeAccounts = [
   'escrowProgram',
   'treasury',
   'tokenLedger',
-  'ledgerEntry',
   'profit',
   'vault',
   'profitToken',
@@ -526,51 +344,6 @@ export const DistributeAccounts = [
   'tokenProgram',
   'systemProgram',
   'rent',
-]
-
-export type TransferProfitInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const TransferProfitAccounts = [
-  'clubData',
-  'payer',
-  'treasury',
-  'treasuryToken',
-  'treasuryData',
-  'profit',
-  'transferProfit',
-  'proposal',
-  'profitToken',
-  'memberData',
-  'tokenProgram',
-  'systemProgram',
-]
-
-export type CreateWithdrawalGovernanceInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateWithdrawalGovernanceAccounts = [
-  'splGovernanceProgram',
-  'realm',
-  'realmConfig',
-  'realmAuthority',
-  'payer',
-  'tokenOwnerRecord',
-  'governance',
-  'voterWeightRecord',
-  'treasury',
-  'treasuryData',
-  'memberData',
-  'clubData',
-  'vault',
-  'tokenProgram',
-  'systemProgram',
 ]
 
 export type CastNftVoteInstruction = {
@@ -583,7 +356,7 @@ export const CastNftVoteAccounts = [
   'realm',
   'voterWeightRecord',
   'memberData',
-  'clubData',
+  'treasuryData',
   'payer',
   'proposal',
   'systemProgram',
@@ -702,214 +475,16 @@ export const InitializeStakingRewardAccounts = [
   'systemProgram',
 ]
 
-export type UpdateProposalDescriptionInstruction = {
+export type UpdateProposalMetadataInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const UpdateProposalDescriptionAccounts = [
-  'proposal',
+export const UpdateProposalMetadataAccounts = [
   'proposalMetadata',
   'payer',
-]
-
-export type CreateMeBuyNowProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateMeBuyNowProposalAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalTransactionAddress',
-  'tokenOwnerRecord',
-  'splGovernanceProgram',
-  'communityTokenMint',
-  'payer',
-  'voterWeightRecord',
-  'treasuryData',
-  'proposalMetadata',
-  'magicEdenData',
   'systemProgram',
-  'rent',
-]
-
-export type CreateMeSellProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateMeSellProposalAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalTransactionAddress',
-  'tokenOwnerRecord',
-  'splGovernanceProgram',
-  'communityTokenMint',
-  'payer',
-  'voterWeightRecord',
-  'clubData',
-  'treasuryData',
-  'treasury',
-  'vault',
-  'proposalMetadata',
-  'magicEdenData',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteMeBuyNowTransactionInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteMeBuyNowTransactionAccounts = [
-  'governance',
-  'realm',
-  'proposal',
-  'proposalTransaction',
-  'splGovernanceProgram',
-  'payer',
-  'escrowProgram',
-  'proposalMetadata',
-  'clubData',
-  'treasury',
-  'offer',
-  'unqEscrowTokens',
-  'magicEdenEscrowedTokenMint',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteMeSellTransactionInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteMeSellTransactionAccounts = [
-  'governance',
-  'realm',
-  'proposal',
-  'proposalTransaction',
-  'splGovernanceProgram',
-  'payer',
-  'escrowProgram',
-  'clubData',
-  'treasury',
-  'proposalMetadata',
-  'vault',
-  'offer',
-  'nativeMint',
-  'makerWantedToken',
-  'unqEscrowTokens',
-  'magicEdenEscrowedTokenMint',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteMeBuyNowInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteMeBuyNowAccounts = [
-  'payer',
-  'clubData',
-  'treasury',
-  'treasuryData',
-  'escrowProgram',
-  'offer',
-  'magicEdenAccountsHolder',
-  'sellersWallet',
-  'magicEdenExerchina',
-  'magicEdenEscrowedToken',
-  'magicEdenEscrowedTokenMint',
-  'magicEdenEscrowedTokenMetadata',
-  'magicEdenState1',
-  'escrowedWantedToken',
-  'autExer',
-  'e8cExer',
-  'expoitExer',
-  'magicEdenState2',
-  'magicEdenState3',
-  'onebwExer',
-  'tokenProgram',
-  'associatedTokenProgram',
-  'systemProgram',
-  'rent',
-  'magicEden',
-  'unqEscrowToken',
-  'account13',
-  'account15',
-]
-
-export type ExecuteMeSellInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteMeSellAccounts = [
-  'payer',
-  'clubData',
-  'treasury',
-  'treasuryData',
-  'escrowProgram',
-  'vault',
-  'offer',
-  'meState0',
-  'offeredNftToken',
-  'nftMint',
-  'nftMetadata',
-  'magicEdenExerchina',
-  'autExer',
-  'e8cExer',
-  'magicEdenState1',
-  'magicEdenState2',
-  'onebwExer',
-  'tokenProgram',
-  'associatedTokenProgram',
-  'systemProgram',
-  'rent',
-  'magicEden',
-]
-
-export type ExecuteMeSellCancelInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteMeSellCancelAccounts = [
-  'payer',
-  'clubData',
-  'treasury',
-  'vault',
-  'offer',
-  'offeredNftToken',
-  'nftMint',
-  'escrowProgram',
-  'magicEdenExerchina',
-  'autExer',
-  'e8cExer',
-  'magicEdenState1',
-  'magicEdenState2',
-  'onebwExer',
-  'tokenProgram',
-  'systemProgram',
-  'magicEden',
 ]
 
 export type CreateFinancialOfferInstruction = {
@@ -961,295 +536,8 @@ export const AcceptFinancialOfferAccounts = [
   'treasury',
   'buyerFinancialRecord',
   'sellerFinancialRecord',
+  'buyerTokenOwnerRecord',
   'systemProgram',
-]
-
-export type CreateTransferProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateTransferProposalAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalTransactionAddress',
-  'tokenOwnerRecord',
-  'splGovernanceProgram',
-  'communityTokenMint',
-  'payer',
-  'voterWeightRecord',
-  'treasury',
-  'treasuryData',
-  'proposalMetadata',
-  'clubData',
-  'offer',
-  'destination',
-  'treasuryToken',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteTransferProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteTransferProposalAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalMetadata',
-  'splGovernanceProgram',
-  'payer',
-  'treasury',
-  'treasuryToken',
-  'treasuryData',
-  'proposalTransaction',
-  'clubData',
-  'offer',
-  'tokenLedger',
-  'ledgerEntry',
-  'destination',
-  'escrowProgram',
-  'tokenProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type CreateTransferGovernanceInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateTransferGovernanceAccounts = [
-  'splGovernanceProgram',
-  'realm',
-  'realmConfig',
-  'realmAuthority',
-  'payer',
-  'tokenOwnerRecord',
-  'governance',
-  'voterWeightRecord',
-  'treasury',
-  'treasuryData',
-  'memberData',
-  'clubData',
-  'governedAccount',
-  'tokenProgram',
-  'systemProgram',
-]
-
-export type UpdateGovernanceConfigInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const UpdateGovernanceConfigAccounts = [
-  'realm',
-  'governance',
-  'payer',
-  'clubData',
-  'memberData',
-  'treasury',
-  'treasuryData',
-  'realmConfig',
-  'proposal',
-  'tokenOwnerRecord',
-  'proposalMetadata',
-  'proposalTransaction',
-  'communityTokenMint',
-  'voterWeightRecord',
-  'splGovernance',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteUpdateGovernanceConfigInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteUpdateGovernanceConfigAccounts = [
-  'clubData',
-  'realm',
-  'governance',
-  'proposal',
-  'proposalMetadata',
-  'treasury',
-  'treasuryData',
-  'proposalTransaction',
-  'splGovernanceProgram',
-]
-
-export type CreateUpdateRoleProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateUpdateRoleProposalAccounts = [
-  'realm',
-  'clubData',
-  'proposal',
-  'proposalTransaction',
-  'treasury',
-  'treasuryData',
-  'memberData',
-  'communityMint',
-  'tokenOwnerRecord',
-  'payer',
-  'voterWeightRecord',
-  'governance',
-  'realmConfig',
-  'proposalMetadata',
-  'escrowProgram',
-  'splGovernanceProgram',
-  'systemProgram',
-  'rent',
-]
-
-export type ExecuteUpdateRoleInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteUpdateRoleAccounts = [
-  'clubData',
-  'realm',
-  'proposal',
-  'treasuryData',
-  'proposalTransaction',
-  'proposalMetadata',
-  'governance',
-  'escrowProgram',
-  'splGovernanceProgram',
-]
-
-export type CreateChangeClubConfigGovernanceInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateChangeClubConfigGovernanceAccounts = [
-  'realm',
-  'clubData',
-  'payer',
-  'memberData',
-  'treasury',
-  'treasuryData',
-  'governance',
-  'realmConfig',
-  'realmAuthority',
-  'voterWeightRecord',
-  'tokenOwnerRecord',
-  'goverenedAccount',
-  'splGovernanceProgram',
-  'systemProgram',
-  'tokenProgram',
-]
-
-export type CreateSolseaProposalInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CreateSolseaProposalAccounts = [
-  'realm',
-  'proposal',
-  'proposalTransaction',
-  'offer',
-  'escrowWantedToken',
-  'realmConfig',
-  'makerWantedToken',
-  'offeredTokenMint',
-  'wantedTokenMint',
-  'governance',
-  'clubData',
-  'proposalMetadata',
-  'payer',
-  'memberData',
-  'communityTokenMint',
-  'treasury',
-  'treasuryData',
-  'tokenOwnerRecord',
-  'escrowProgram',
-  'voterWeightRecord',
-  'splGovernance',
-  'systemProgram',
-  'tokenProgram',
-  'rent',
-]
-
-export type ExecuteSolseaTransactionInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const ExecuteSolseaTransactionAccounts = [
-  'clubData',
-  'offer',
-  'solseaEscrow',
-  'authorityAccount',
-  'solseaProfitAccount',
-  'solseaEscrowTokens',
-  'proposalMetadata',
-  'treasury',
-  'maker',
-  'proposal',
-  'proposalTransaction',
-  'memberData',
-  'solseaProgram',
-  'wantedTokenMint',
-  'offeredTokenMint',
-  'escrowWantedToken',
-  'makerWantedToken',
-  'makerOfferedToken',
-  'payer',
-  'splGovernance',
-  'governance',
-  'profitAccount',
-  'escrowProgram',
-  'systemProgram',
-  'tokenProgram',
-  'rent',
-]
-
-export type CancelSolseaOfferInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const CancelSolseaOfferAccounts = [
-  'clubData',
-  'solseaEscrow',
-  'solseaEscrowTokens',
-  'offeredTokenMint',
-  'solseaAuthority',
-  'proposal',
-  'treasury',
-  'offer',
-  'vault',
-  'makerOfferedTokens',
-  'payer',
-  'memberData',
-  'escrowProgram',
-  'solseaProgram',
-  'systemProgram',
-  'tokenProgram',
 ]
 
 export type ReserveRightsInstruction = {
@@ -1281,83 +569,110 @@ export const UpdateAllocationAccounts = [
   'systemProgram',
 ]
 
-export type CreateAddSellPermissionProposalInstruction = {
+export type ConfigureWhitelistingsInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const CreateAddSellPermissionProposalAccounts = [
-  'governance',
+export const ConfigureWhitelistingsAccounts = [
+  'payer',
+  'whitelistingData',
+  'adminsData',
+  'systemProgram',
+]
+
+export type ConfigureAdminsInstruction = {
+  programId: PublicKey
+  keys: AccountMeta[]
+  data: Buffer
+}
+
+export const ConfigureAdminsAccounts = ['admins', 'payer', 'systemProgram']
+
+export type MigrateFinancialsInstruction = {
+  programId: PublicKey
+  keys: AccountMeta[]
+  data: Buffer
+}
+
+export const MigrateFinancialsAccounts = [
+  'clubData',
+  'payer',
+  'payerMemberData',
+  'treasuryData',
+  'member',
+  'memberData',
+  'financialRecord',
+  'fundraiseConfig',
+  'splGovernance',
   'realm',
-  'governanceAuthority',
-  'realmConfig',
-  'proposal',
-  'proposalTransactionAddress',
+  'governingTokenMint',
   'tokenOwnerRecord',
+  'systemProgram',
+]
+
+export type InsertTransactionInstruction = {
+  programId: PublicKey
+  keys: AccountMeta[]
+  data: Buffer
+}
+
+export const InsertTransactionAccounts = [
   'splGovernanceProgram',
+  'governance',
+  'proposal',
+  'proposalMetadata',
+  'treasuryData',
+  'proposalTransaction',
+  'tokenOwnerRecord',
   'communityTokenMint',
   'payer',
-  'voterWeightRecord',
-  'treasuryData',
-  'proposalMetadata',
-  'clubData',
   'rent',
   'systemProgram',
 ]
 
-export type ExecuteSellPermissionTransactionInstruction = {
+export type FundraiseInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const ExecuteSellPermissionTransactionAccounts = [
-  'governance',
-  'realm',
-  'realmConfig',
-  'proposal',
-  'proposalTransaction',
-  'splGovernanceProgram',
-  'tokenOwnerRecord',
-  'voterWeightRecord',
-  'payer',
-  'proposalMetadata',
-  'clubData',
-  'treasuryData',
+export const FundraiseAccounts = [
   'memberData',
-  'clubProgram',
-  'spcGovernance',
-  'spcGovernedAccount',
-  'systemProgram',
-]
-
-export type AddStakeConfigToStakeRecordInstruction = {
-  programId: PublicKey
-  keys: AccountMeta[]
-  data: Buffer
-}
-
-export const AddStakeConfigToStakeRecordAccounts = [
+  'treasuryData',
+  'treasury',
+  'fundraiseConfig',
   'payer',
-  'stakeRecord',
-  'stakeConfig',
+  'clubData',
   'systemProgram',
 ]
 
-export type AddCanLeaveActionInstruction = {
+export type CancelProposalInstruction = {
   programId: PublicKey
   keys: AccountMeta[]
   data: Buffer
 }
 
-export const AddCanLeaveActionAccounts = ['payer', 'clubData', 'systemProgram']
+export const CancelProposalAccounts = [
+  'clubData',
+  'memberData',
+  'offer',
+  'proposalMetadata',
+  'vault',
+  'treasury',
+  'treasuryData',
+  'makerOfferedTokens',
+  'payer',
+  'escrowProgram',
+  'tokenProgram',
+  'systemProgram',
+]
 
 export type ParsedInstructions =
   | CreateClubInstruction
-  | CreateClubVaultInstruction
-  | CreateTreasuryGovernanceInstruction
-  | AddSellPermissionInstruction
+  | CreateGovernanceInstruction
+  | CreateTreasuryInstruction
   | SupportClubInstruction
   | LeaveClubInstruction
   | CreateClubProposalInstruction
@@ -1365,18 +680,9 @@ export type ParsedInstructions =
   | UpdateMemberInstruction
   | AcceptMembershipInstruction
   | CancelInvitationInstruction
-  | CreateFundraiseInstruction
-  | FinishFundraiseInstruction
   | UpdateVoterWeightInstruction
-  | ExecuteTransactionInstruction
-  | CancelEscrowInstruction
-  | CreateProposalMetadataInstruction
-  | CreateWithdrawalProposalInstruction
-  | ExecuteWithdrawalTransactionInstruction
-  | UpdateVoterWeightForGovernanceInstruction
+  | ExecuteProposalInstruction
   | DistributeInstruction
-  | TransferProfitInstruction
-  | CreateWithdrawalGovernanceInstruction
   | CastNftVoteInstruction
   | InitializeStakingInstruction
   | StakeTokensInstruction
@@ -1385,73 +691,59 @@ export type ParsedInstructions =
   | FinishStakingInstruction
   | StartStakingInstruction
   | InitializeStakingRewardInstruction
-  | UpdateProposalDescriptionInstruction
-  | CreateMeBuyNowProposalInstruction
-  | CreateMeSellProposalInstruction
-  | ExecuteMeBuyNowTransactionInstruction
-  | ExecuteMeSellTransactionInstruction
-  | ExecuteMeBuyNowInstruction
-  | ExecuteMeSellInstruction
-  | ExecuteMeSellCancelInstruction
+  | UpdateProposalMetadataInstruction
   | CreateFinancialOfferInstruction
   | CancelFinancialOfferInstruction
   | AcceptFinancialOfferInstruction
-  | CreateTransferProposalInstruction
-  | ExecuteTransferProposalInstruction
-  | CreateTransferGovernanceInstruction
-  | UpdateGovernanceConfigInstruction
-  | ExecuteUpdateGovernanceConfigInstruction
-  | CreateUpdateRoleProposalInstruction
-  | ExecuteUpdateRoleInstruction
-  | CreateChangeClubConfigGovernanceInstruction
-  | CreateSolseaProposalInstruction
-  | ExecuteSolseaTransactionInstruction
-  | CancelSolseaOfferInstruction
   | ReserveRightsInstruction
   | UpdateAllocationInstruction
-  | CreateAddSellPermissionProposalInstruction
-  | ExecuteSellPermissionTransactionInstruction
-  | AddStakeConfigToStakeRecordInstruction
-  | AddCanLeaveActionInstruction
+  | ConfigureWhitelistingsInstruction
+  | ConfigureAdminsInstruction
+  | MigrateFinancialsInstruction
+  | InsertTransactionInstruction
+  | FundraiseInstruction
+  | CancelProposalInstruction
 export type ParsedAccounts =
   | ClubData
+  | WhitelistingData
+  | Admins
+  | ClubVault
   | ClubVaultData
+  | Withdrawal
+  | WithdrawalData
   | FundraiseConfig
   | FinancialRecord
   | FinancialRecordOffer
-  | FinancialRecordDepricated
-  | MagicEdenData
   | MaxVoterWeightRecord
+  | VoterWeightRecord
   | AllowedMemberData
   | NftVoteRecord
   | ProposalMetadata
   | StakeConfig
   | StakeRecord
-  | TransferProfitData
   | TreasuryData
   | UniverseMetadata
-  | VoterWeightRecord
-  | WithdrawalData
 
 export type ParsedAccountsData =
   | ClubDataArgs
+  | WhitelistingDataArgs
+  | AdminsArgs
+  | ClubVaultArgs
   | ClubVaultDataArgs
+  | WithdrawalArgs
+  | WithdrawalDataArgs
   | FundraiseConfigArgs
   | FinancialRecordArgs
   | FinancialRecordOfferArgs
-  | FinancialRecordDepricatedArgs
-  | MagicEdenDataArgs
   | MaxVoterWeightRecordArgs
+  | VoterWeightRecordArgs
   | AllowedMemberDataArgs
   | NftVoteRecordArgs
   | ProposalMetadataArgs
   | StakeConfigArgs
   | StakeRecordArgs
-  | TransferProfitDataArgs
   | TreasuryDataArgs
   | UniverseMetadataArgs
-  | VoterWeightRecordArgs
-  | WithdrawalDataArgs
 
 export type ParsedTypes =
   | KycError
@@ -1461,40 +753,52 @@ export type ParsedTypes =
   | UpdateMembersForRole
   | ClubAction
   | SupportType
-  | TradedRightType
-  | ProfitType
-  | UpdateAllocationAction
-  | MagicEdenInstruction
-  | MemberStatus
+  | WhitelistingAction
+  | AdminPermission
+  | AdminStatus
   | OfferStatus
   | OfferType
-  | ProposalAction
+  | InitializeType
+  | TradedRightType
+  | UpdateAllocationAction
+  | FundraiseAction
+  | GovernanceType
+  | VoteThresholdPercentage
+  | VoteTipping
+  | MemberStatus
   | ProposalType
   | ProposalStatus
+  | ProposalAction
+  | ProposalUpdateStatus
   | StakePeriodType
   | StakeStatus
   | StakeOption
   | UNQNftRarity
-  | VoteThresholdPercentage
-  | VoteTipping
+  | TreasuryAction
+  | AllowType
   | Rarity
   | VoterWeightAction
   | RoleConfig
   | KycConfig
   | RolesDto
   | UpdateRoleWeight
+  | AdminConfig
+  | FundraiseFeeConfig
+  | OtcFeeConfig
+  | Offer
   | CustomAllocation
   | Allocation
   | TradedRight
   | DepositRecord
-  | Order
-  | UpdateMemberDto
-  | Offer
-  | SellPermissionDto
-  | NftStakeRecord
+  | SellPermission
+  | UpdateGovernanceConfigInput
   | GovernanceConfig
+  | UpdateMemberDto
+  | NftStakeRecord
   | IndividualRight
   | ReservedRights
-  | SellPermission
-  | AddSpcInstructionData
+  | GovernanceDto
+  | SellPermissionDto
+  | TreasuryRoleConfig
+  | TreasuryRolesDto
   | SetGovCfgDto

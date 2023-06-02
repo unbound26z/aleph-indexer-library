@@ -7,18 +7,56 @@
 
 import * as beet from '@metaplex-foundation/beet'
 /**
+ * This type is used to derive the {@link SupportType} type as well as the de/serializer.
+ * However don't refer to it in your code but use the {@link SupportType} type instead.
+ *
+ * @category userTypes
+ * @category enums
+ * @category generated
+ * @private
+ */
+export type SupportTypeRecord = {
+  Deposit: { fields: [beet.bignum] }
+  Withdrawal: { fields: [beet.bignum] }
+}
+
+/**
+ * Union type respresenting the SupportType data enum defined in Rust.
+ *
+ * NOTE: that it includes a `__kind` property which allows to narrow types in
+ * switch/if statements.
+ * Additionally `isSupportType*` type guards are exposed below to narrow to a specific variant.
+ *
+ * @category userTypes
  * @category enums
  * @category generated
  */
-export enum SupportType {
-  Deposit,
-  Withdrawal,
-}
+export type SupportType = beet.DataEnumKeyAsKind<SupportTypeRecord>
+
+export const isSupportTypeDeposit = (
+  x: SupportType,
+): x is SupportType & { __kind: 'Deposit' } => x.__kind === 'Deposit'
+export const isSupportTypeWithdrawal = (
+  x: SupportType,
+): x is SupportType & { __kind: 'Withdrawal' } => x.__kind === 'Withdrawal'
 
 /**
  * @category userTypes
  * @category generated
  */
-export const supportTypeBeet = beet.fixedScalarEnum(
-  SupportType,
-) as beet.FixedSizeBeet<SupportType, SupportType>
+export const supportTypeBeet = beet.dataEnum<SupportTypeRecord>([
+  [
+    'Deposit',
+    new beet.BeetArgsStruct<SupportTypeRecord['Deposit']>(
+      [['fields', beet.fixedSizeTuple([beet.u64])]],
+      'SupportTypeRecord["Deposit"]',
+    ),
+  ],
+  [
+    'Withdrawal',
+    new beet.BeetArgsStruct<SupportTypeRecord['Withdrawal']>(
+      [['fields', beet.fixedSizeTuple([beet.u64])]],
+      'SupportTypeRecord["Withdrawal"]',
+    ),
+  ],
+]) as beet.FixableBeet<SupportType, SupportType>

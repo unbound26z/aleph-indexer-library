@@ -10,6 +10,10 @@ import * as beet from '@metaplex-foundation/beet'
 import * as beetSolana from '@metaplex-foundation/beet-solana'
 import { SellPermission, sellPermissionBeet } from '../types/SellPermission.js'
 import { ReservedRights, reservedRightsBeet } from '../types/ReservedRights.js'
+import {
+  TreasuryRoleConfig,
+  treasuryRoleConfigBeet,
+} from '../types/TreasuryRoleConfig.js'
 
 /**
  * Arguments used to create {@link TreasuryData}
@@ -17,6 +21,8 @@ import { ReservedRights, reservedRightsBeet } from '../types/ReservedRights.js'
  * @category generated
  */
 export type TreasuryDataArgs = {
+  clubData: web3.PublicKey
+  realm: web3.PublicKey
   fundraiseCount: number
   treasury: web3.PublicKey
   hasActiveFundraise: boolean
@@ -33,8 +39,10 @@ export type TreasuryDataArgs = {
   transferGovernance: beet.COption<web3.PublicKey>
   changeClubConfigGovernance: beet.COption<web3.PublicKey>
   hasActiveUpdateGovernanceConfig: boolean
-  clubData: web3.PublicKey
   reservedRights: beet.COption<ReservedRights>
+  treasuryRoleConfig: TreasuryRoleConfig[]
+  defaultTreasuryRole: string
+  name: string
 }
 
 export const treasuryDataDiscriminator = [73, 12, 230, 7, 66, 226, 146, 109]
@@ -47,6 +55,8 @@ export const treasuryDataDiscriminator = [73, 12, 230, 7, 66, 226, 146, 109]
  */
 export class TreasuryData implements TreasuryDataArgs {
   private constructor(
+    readonly clubData: web3.PublicKey,
+    readonly realm: web3.PublicKey,
     readonly fundraiseCount: number,
     readonly treasury: web3.PublicKey,
     readonly hasActiveFundraise: boolean,
@@ -63,8 +73,10 @@ export class TreasuryData implements TreasuryDataArgs {
     readonly transferGovernance: beet.COption<web3.PublicKey>,
     readonly changeClubConfigGovernance: beet.COption<web3.PublicKey>,
     readonly hasActiveUpdateGovernanceConfig: boolean,
-    readonly clubData: web3.PublicKey,
     readonly reservedRights: beet.COption<ReservedRights>,
+    readonly treasuryRoleConfig: TreasuryRoleConfig[],
+    readonly defaultTreasuryRole: string,
+    readonly name: string,
   ) {}
 
   /**
@@ -72,6 +84,8 @@ export class TreasuryData implements TreasuryDataArgs {
    */
   static fromArgs(args: TreasuryDataArgs) {
     return new TreasuryData(
+      args.clubData,
+      args.realm,
       args.fundraiseCount,
       args.treasury,
       args.hasActiveFundraise,
@@ -88,8 +102,10 @@ export class TreasuryData implements TreasuryDataArgs {
       args.transferGovernance,
       args.changeClubConfigGovernance,
       args.hasActiveUpdateGovernanceConfig,
-      args.clubData,
       args.reservedRights,
+      args.treasuryRoleConfig,
+      args.defaultTreasuryRole,
+      args.name,
     )
   }
 
@@ -198,6 +214,8 @@ export class TreasuryData implements TreasuryDataArgs {
    */
   pretty() {
     return {
+      clubData: this.clubData.toBase58(),
+      realm: this.realm.toBase58(),
       fundraiseCount: this.fundraiseCount,
       treasury: this.treasury.toBase58(),
       hasActiveFundraise: this.hasActiveFundraise,
@@ -234,8 +252,10 @@ export class TreasuryData implements TreasuryDataArgs {
       transferGovernance: this.transferGovernance,
       changeClubConfigGovernance: this.changeClubConfigGovernance,
       hasActiveUpdateGovernanceConfig: this.hasActiveUpdateGovernanceConfig,
-      clubData: this.clubData.toBase58(),
       reservedRights: this.reservedRights,
+      treasuryRoleConfig: this.treasuryRoleConfig,
+      defaultTreasuryRole: this.defaultTreasuryRole,
+      name: this.name,
     }
   }
 }
@@ -252,6 +272,8 @@ export const treasuryDataBeet = new beet.FixableBeetStruct<
 >(
   [
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
+    ['clubData', beetSolana.publicKey],
+    ['realm', beetSolana.publicKey],
     ['fundraiseCount', beet.u32],
     ['treasury', beetSolana.publicKey],
     ['hasActiveFundraise', beet.bool],
@@ -268,8 +290,10 @@ export const treasuryDataBeet = new beet.FixableBeetStruct<
     ['transferGovernance', beet.coption(beetSolana.publicKey)],
     ['changeClubConfigGovernance', beet.coption(beetSolana.publicKey)],
     ['hasActiveUpdateGovernanceConfig', beet.bool],
-    ['clubData', beetSolana.publicKey],
     ['reservedRights', beet.coption(reservedRightsBeet)],
+    ['treasuryRoleConfig', beet.array(treasuryRoleConfigBeet)],
+    ['defaultTreasuryRole', beet.utf8String],
+    ['name', beet.utf8String],
   ],
   TreasuryData.fromArgs,
   'TreasuryData',

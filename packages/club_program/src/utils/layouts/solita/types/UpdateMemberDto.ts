@@ -6,9 +6,10 @@
  */
 
 import * as beet from '@metaplex-foundation/beet'
+import { MemberStatus, memberStatusBeet } from './MemberStatus.js'
 export type UpdateMemberDto = {
   isMember: beet.COption<boolean>
-  status: beet.COption<number>
+  status: beet.COption<MemberStatus>
   role: beet.COption<string>
 }
 
@@ -20,7 +21,7 @@ export const updateMemberDtoBeet =
   new beet.FixableBeetArgsStruct<UpdateMemberDto>(
     [
       ['isMember', beet.coption(beet.bool)],
-      ['status', beet.coption(beet.u8)],
+      ['status', beet.coption(memberStatusBeet)],
       ['role', beet.coption(beet.utf8String)],
     ],
     'UpdateMemberDto',

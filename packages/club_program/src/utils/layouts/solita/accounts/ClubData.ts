@@ -8,6 +8,7 @@
 import * as web3 from '@solana/web3.js'
 import * as beet from '@metaplex-foundation/beet'
 import * as beetSolana from '@metaplex-foundation/beet-solana'
+import { ClubType, clubTypeBeet } from '../types/ClubType.js'
 import { RoleConfig, roleConfigBeet } from '../types/RoleConfig.js'
 import { KycConfig, kycConfigBeet } from '../types/KycConfig.js'
 
@@ -21,10 +22,9 @@ export type ClubDataArgs = {
   realm: web3.PublicKey
   name: string
   slotCreated: beet.bignum
-  clubType: number
+  clubType: ClubType
   roleConfig: RoleConfig[]
   treasuryCount: number
-  maxVoterWeight: beet.COption<beet.bignum>
   stakeCount: number
   activeStakeCount: number
   hasActiveStaking: boolean
@@ -47,10 +47,9 @@ export class ClubData implements ClubDataArgs {
     readonly realm: web3.PublicKey,
     readonly name: string,
     readonly slotCreated: beet.bignum,
-    readonly clubType: number,
+    readonly clubType: ClubType,
     readonly roleConfig: RoleConfig[],
     readonly treasuryCount: number,
-    readonly maxVoterWeight: beet.COption<beet.bignum>,
     readonly stakeCount: number,
     readonly activeStakeCount: number,
     readonly hasActiveStaking: boolean,
@@ -71,7 +70,6 @@ export class ClubData implements ClubDataArgs {
       args.clubType,
       args.roleConfig,
       args.treasuryCount,
-      args.maxVoterWeight,
       args.stakeCount,
       args.activeStakeCount,
       args.hasActiveStaking,
@@ -200,10 +198,9 @@ export class ClubData implements ClubDataArgs {
         }
         return x
       })(),
-      clubType: this.clubType,
+      clubType: 'ClubType.' + ClubType[this.clubType],
       roleConfig: this.roleConfig,
       treasuryCount: this.treasuryCount,
-      maxVoterWeight: this.maxVoterWeight,
       stakeCount: this.stakeCount,
       activeStakeCount: this.activeStakeCount,
       hasActiveStaking: this.hasActiveStaking,
@@ -230,10 +227,9 @@ export const clubDataBeet = new beet.FixableBeetStruct<
     ['realm', beetSolana.publicKey],
     ['name', beet.utf8String],
     ['slotCreated', beet.u64],
-    ['clubType', beet.u8],
+    ['clubType', clubTypeBeet],
     ['roleConfig', beet.array(roleConfigBeet)],
     ['treasuryCount', beet.u32],
-    ['maxVoterWeight', beet.coption(beet.u64)],
     ['stakeCount', beet.u32],
     ['activeStakeCount', beet.u32],
     ['hasActiveStaking', beet.bool],

@@ -22,11 +22,9 @@ export const acceptMembershipStruct = new beet.BeetArgsStruct<{
 /**
  * Accounts required by the _acceptMembership_ instruction
  *
+ * @property [] realm
  * @property [_writable_] memberData
  * @property [_writable_, **signer**] payer
- * @property [_writable_] realm
- * @property [] communityTokenMint
- * @property [] splGovernanceProgram
  * @property [_writable_] tokenOwnerRecord
  * @property [_writable_] clubData
  * @category Instructions
@@ -34,11 +32,9 @@ export const acceptMembershipStruct = new beet.BeetArgsStruct<{
  * @category generated
  */
 export type AcceptMembershipInstructionAccounts = {
+  realm: web3.PublicKey
   memberData: web3.PublicKey
   payer: web3.PublicKey
-  realm: web3.PublicKey
-  communityTokenMint: web3.PublicKey
-  splGovernanceProgram: web3.PublicKey
   tokenOwnerRecord: web3.PublicKey
   clubData: web3.PublicKey
   systemProgram?: web3.PublicKey
@@ -66,6 +62,11 @@ export function createAcceptMembershipInstruction(
   })
   const keys: web3.AccountMeta[] = [
     {
+      pubkey: accounts.realm,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
       pubkey: accounts.memberData,
       isWritable: true,
       isSigner: false,
@@ -74,21 +75,6 @@ export function createAcceptMembershipInstruction(
       pubkey: accounts.payer,
       isWritable: true,
       isSigner: true,
-    },
-    {
-      pubkey: accounts.realm,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.communityTokenMint,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.splGovernanceProgram,
-      isWritable: false,
-      isSigner: false,
     },
     {
       pubkey: accounts.tokenOwnerRecord,

@@ -8,6 +8,10 @@
 import * as splToken from '@solana/spl-token'
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import {
+  StakePeriodType,
+  stakePeriodTypeBeet,
+} from '../types/StakePeriodType.js'
 
 /**
  * @category Instructions
@@ -17,7 +21,7 @@ import * as web3 from '@solana/web3.js'
 export type InitializeStakingInstructionArgs = {
   stakeName: string
   capAmount: beet.bignum
-  stakePeriod: number
+  stakePeriod: StakePeriodType
 }
 /**
  * @category Instructions
@@ -33,7 +37,7 @@ export const initializeStakingStruct = new beet.FixableBeetArgsStruct<
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['stakeName', beet.utf8String],
     ['capAmount', beet.u64],
-    ['stakePeriod', beet.u8],
+    ['stakePeriod', stakePeriodTypeBeet],
   ],
   'InitializeStakingInstructionArgs',
 )

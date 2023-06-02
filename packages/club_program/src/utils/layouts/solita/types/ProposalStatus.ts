@@ -27,13 +27,18 @@ export enum ProposalStatus {
   CreatedDiscussion,
   CreatedWithdrawal,
   ExecutedWithdrawal,
-  CanceledByOwner,
+  CancelledByOwner,
   CreatedUpdateGovernanceConfig,
   ExecutedUpdateGovernanceConfig,
   CreatedUpdateRoleConfig,
   ExecutedUpdateRoleConfig,
   ExecutedSolseaBuy,
   ExecutedSolseaSell,
+  CreatedMetadata,
+  ProposalCreated,
+  ProposalPreparing,
+  ProposalReady,
+  ProposalExecuted,
 }
 
 /**

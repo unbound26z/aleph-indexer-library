@@ -46,6 +46,7 @@ export const ClubType = new GraphQLEnumType({
     TokenEqual: { value: 'TokenEqual' },
     RoleBased: { value: 'RoleBased' },
     NftBased: { value: 'NftBased' },
+    Syndicate: { value: 'Syndicate' },
   },
 })
 
@@ -115,49 +116,27 @@ export const SupportType = new GraphQLEnumType({
   },
 })
 
-export const TradedRightType = new GraphQLEnumType({
-  name: 'TradedRightType',
+export const WhitelistingAction = new GraphQLEnumType({
+  name: 'WhitelistingAction',
   values: {
-    Buy: { value: 'Buy' },
-    Sell: { value: 'Sell' },
-    BuyReserved: { value: 'BuyReserved' },
-    SellReserved: { value: 'SellReserved' },
+    Add: { value: 'Add' },
+    Remove: { value: 'Remove' },
   },
 })
 
-export const ProfitType = new GraphQLEnumType({
-  name: 'ProfitType',
+export const AdminPermission = new GraphQLEnumType({
+  name: 'AdminPermission',
   values: {
-    Gain: { value: 'Gain' },
-    Loss: { value: 'Loss' },
+    CreateClub: { value: 'CreateClub' },
+    WhitelistMembers: { value: 'WhitelistMembers' },
   },
 })
 
-export const UpdateAllocationAction = new GraphQLEnumType({
-  name: 'UpdateAllocationAction',
+export const AdminStatus = new GraphQLEnumType({
+  name: 'AdminStatus',
   values: {
-    UpdateCustomAllocation: { value: 'UpdateCustomAllocation' },
-    RemoveCustomAllocation: { value: 'RemoveCustomAllocation' },
-    UpdateEqual: { value: 'UpdateEqual' },
-  },
-})
-
-export const MagicEdenInstruction = new GraphQLEnumType({
-  name: 'MagicEdenInstruction',
-  values: {
-    BuyNow: { value: 'BuyNow' },
-    Sell: { value: 'Sell' },
-  },
-})
-
-export const MemberStatus = new GraphQLEnumType({
-  name: 'MemberStatus',
-  values: {
-    UNINVITED: { value: 'UNINVITED' },
-    PENDING: { value: 'PENDING' },
-    ACCEPTED: { value: 'ACCEPTED' },
-    REJECTED: { value: 'REJECTED' },
-    CANCELED: { value: 'CANCELED' },
+    Accepted: { value: 'Accepted' },
+    Rejected: { value: 'Rejected' },
   },
 })
 
@@ -191,11 +170,79 @@ export const OfferType = new GraphQLEnumType({
   },
 })
 
-export const ProposalAction = new GraphQLEnumType({
-  name: 'ProposalAction',
+export const InitializeType = new GraphQLEnumType({
+  name: 'InitializeType',
   values: {
-    BuyNFT: { value: 'BuyNFT' },
-    SellNFT: { value: 'SellNFT' },
+    MagicEdenSell: { value: 'MagicEdenSell' },
+    MagicEdenBuy: { value: 'MagicEdenBuy' },
+    RegularBuySell: { value: 'RegularBuySell' },
+    Solsea: { value: 'Solsea' },
+  },
+})
+
+export const TradedRightType = new GraphQLEnumType({
+  name: 'TradedRightType',
+  values: {
+    Buy: { value: 'Buy' },
+    Sell: { value: 'Sell' },
+    BuyReserved: { value: 'BuyReserved' },
+    SellReserved: { value: 'SellReserved' },
+  },
+})
+
+export const UpdateAllocationAction = new GraphQLEnumType({
+  name: 'UpdateAllocationAction',
+  values: {
+    UpdateCustomAllocation: { value: 'UpdateCustomAllocation' },
+    RemoveCustomAllocation: { value: 'RemoveCustomAllocation' },
+    UpdateEqual: { value: 'UpdateEqual' },
+  },
+})
+
+export const FundraiseAction = new GraphQLEnumType({
+  name: 'FundraiseAction',
+  values: {
+    Create: { value: 'Create' },
+    Finish: { value: 'Finish' },
+  },
+})
+
+export const GovernanceType = new GraphQLEnumType({
+  name: 'GovernanceType',
+  values: {
+    Treasury: { value: 'Treasury' },
+    Withdrawal: { value: 'Withdrawal' },
+    Transfer: { value: 'Transfer' },
+    SellPermission: { value: 'SellPermission' },
+    GovernanceChange: { value: 'GovernanceChange' },
+  },
+})
+
+export const VoteThresholdPercentage = new GraphQLEnumType({
+  name: 'VoteThresholdPercentage',
+  values: {
+    YesVote: { value: 'YesVote' },
+    Quorum: { value: 'Quorum' },
+  },
+})
+
+export const VoteTipping = new GraphQLEnumType({
+  name: 'VoteTipping',
+  values: {
+    Strict: { value: 'Strict' },
+    Early: { value: 'Early' },
+    Disabled: { value: 'Disabled' },
+  },
+})
+
+export const MemberStatus = new GraphQLEnumType({
+  name: 'MemberStatus',
+  values: {
+    Uninvited: { value: 'Uninvited' },
+    Pending: { value: 'Pending' },
+    Accepted: { value: 'Accepted' },
+    Rejected: { value: 'Rejected' },
+    Cancelled: { value: 'Cancelled' },
   },
 })
 
@@ -213,7 +260,6 @@ export const ProposalType = new GraphQLEnumType({
     BuySolsea: { value: 'BuySolsea' },
     UpdateGovernanceConfig: { value: 'UpdateGovernanceConfig' },
     UpdateRoleConfig: { value: 'UpdateRoleConfig' },
-    AddSellPermission: { value: 'AddSellPermission' },
   },
 })
 
@@ -236,13 +282,35 @@ export const ProposalStatus = new GraphQLEnumType({
     CreatedDiscussion: { value: 'CreatedDiscussion' },
     CreatedWithdrawal: { value: 'CreatedWithdrawal' },
     ExecutedWithdrawal: { value: 'ExecutedWithdrawal' },
-    CanceledByOwner: { value: 'CanceledByOwner' },
+    CancelledByOwner: { value: 'CancelledByOwner' },
     CreatedUpdateGovernanceConfig: { value: 'CreatedUpdateGovernanceConfig' },
     ExecutedUpdateGovernanceConfig: { value: 'ExecutedUpdateGovernanceConfig' },
     CreatedUpdateRoleConfig: { value: 'CreatedUpdateRoleConfig' },
     ExecutedUpdateRoleConfig: { value: 'ExecutedUpdateRoleConfig' },
     ExecutedSolseaBuy: { value: 'ExecutedSolseaBuy' },
     ExecutedSolseaSell: { value: 'ExecutedSolseaSell' },
+    CreatedMetadata: { value: 'CreatedMetadata' },
+    ProposalCreated: { value: 'ProposalCreated' },
+    ProposalPreparing: { value: 'ProposalPreparing' },
+    ProposalReady: { value: 'ProposalReady' },
+    ProposalExecuted: { value: 'ProposalExecuted' },
+  },
+})
+
+export const ProposalAction = new GraphQLEnumType({
+  name: 'ProposalAction',
+  values: {
+    BuyNFT: { value: 'BuyNFT' },
+    SellNFT: { value: 'SellNFT' },
+  },
+})
+
+export const ProposalUpdateStatus = new GraphQLEnumType({
+  name: 'ProposalUpdateStatus',
+  values: {
+    Updating: { value: 'Updating' },
+    Finished: { value: 'Finished' },
+    Close: { value: 'Close' },
   },
 })
 
@@ -269,8 +337,8 @@ export const StakeStatus = new GraphQLEnumType({
 export const StakeOption = new GraphQLEnumType({
   name: 'StakeOption',
   values: {
-    FT: { value: 'FT' },
-    NFT: { value: 'NFT' },
+    Ft: { value: 'Ft' },
+    Nft: { value: 'Nft' },
   },
 })
 
@@ -284,20 +352,25 @@ export const UNQNftRarity = new GraphQLEnumType({
   },
 })
 
-export const VoteThresholdPercentage = new GraphQLEnumType({
-  name: 'VoteThresholdPercentage',
+export const TreasuryAction = new GraphQLEnumType({
+  name: 'TreasuryAction',
   values: {
-    YesVote: { value: 'YesVote' },
-    Quorum: { value: 'Quorum' },
+    CreateDiscussionProposal: { value: 'CreateDiscussionProposal' },
+    CreateP2PProposal: { value: 'CreateP2PProposal' },
+    CreateWithdrawalProposal: { value: 'CreateWithdrawalProposal' },
+    CreateTransferProposal: { value: 'CreateTransferProposal' },
+    CreateMeProposal: { value: 'CreateMeProposal' },
+    SignOffProposal: { value: 'SignOffProposal' },
+    CancelProposal: { value: 'CancelProposal' },
+    CancelP2POffer: { value: 'CancelP2POffer' },
   },
 })
 
-export const VoteTipping = new GraphQLEnumType({
-  name: 'VoteTipping',
+export const AllowType = new GraphQLEnumType({
+  name: 'AllowType',
   values: {
-    Strict: { value: 'Strict' },
-    Early: { value: 'Early' },
-    Disabled: { value: 'Disabled' },
+    Club: { value: 'Club' },
+    Treasury: { value: 'Treasury' },
   },
 })
 
@@ -326,7 +399,6 @@ export const RoleConfig = new GraphQLObjectType({
   name: 'RoleConfig',
   fields: {
     name: { type: new GraphQLNonNull(GraphQLString) },
-    roleWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
     clubActions: { type: new GraphQLNonNull(ClubAction) },
     membersCount: { type: new GraphQLNonNull(GraphQLInt) },
   },
@@ -345,6 +417,7 @@ export const RolesDto = new GraphQLObjectType({
   fields: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     roleWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    clubActions: { type: new GraphQLNonNull(ClubAction) },
   },
 })
 
@@ -354,6 +427,51 @@ export const UpdateRoleWeight = new GraphQLObjectType({
     role: { type: new GraphQLNonNull(GraphQLString) },
     currentWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
     updateWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+  },
+})
+
+export const AdminConfig = new GraphQLObjectType({
+  name: 'AdminConfig',
+  fields: {
+    admin: { type: new GraphQLNonNull(GraphQLString) },
+    permissions: { type: new GraphQLNonNull(AdminPermission) },
+    status: { type: new GraphQLNonNull(AdminStatus) },
+  },
+})
+
+export const FundraiseFeeConfig = new GraphQLObjectType({
+  name: 'FundraiseFeeConfig',
+  fields: {
+    authority: { type: new GraphQLNonNull(GraphQLString) },
+    feePercentage: { type: new GraphQLNonNull(GraphQLInt) },
+  },
+})
+
+export const OtcFeeConfig = new GraphQLObjectType({
+  name: 'OtcFeeConfig',
+  fields: {
+    authority: { type: new GraphQLNonNull(GraphQLString) },
+    feePercentage: { type: new GraphQLNonNull(GraphQLInt) },
+  },
+})
+
+export const Offer = new GraphQLObjectType({
+  name: 'Offer',
+  fields: {
+    maker: { type: new GraphQLNonNull(GraphQLString) },
+    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    offeredAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    offeredTokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    wantedAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    wantedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    tokenLedgerMint: { type: new GraphQLNonNull(GraphQLString) },
+    makerWantedToken: { type: new GraphQLNonNull(GraphQLString) },
+    escrowedWantedToken: { type: new GraphQLNonNull(GraphQLString) },
+    status: { type: new GraphQLNonNull(OfferStatus) },
+    offerType: { type: new GraphQLNonNull(OfferType) },
+    dedicatedTaker: { type: new GraphQLNonNull(GraphQLString) },
+    proposal: { type: new GraphQLNonNull(GraphQLString) },
+    sellerFeeBps: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -393,66 +511,23 @@ export const DepositRecord = new GraphQLObjectType({
   },
 })
 
-export const Order = new GraphQLObjectType({
-  name: 'Order',
-  fields: {
-    amount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    mint: { type: new GraphQLNonNull(GraphQLString) },
-    slot: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    createdAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const UpdateMemberDto = new GraphQLObjectType({
-  name: 'UpdateMemberDto',
-  fields: {
-    isMember: { type: new GraphQLNonNull(GraphQLBoolean) },
-    status: { type: new GraphQLNonNull(GraphQLInt) },
-    role: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const Offer = new GraphQLObjectType({
-  name: 'Offer',
-  fields: {
-    discriminator: { type: new GraphQLNonNull(GraphQLString) },
-    maker: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    offeredAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    offeredTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    wantedAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    wantedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    tokenLedgerMint: { type: new GraphQLNonNull(GraphQLString) },
-    makerWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    status: { type: new GraphQLNonNull(OfferStatus) },
-    offerType: { type: new GraphQLNonNull(OfferType) },
-    dedicatedTaker: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    sellerFeeBps: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const SellPermissionDto = new GraphQLObjectType({
-  name: 'SellPermissionDto',
+export const SellPermission = new GraphQLObjectType({
+  name: 'SellPermission',
   fields: {
     from: { type: new GraphQLNonNull(GraphQLBigNumber) },
     to: { type: new GraphQLNonNull(GraphQLBigNumber) },
     quorumMinimum: { type: new GraphQLNonNull(GraphQLInt) },
     decimal: { type: new GraphQLNonNull(GraphQLInt) },
+    governance: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const NftStakeRecord = new GraphQLObjectType({
-  name: 'NftStakeRecord',
+export const UpdateGovernanceConfigInput = new GraphQLObjectType({
+  name: 'UpdateGovernanceConfigInput',
   fields: {
-    nftOwner: { type: new GraphQLNonNull(GraphQLString) },
-    tokenAccount: { type: new GraphQLNonNull(GraphQLString) },
-    tokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    stakedNft: { type: new GraphQLNonNull(GraphQLString) },
-    rarity: { type: new GraphQLNonNull(Rarity) },
-    hasClaimed: { type: new GraphQLNonNull(GraphQLBoolean) },
-    unstakePeriodEnd: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    newQuorums: { type: new GraphQLNonNull(GraphQLString) },
+    seeds: { type: new GraphQLNonNull(GraphQLString) },
+    newVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -475,6 +550,28 @@ export const GovernanceConfig = new GraphQLObjectType({
   },
 })
 
+export const UpdateMemberDto = new GraphQLObjectType({
+  name: 'UpdateMemberDto',
+  fields: {
+    isMember: { type: new GraphQLNonNull(GraphQLBoolean) },
+    status: { type: new GraphQLNonNull(MemberStatus) },
+    role: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const NftStakeRecord = new GraphQLObjectType({
+  name: 'NftStakeRecord',
+  fields: {
+    nftOwner: { type: new GraphQLNonNull(GraphQLString) },
+    tokenAccount: { type: new GraphQLNonNull(GraphQLString) },
+    tokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    stakedNft: { type: new GraphQLNonNull(GraphQLString) },
+    rarity: { type: new GraphQLNonNull(Rarity) },
+    hasClaimed: { type: new GraphQLNonNull(GraphQLBoolean) },
+    unstakePeriodEnd: { type: new GraphQLNonNull(GraphQLBigNumber) },
+  },
+})
+
 export const IndividualRight = new GraphQLObjectType({
   name: 'IndividualRight',
   fields: {
@@ -493,22 +590,44 @@ export const ReservedRights = new GraphQLObjectType({
   },
 })
 
-export const SellPermission = new GraphQLObjectType({
-  name: 'SellPermission',
+export const GovernanceDto = new GraphQLObjectType({
+  name: 'GovernanceDto',
+  fields: {
+    governanceType: { type: new GraphQLNonNull(GovernanceType) },
+    maxVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
+    voteThresholdPercentage: { type: new GraphQLNonNull(GraphQLInt) },
+    sellPermission: { type: new GraphQLNonNull(SellPermission) },
+  },
+})
+
+export const SellPermissionDto = new GraphQLObjectType({
+  name: 'SellPermissionDto',
   fields: {
     from: { type: new GraphQLNonNull(GraphQLBigNumber) },
     to: { type: new GraphQLNonNull(GraphQLBigNumber) },
     quorumMinimum: { type: new GraphQLNonNull(GraphQLInt) },
     decimal: { type: new GraphQLNonNull(GraphQLInt) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const AddSpcInstructionData = new GraphQLObjectType({
-  name: 'AddSpcInstructionData',
+export const TreasuryRoleConfig = new GraphQLObjectType({
+  name: 'TreasuryRoleConfig',
   fields: {
-    sellPermission: { type: new GraphQLNonNull(SellPermissionDto) },
-    maxVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    roleWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    treasuryActions: { type: new GraphQLNonNull(TreasuryAction) },
+    membersCount: { type: new GraphQLNonNull(GraphQLInt) },
+    isDefault: { type: new GraphQLNonNull(GraphQLBoolean) },
+  },
+})
+
+export const TreasuryRolesDto = new GraphQLObjectType({
+  name: 'TreasuryRolesDto',
+  fields: {
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    roleWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    treasuryActions: { type: new GraphQLNonNull(TreasuryAction) },
+    isDefault: { type: new GraphQLNonNull(GraphQLBoolean) },
   },
 })
 
@@ -536,26 +655,24 @@ export const TotalAccounts = new GraphQLObjectType({
   name: 'TotalAccounts',
   fields: {
     ClubData: { type: new GraphQLNonNull(GraphQLInt) },
-    // ClubVault: { type: new GraphQLNonNull(GraphQLInt) },
+    WhitelistingData: { type: new GraphQLNonNull(GraphQLInt) },
+    Admins: { type: new GraphQLNonNull(GraphQLInt) },
+    ClubVault: { type: new GraphQLNonNull(GraphQLInt) },
     ClubVaultData: { type: new GraphQLNonNull(GraphQLInt) },
+    Withdrawal: { type: new GraphQLNonNull(GraphQLInt) },
+    WithdrawalData: { type: new GraphQLNonNull(GraphQLInt) },
     FundraiseConfig: { type: new GraphQLNonNull(GraphQLInt) },
     FinancialRecord: { type: new GraphQLNonNull(GraphQLInt) },
     FinancialRecordOffer: { type: new GraphQLNonNull(GraphQLInt) },
-    FinancialRecordDepricated: { type: new GraphQLNonNull(GraphQLInt) },
-    MagicEdenData: { type: new GraphQLNonNull(GraphQLInt) },
     MaxVoterWeightRecord: { type: new GraphQLNonNull(GraphQLInt) },
+    VoterWeightRecord: { type: new GraphQLNonNull(GraphQLInt) },
     AllowedMemberData: { type: new GraphQLNonNull(GraphQLInt) },
     NftVoteRecord: { type: new GraphQLNonNull(GraphQLInt) },
     ProposalMetadata: { type: new GraphQLNonNull(GraphQLInt) },
     StakeConfig: { type: new GraphQLNonNull(GraphQLInt) },
     StakeRecord: { type: new GraphQLNonNull(GraphQLInt) },
-    TransferProfitData: { type: new GraphQLNonNull(GraphQLInt) },
-    ClubTreasury: { type: new GraphQLNonNull(GraphQLInt) },
     TreasuryData: { type: new GraphQLNonNull(GraphQLInt) },
     UniverseMetadata: { type: new GraphQLNonNull(GraphQLInt) },
-    VoterWeightRecord: { type: new GraphQLNonNull(GraphQLInt) },
-    Withdrawal: { type: new GraphQLNonNull(GraphQLInt) },
-    WithdrawalData: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -586,26 +703,24 @@ export const AccountsEnum = new GraphQLEnumType({
   name: 'AccountsEnum',
   values: {
     ClubData: { value: 'ClubData' },
-    // ClubVault: { value: 'ClubVault' },
+    WhitelistingData: { value: 'WhitelistingData' },
+    Admins: { value: 'Admins' },
+    ClubVault: { value: 'ClubVault' },
     ClubVaultData: { value: 'ClubVaultData' },
+    Withdrawal: { value: 'Withdrawal' },
+    WithdrawalData: { value: 'WithdrawalData' },
     FundraiseConfig: { value: 'FundraiseConfig' },
     FinancialRecord: { value: 'FinancialRecord' },
     FinancialRecordOffer: { value: 'FinancialRecordOffer' },
-    FinancialRecordDepricated: { value: 'FinancialRecordDepricated' },
-    MagicEdenData: { value: 'MagicEdenData' },
     MaxVoterWeightRecord: { value: 'MaxVoterWeightRecord' },
+    VoterWeightRecord: { value: 'VoterWeightRecord' },
     AllowedMemberData: { value: 'AllowedMemberData' },
     NftVoteRecord: { value: 'NftVoteRecord' },
     ProposalMetadata: { value: 'ProposalMetadata' },
     StakeConfig: { value: 'StakeConfig' },
     StakeRecord: { value: 'StakeRecord' },
-    TransferProfitData: { value: 'TransferProfitData' },
-    ClubTreasury: { value: 'ClubTreasury' },
     TreasuryData: { value: 'TreasuryData' },
     UniverseMetadata: { value: 'UniverseMetadata' },
-    VoterWeightRecord: { value: 'VoterWeightRecord' },
-    Withdrawal: { value: 'Withdrawal' },
-    WithdrawalData: { value: 'WithdrawalData' },
   },
 })
 
@@ -616,10 +731,9 @@ export const ClubData = new GraphQLObjectType({
     realm: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     slotCreated: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    clubType: { type: new GraphQLNonNull(GraphQLInt) },
+    clubType: { type: new GraphQLNonNull(ClubType) },
     roleConfig: { type: new GraphQLNonNull(RoleConfig) },
     treasuryCount: { type: new GraphQLNonNull(GraphQLInt) },
-    maxVoterWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
     stakeCount: { type: new GraphQLNonNull(GraphQLInt) },
     activeStakeCount: { type: new GraphQLNonNull(GraphQLInt) },
     hasActiveStaking: { type: new GraphQLNonNull(GraphQLBoolean) },
@@ -629,15 +743,54 @@ export const ClubData = new GraphQLObjectType({
   },
 })
 
-// export const ClubVault = new GraphQLObjectType({
-//   name: 'ClubVault',
-//   fields: {},
-// })
+export const WhitelistingData = new GraphQLObjectType({
+  name: 'WhitelistingData',
+  fields: {
+    whitelistedMembers: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const Admins = new GraphQLObjectType({
+  name: 'Admins',
+  fields: {
+    feeWallet: { type: new GraphQLNonNull(GraphQLString) },
+    feePercentage: { type: new GraphQLNonNull(GraphQLInt) },
+    adminConfigs: { type: new GraphQLNonNull(AdminConfig) },
+    fundraiseFeeConfigs: { type: new GraphQLNonNull(FundraiseFeeConfig) },
+    otcFeeConfigs: { type: new GraphQLNonNull(OtcFeeConfig) },
+  },
+})
+
+export const ClubVault = new GraphQLObjectType({
+  name: 'ClubVault',
+  fields: {},
+})
 
 export const ClubVaultData = new GraphQLObjectType({
   name: 'ClubVaultData',
   fields: {
     chainId: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const Withdrawal = new GraphQLObjectType({
+  name: 'Withdrawal',
+  fields: {},
+})
+
+export const WithdrawalData = new GraphQLObjectType({
+  name: 'WithdrawalData',
+  fields: {
+    realm: { type: new GraphQLNonNull(GraphQLString) },
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    proposal: { type: new GraphQLNonNull(GraphQLString) },
+    fundraiseNumber: { type: new GraphQLNonNull(GraphQLInt) },
+    withdrawalAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    amountWithdrawn: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    totalFinancialPower: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    withdrawalMint: { type: new GraphQLNonNull(GraphQLString) },
+    proposalCreatedAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
   },
 })
 
@@ -661,6 +814,10 @@ export const FinancialRecord = new GraphQLObjectType({
     sellOffersCount: { type: new GraphQLNonNull(GraphQLInt) },
     listedFinancialRights: { type: new GraphQLNonNull(GraphQLBigNumber) },
     depositRecords: { type: new GraphQLNonNull(DepositRecord) },
+    treasuryRole: { type: new GraphQLNonNull(GraphQLString) },
+    createdAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    createdAtSlot: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -679,28 +836,6 @@ export const FinancialRecordOffer = new GraphQLObjectType({
   },
 })
 
-export const FinancialRecordDepricated = new GraphQLObjectType({
-  name: 'FinancialRecordDepricated',
-  fields: {
-    authority: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    financialRight: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    latestFundraiseIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    validFromIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    sellOffersCount: { type: new GraphQLNonNull(GraphQLInt) },
-    listedFinancialAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const MagicEdenData = new GraphQLObjectType({
-  name: 'MagicEdenData',
-  fields: {
-    instruction: { type: new GraphQLNonNull(MagicEdenInstruction) },
-    data: { type: new GraphQLNonNull(GraphQLString) },
-    accounts: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
 export const MaxVoterWeightRecord = new GraphQLObjectType({
   name: 'MaxVoterWeightRecord',
   fields: {
@@ -712,13 +847,27 @@ export const MaxVoterWeightRecord = new GraphQLObjectType({
   },
 })
 
+export const VoterWeightRecord = new GraphQLObjectType({
+  name: 'VoterWeightRecord',
+  fields: {
+    realm: { type: new GraphQLNonNull(GraphQLString) },
+    governingTokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    governingTokenOwner: { type: new GraphQLNonNull(GraphQLString) },
+    voterWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    voterWeightExpiry: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    weightAction: { type: new GraphQLNonNull(VoterWeightAction) },
+    weightActionTarget: { type: new GraphQLNonNull(GraphQLString) },
+    reserved: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
 export const AllowedMemberData = new GraphQLObjectType({
   name: 'AllowedMemberData',
   fields: {
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     memberPubkey: { type: new GraphQLNonNull(GraphQLString) },
     isMember: { type: new GraphQLNonNull(GraphQLBoolean) },
-    status: { type: new GraphQLNonNull(GraphQLInt) },
+    status: { type: new GraphQLNonNull(MemberStatus) },
     role: { type: new GraphQLNonNull(GraphQLString) },
     joinedAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
     joinedAtSlot: { type: new GraphQLNonNull(GraphQLBigNumber) },
@@ -790,25 +939,11 @@ export const StakeRecord = new GraphQLObjectType({
   },
 })
 
-export const TransferProfitData = new GraphQLObjectType({
-  name: 'TransferProfitData',
-  fields: {
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    slotExpiry: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-// export const ClubTreasury = new GraphQLObjectType({
-//   name: 'ClubTreasury',
-//   fields: {},
-// })
-
 export const TreasuryData = new GraphQLObjectType({
   name: 'TreasuryData',
   fields: {
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    realm: { type: new GraphQLNonNull(GraphQLString) },
     fundraiseCount: { type: new GraphQLNonNull(GraphQLInt) },
     treasury: { type: new GraphQLNonNull(GraphQLString) },
     hasActiveFundraise: { type: new GraphQLNonNull(GraphQLBoolean) },
@@ -827,8 +962,10 @@ export const TreasuryData = new GraphQLObjectType({
     hasActiveUpdateGovernanceConfig: {
       type: new GraphQLNonNull(GraphQLBoolean),
     },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
     reservedRights: { type: new GraphQLNonNull(ReservedRights) },
+    treasuryRoleConfig: { type: new GraphQLNonNull(TreasuryRoleConfig) },
+    defaultTreasuryRole: { type: new GraphQLNonNull(GraphQLString) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -842,43 +979,8 @@ export const UniverseMetadata = new GraphQLObjectType({
     mintingEpoch: { type: new GraphQLNonNull(GraphQLBigNumber) },
     currentUniverseLevel: { type: new GraphQLNonNull(GraphQLInt) },
     status: { type: new GraphQLNonNull(GraphQLInt) },
-    rarity: { type: new GraphQLNonNull(GraphQLInt) },
+    rarity: { type: new GraphQLNonNull(Rarity) },
     evolutionPoints: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const VoterWeightRecord = new GraphQLObjectType({
-  name: 'VoterWeightRecord',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    governingTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    governingTokenOwner: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    voterWeightExpiry: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    weightAction: { type: new GraphQLNonNull(VoterWeightAction) },
-    weightActionTarget: { type: new GraphQLNonNull(GraphQLString) },
-    reserved: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-// export const Withdrawal = new GraphQLObjectType({
-//   name: 'Withdrawal',
-//   fields: {},
-// })
-
-export const WithdrawalData = new GraphQLObjectType({
-  name: 'WithdrawalData',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    fundraiseNumber: { type: new GraphQLNonNull(GraphQLInt) },
-    withdrawalAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    amountWithdrawn: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    totalFinancialPower: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    withdrawalMint: { type: new GraphQLNonNull(GraphQLString) },
-    proposalCreatedAt: { type: new GraphQLNonNull(GraphQLBigNumber) },
   },
 })
 
@@ -886,52 +988,56 @@ export const ParsedAccountsData = new GraphQLUnionType({
   name: 'ParsedAccountsData',
   types: [
     ClubData,
-    // ClubVault,
+    WhitelistingData,
+    Admins,
+    ClubVault,
     ClubVaultData,
+    Withdrawal,
+    WithdrawalData,
     FundraiseConfig,
     FinancialRecord,
     FinancialRecordOffer,
-    FinancialRecordDepricated,
-    MagicEdenData,
     MaxVoterWeightRecord,
+    VoterWeightRecord,
     AllowedMemberData,
     NftVoteRecord,
     ProposalMetadata,
     StakeConfig,
     StakeRecord,
-    TransferProfitData,
-    // ClubTreasury,
     TreasuryData,
     UniverseMetadata,
-    VoterWeightRecord,
-    // Withdrawal,
-    WithdrawalData,
   ],
   resolveType: (obj) => {
     // here is selected a unique property of each account to discriminate between types
     if (obj.kycConfig) {
       return 'ClubData'
     }
+    if (obj.whitelistedMembers) {
+      return 'WhitelistingData'
+    }
+    if (obj.otcFeeConfigs) {
+      return 'Admins'
+    }
     if (obj.chainId) {
       return 'ClubVaultData'
+    }
+    if (obj.proposalCreatedAt) {
+      return 'WithdrawalData'
     }
     if (obj.allocation) {
       return 'FundraiseConfig'
     }
-    if (obj.depositRecords) {
+    if (obj.tokenOwnerRecord) {
       return 'FinancialRecord'
     }
     if (obj.initialAmountOfRights) {
       return 'FinancialRecordOffer'
     }
-    if (obj.listedFinancialAmount) {
-      return 'FinancialRecordDepricated'
-    }
-    if (obj.accounts) {
-      return 'MagicEdenData'
-    }
     if (obj.reserved) {
       return 'MaxVoterWeightRecord'
+    }
+    if (obj.reserved) {
+      return 'VoterWeightRecord'
     }
     if (obj.joinedAtSlot) {
       return 'AllowedMemberData'
@@ -948,20 +1054,11 @@ export const ParsedAccountsData = new GraphQLUnionType({
     if (obj.stakeConfig) {
       return 'StakeRecord'
     }
-    if (obj.slotExpiry) {
-      return 'TransferProfitData'
-    }
-    if (obj.reservedRights) {
+    if (obj.name) {
       return 'TreasuryData'
     }
     if (obj.evolutionPoints) {
       return 'UniverseMetadata'
-    }
-    if (obj.reserved) {
-      return 'VoterWeightRecord'
-    }
-    if (obj.proposalCreatedAt) {
-      return 'WithdrawalData'
     }
   },
 })
@@ -997,9 +1094,8 @@ export const ParsedEvents = new GraphQLEnumType({
   name: 'ParsedEvents',
   values: {
     CreateClubEvent: { value: 'CreateClubEvent' },
-    CreateClubVaultEvent: { value: 'CreateClubVaultEvent' },
-    CreateTreasuryGovernanceEvent: { value: 'CreateTreasuryGovernanceEvent' },
-    AddSellPermissionEvent: { value: 'AddSellPermissionEvent' },
+    CreateGovernanceEvent: { value: 'CreateGovernanceEvent' },
+    CreateTreasuryEvent: { value: 'CreateTreasuryEvent' },
     SupportClubEvent: { value: 'SupportClubEvent' },
     LeaveClubEvent: { value: 'LeaveClubEvent' },
     CreateClubProposalEvent: { value: 'CreateClubProposalEvent' },
@@ -1007,24 +1103,9 @@ export const ParsedEvents = new GraphQLEnumType({
     UpdateMemberEvent: { value: 'UpdateMemberEvent' },
     AcceptMembershipEvent: { value: 'AcceptMembershipEvent' },
     CancelInvitationEvent: { value: 'CancelInvitationEvent' },
-    CreateFundraiseEvent: { value: 'CreateFundraiseEvent' },
-    FinishFundraiseEvent: { value: 'FinishFundraiseEvent' },
     UpdateVoterWeightEvent: { value: 'UpdateVoterWeightEvent' },
-    ExecuteTransactionEvent: { value: 'ExecuteTransactionEvent' },
-    CancelEscrowEvent: { value: 'CancelEscrowEvent' },
-    CreateProposalMetadataEvent: { value: 'CreateProposalMetadataEvent' },
-    CreateWithdrawalProposalEvent: { value: 'CreateWithdrawalProposalEvent' },
-    ExecuteWithdrawalTransactionEvent: {
-      value: 'ExecuteWithdrawalTransactionEvent',
-    },
-    UpdateVoterWeightForGovernanceEvent: {
-      value: 'UpdateVoterWeightForGovernanceEvent',
-    },
+    ExecuteProposalEvent: { value: 'ExecuteProposalEvent' },
     DistributeEvent: { value: 'DistributeEvent' },
-    TransferProfitEvent: { value: 'TransferProfitEvent' },
-    CreateWithdrawalGovernanceEvent: {
-      value: 'CreateWithdrawalGovernanceEvent',
-    },
     CastNftVoteEvent: { value: 'CastNftVoteEvent' },
     InitializeStakingEvent: { value: 'InitializeStakingEvent' },
     StakeTokensEvent: { value: 'StakeTokensEvent' },
@@ -1033,46 +1114,18 @@ export const ParsedEvents = new GraphQLEnumType({
     FinishStakingEvent: { value: 'FinishStakingEvent' },
     StartStakingEvent: { value: 'StartStakingEvent' },
     InitializeStakingRewardEvent: { value: 'InitializeStakingRewardEvent' },
-    UpdateProposalDescriptionEvent: { value: 'UpdateProposalDescriptionEvent' },
-    CreateMeBuyNowProposalEvent: { value: 'CreateMeBuyNowProposalEvent' },
-    CreateMeSellProposalEvent: { value: 'CreateMeSellProposalEvent' },
-    ExecuteMeBuyNowTransactionEvent: {
-      value: 'ExecuteMeBuyNowTransactionEvent',
-    },
-    ExecuteMeSellTransactionEvent: { value: 'ExecuteMeSellTransactionEvent' },
-    ExecuteMeBuyNowEvent: { value: 'ExecuteMeBuyNowEvent' },
-    ExecuteMeSellEvent: { value: 'ExecuteMeSellEvent' },
-    ExecuteMeSellCancelEvent: { value: 'ExecuteMeSellCancelEvent' },
+    UpdateProposalMetadataEvent: { value: 'UpdateProposalMetadataEvent' },
     CreateFinancialOfferEvent: { value: 'CreateFinancialOfferEvent' },
     CancelFinancialOfferEvent: { value: 'CancelFinancialOfferEvent' },
     AcceptFinancialOfferEvent: { value: 'AcceptFinancialOfferEvent' },
-    CreateTransferProposalEvent: { value: 'CreateTransferProposalEvent' },
-    ExecuteTransferProposalEvent: { value: 'ExecuteTransferProposalEvent' },
-    CreateTransferGovernanceEvent: { value: 'CreateTransferGovernanceEvent' },
-    UpdateGovernanceConfigEvent: { value: 'UpdateGovernanceConfigEvent' },
-    ExecuteUpdateGovernanceConfigEvent: {
-      value: 'ExecuteUpdateGovernanceConfigEvent',
-    },
-    CreateUpdateRoleProposalEvent: { value: 'CreateUpdateRoleProposalEvent' },
-    ExecuteUpdateRoleEvent: { value: 'ExecuteUpdateRoleEvent' },
-    CreateChangeClubConfigGovernanceEvent: {
-      value: 'CreateChangeClubConfigGovernanceEvent',
-    },
-    CreateSolseaProposalEvent: { value: 'CreateSolseaProposalEvent' },
-    ExecuteSolseaTransactionEvent: { value: 'ExecuteSolseaTransactionEvent' },
-    CancelSolseaOfferEvent: { value: 'CancelSolseaOfferEvent' },
     ReserveRightsEvent: { value: 'ReserveRightsEvent' },
     UpdateAllocationEvent: { value: 'UpdateAllocationEvent' },
-    CreateAddSellPermissionProposalEvent: {
-      value: 'CreateAddSellPermissionProposalEvent',
-    },
-    ExecuteSellPermissionTransactionEvent: {
-      value: 'ExecuteSellPermissionTransactionEvent',
-    },
-    AddStakeConfigToStakeRecordEvent: {
-      value: 'AddStakeConfigToStakeRecordEvent',
-    },
-    AddCanLeaveActionEvent: { value: 'AddCanLeaveActionEvent' },
+    ConfigureWhitelistingsEvent: { value: 'ConfigureWhitelistingsEvent' },
+    ConfigureAdminsEvent: { value: 'ConfigureAdminsEvent' },
+    MigrateFinancialsEvent: { value: 'MigrateFinancialsEvent' },
+    InsertTransactionEvent: { value: 'InsertTransactionEvent' },
+    FundraiseEvent: { value: 'FundraiseEvent' },
+    CancelProposalEvent: { value: 'CancelProposalEvent' },
   },
 })
 
@@ -1097,32 +1150,14 @@ export const CreateClubEventAccounts = new GraphQLObjectType({
   name: 'CreateClubEventAccounts',
   fields: {
     realm: { type: new GraphQLNonNull(GraphQLString) },
-    ogRealm: { type: new GraphQLNonNull(GraphQLString) },
-    realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenHoldingAddress: { type: new GraphQLNonNull(GraphQLString) },
     realmConfig: { type: new GraphQLNonNull(GraphQLString) },
     tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightProgram: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     memberData: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     rent: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateClubEventData = new GraphQLObjectType({
-  name: 'CreateClubEventData',
-  fields: {
-    clubName: { type: new GraphQLNonNull(GraphQLString) },
-    clubType: { type: new GraphQLNonNull(GraphQLInt) },
-    roles: { type: new GraphQLNonNull(GraphQLString) },
-    ownerRole: { type: new GraphQLNonNull(GraphQLString) },
-    defaultRole: { type: new GraphQLNonNull(GraphQLString) },
-    kycConfig: { type: new GraphQLNonNull(KycConfig) },
   },
 })
 
@@ -1132,113 +1167,87 @@ export const CreateClubEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.CreateClub,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateClubEventData) },
+    data: { type: new GraphQLNonNull(GraphQLString) },
     accounts: { type: new GraphQLNonNull(CreateClubEventAccounts) },
   },
 })
 
 /*----------------------------------------------------------------------*/
 
-export const CreateClubVaultEventAccounts = new GraphQLObjectType({
-  name: 'CreateClubVaultEventAccounts',
+export const CreateGovernanceEventAccounts = new GraphQLObjectType({
+  name: 'CreateGovernanceEventAccounts',
   fields: {
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
     splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
+    realm: { type: new GraphQLNonNull(GraphQLString) },
+    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
+    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const CreateGovernanceEventData = new GraphQLObjectType({
+  name: 'CreateGovernanceEventData',
+  fields: {
+    governanceDtos: { type: new GraphQLNonNull(GovernanceDto) },
+  },
+})
+
+export const CreateGovernanceEvent = new GraphQLObjectType({
+  name: 'CreateGovernanceEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.CreateGovernance,
+  fields: {
+    ...commonEventFields,
+    data: { type: new GraphQLNonNull(CreateGovernanceEventData) },
+    accounts: { type: new GraphQLNonNull(CreateGovernanceEventAccounts) },
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+export const CreateTreasuryEventAccounts = new GraphQLObjectType({
+  name: 'CreateTreasuryEventAccounts',
+  fields: {
+    payer: { type: new GraphQLNonNull(GraphQLString) },
+    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    profit: { type: new GraphQLNonNull(GraphQLString) },
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
     vaultData: { type: new GraphQLNonNull(GraphQLString) },
     vault: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    financialRecord: { type: new GraphQLNonNull(GraphQLString) },
+    realm: { type: new GraphQLNonNull(GraphQLString) },
+    splGovernance: { type: new GraphQLNonNull(GraphQLString) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
+    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const CreateClubVaultEventData = new GraphQLObjectType({
-  name: 'CreateClubVaultEventData',
+export const CreateTreasuryEventData = new GraphQLObjectType({
+  name: 'CreateTreasuryEventData',
   fields: {
+    name: { type: new GraphQLNonNull(GraphQLString) },
     chainId: { type: new GraphQLNonNull(GraphQLString) },
+    nftMaxVoterWeight: { type: new GraphQLNonNull(GraphQLBigNumber) },
+    roleDtos: { type: new GraphQLNonNull(TreasuryRolesDto) },
   },
 })
 
-export const CreateClubVaultEvent = new GraphQLObjectType({
-  name: 'CreateClubVaultEvent',
+export const CreateTreasuryEvent = new GraphQLObjectType({
+  name: 'CreateTreasuryEvent',
   interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateClubVault,
+  isTypeOf: (item) => item.type === InstructionType.CreateTreasury,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateClubVaultEventData) },
-    accounts: { type: new GraphQLNonNull(CreateClubVaultEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateTreasuryGovernanceEventAccounts = new GraphQLObjectType({
-  name: 'CreateTreasuryGovernanceEventAccounts',
-  fields: {
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    profit: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateTreasuryGovernanceEvent = new GraphQLObjectType({
-  name: 'CreateTreasuryGovernanceEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateTreasuryGovernance,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(GraphQLInt) },
-    accounts: {
-      type: new GraphQLNonNull(CreateTreasuryGovernanceEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const AddSellPermissionEventAccounts = new GraphQLObjectType({
-  name: 'AddSellPermissionEventAccounts',
-  fields: {
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    governedSpc: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const AddSellPermissionEvent = new GraphQLObjectType({
-  name: 'AddSellPermissionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.AddSellPermission,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(GraphQLInt) },
-    accounts: { type: new GraphQLNonNull(AddSellPermissionEventAccounts) },
+    data: { type: new GraphQLNonNull(CreateTreasuryEventData) },
+    accounts: { type: new GraphQLNonNull(CreateTreasuryEventAccounts) },
   },
 })
 
@@ -1247,24 +1256,16 @@ export const AddSellPermissionEvent = new GraphQLObjectType({
 export const SupportClubEventAccounts = new GraphQLObjectType({
   name: 'SupportClubEventAccounts',
   fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
     memberData: { type: new GraphQLNonNull(GraphQLString) },
     fundraiseConfig: { type: new GraphQLNonNull(GraphQLString) },
-    financialRecord: { type: new GraphQLNonNull(GraphQLString) },
     treasuryData: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     treasury: { type: new GraphQLNonNull(GraphQLString) },
+    financialRecord: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const SupportClubEventData = new GraphQLObjectType({
-  name: 'SupportClubEventData',
-  fields: {
-    depositAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    supportType: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -1274,7 +1275,7 @@ export const SupportClubEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.SupportClub,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(SupportClubEventData) },
+    data: { type: new GraphQLNonNull(SupportType) },
     accounts: { type: new GraphQLNonNull(SupportClubEventAccounts) },
   },
 })
@@ -1315,35 +1316,18 @@ export const CreateClubProposalEventAccounts = new GraphQLObjectType({
     governanceAuthority: { type: new GraphQLNonNull(GraphQLString) },
     realmConfig: { type: new GraphQLNonNull(GraphQLString) },
     proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
     tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
     splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
     communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedWantedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    makerWantedAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedAuthority: { type: new GraphQLNonNull(GraphQLString) },
+    maxVoterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
     treasuryData: { type: new GraphQLNonNull(GraphQLString) },
     proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
-    wantedTokensMint: { type: new GraphQLNonNull(GraphQLString) },
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
     rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateClubProposalEventData = new GraphQLObjectType({
-  name: 'CreateClubProposalEventData',
-  fields: {
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-    offeredAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    wantedAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    action: { type: new GraphQLNonNull(GraphQLInt) },
-    dedicatedTaker: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -1353,7 +1337,7 @@ export const CreateClubProposalEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.CreateClubProposal,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateClubProposalEventData) },
+    data: { type: new GraphQLNonNull(GraphQLBoolean) },
     accounts: { type: new GraphQLNonNull(CreateClubProposalEventAccounts) },
   },
 })
@@ -1366,14 +1350,8 @@ export const AllowMemberEventAccounts = new GraphQLObjectType({
     memberData: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
+    realm: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const AllowMemberEventData = new GraphQLObjectType({
-  name: 'AllowMemberEventData',
-  fields: {
-    roles: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
@@ -1383,7 +1361,7 @@ export const AllowMemberEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.AllowMember,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(AllowMemberEventData) },
+    data: { type: new GraphQLNonNull(GraphQLString) },
     accounts: { type: new GraphQLNonNull(AllowMemberEventAccounts) },
   },
 })
@@ -1420,11 +1398,9 @@ export const UpdateMemberEvent = new GraphQLObjectType({
 export const AcceptMembershipEventAccounts = new GraphQLObjectType({
   name: 'AcceptMembershipEventAccounts',
   fields: {
+    realm: { type: new GraphQLNonNull(GraphQLString) },
     memberData: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
     tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -1467,64 +1443,6 @@ export const CancelInvitationEvent = new GraphQLObjectType({
 
 /*----------------------------------------------------------------------*/
 
-export const CreateFundraiseEventAccounts = new GraphQLObjectType({
-  name: 'CreateFundraiseEventAccounts',
-  fields: {
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    fundraiseConfig: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateFundraiseEventData = new GraphQLObjectType({
-  name: 'CreateFundraiseEventData',
-  fields: {
-    amount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const CreateFundraiseEvent = new GraphQLObjectType({
-  name: 'CreateFundraiseEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateFundraise,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateFundraiseEventData) },
-    accounts: { type: new GraphQLNonNull(CreateFundraiseEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const FinishFundraiseEventAccounts = new GraphQLObjectType({
-  name: 'FinishFundraiseEventAccounts',
-  fields: {
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    fundraiseConfig: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const FinishFundraiseEvent = new GraphQLObjectType({
-  name: 'FinishFundraiseEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.FinishFundraise,
-  fields: {
-    ...commonEventFields,
-    accounts: { type: new GraphQLNonNull(FinishFundraiseEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
 export const UpdateVoterWeightEventAccounts = new GraphQLObjectType({
   name: 'UpdateVoterWeightEventAccounts',
   fields: {
@@ -1534,17 +1452,7 @@ export const UpdateVoterWeightEventAccounts = new GraphQLObjectType({
     memberData: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
-    maxVoterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const UpdateVoterWeightEventData = new GraphQLObjectType({
-  name: 'UpdateVoterWeightEventData',
-  fields: {
-    action: { type: new GraphQLNonNull(GraphQLInt) },
   },
 })
 
@@ -1554,255 +1462,37 @@ export const UpdateVoterWeightEvent = new GraphQLObjectType({
   isTypeOf: (item) => item.type === InstructionType.UpdateVoterWeight,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(UpdateVoterWeightEventData) },
+    data: { type: new GraphQLNonNull(ClubAction) },
     accounts: { type: new GraphQLNonNull(UpdateVoterWeightEventAccounts) },
   },
 })
 
 /*----------------------------------------------------------------------*/
 
-export const ExecuteTransactionEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteTransactionEventAccounts',
+export const ExecuteProposalEventAccounts = new GraphQLObjectType({
+  name: 'ExecuteProposalEventAccounts',
   fields: {
     governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
     proposal: { type: new GraphQLNonNull(GraphQLString) },
     proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
     splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedWantedTokenAccount: { type: new GraphQLNonNull(GraphQLString) },
-    maker: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    offeredTokensMint: { type: new GraphQLNonNull(GraphQLString) },
-    wantedTokensMint: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteTransactionEventData = new GraphQLObjectType({
-  name: 'ExecuteTransactionEventData',
-  fields: {
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-    action: { type: new GraphQLNonNull(GraphQLInt) },
-    treasuryIndex: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const ExecuteTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteTransactionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteTransaction,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(ExecuteTransactionEventData) },
-    accounts: { type: new GraphQLNonNull(ExecuteTransactionEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CancelEscrowEventAccounts = new GraphQLObjectType({
-  name: 'CancelEscrowEventAccounts',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    maker: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedWantedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CancelEscrowEventData = new GraphQLObjectType({
-  name: 'CancelEscrowEventData',
-  fields: {
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-    action: { type: new GraphQLNonNull(GraphQLInt) },
-    treasuryIndex: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const CancelEscrowEvent = new GraphQLObjectType({
-  name: 'CancelEscrowEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CancelEscrow,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CancelEscrowEventData) },
-    accounts: { type: new GraphQLNonNull(CancelEscrowEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateProposalMetadataEventAccounts = new GraphQLObjectType({
-  name: 'CreateProposalMetadataEventAccounts',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateProposalMetadataEventData = new GraphQLObjectType({
-  name: 'CreateProposalMetadataEventData',
-  fields: {
-    proposalType: { type: new GraphQLNonNull(GraphQLInt) },
-    data1: { type: new GraphQLNonNull(GraphQLString) },
-    data2: { type: new GraphQLNonNull(GraphQLString) },
-    data3: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateProposalMetadataEvent = new GraphQLObjectType({
-  name: 'CreateProposalMetadataEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateProposalMetadata,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateProposalMetadataEventData) },
-    accounts: { type: new GraphQLNonNull(CreateProposalMetadataEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateWithdrawalProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateWithdrawalProposalEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
     treasury: { type: new GraphQLNonNull(GraphQLString) },
     treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawal: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawalData: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawalMint: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
     tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateWithdrawalProposalEventData = new GraphQLObjectType({
-  name: 'CreateWithdrawalProposalEventData',
-  fields: {
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-    withdrawalAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const CreateWithdrawalProposalEvent = new GraphQLObjectType({
-  name: 'CreateWithdrawalProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateWithdrawalProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateWithdrawalProposalEventData) },
-    accounts: {
-      type: new GraphQLNonNull(CreateWithdrawalProposalEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteWithdrawalTransactionEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteWithdrawalTransactionEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawal: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawalData: { type: new GraphQLNonNull(GraphQLString) },
-    withdrawalMint: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    transferProfitData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const ExecuteWithdrawalTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteWithdrawalTransactionEvent',
+export const ExecuteProposalEvent = new GraphQLObjectType({
+  name: 'ExecuteProposalEvent',
   interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.ExecuteWithdrawalTransaction,
+  isTypeOf: (item) => item.type === InstructionType.ExecuteProposal,
   fields: {
     ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteWithdrawalTransactionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const UpdateVoterWeightForGovernanceEventAccounts =
-  new GraphQLObjectType({
-    name: 'UpdateVoterWeightForGovernanceEventAccounts',
-    fields: {
-      realm: { type: new GraphQLNonNull(GraphQLString) },
-      voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-      memberData: { type: new GraphQLNonNull(GraphQLString) },
-      clubData: { type: new GraphQLNonNull(GraphQLString) },
-      payer: { type: new GraphQLNonNull(GraphQLString) },
-      systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    },
-  })
-
-export const UpdateVoterWeightForGovernanceEvent = new GraphQLObjectType({
-  name: 'UpdateVoterWeightForGovernanceEvent',
-  interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.UpdateVoterWeightForGovernance,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(UpdateVoterWeightForGovernanceEventAccounts),
-    },
+    accounts: { type: new GraphQLNonNull(ExecuteProposalEventAccounts) },
   },
 })
 
@@ -1818,7 +1508,6 @@ export const DistributeEventAccounts = new GraphQLObjectType({
     escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
     treasury: { type: new GraphQLNonNull(GraphQLString) },
     tokenLedger: { type: new GraphQLNonNull(GraphQLString) },
-    ledgerEntry: { type: new GraphQLNonNull(GraphQLString) },
     profit: { type: new GraphQLNonNull(GraphQLString) },
     vault: { type: new GraphQLNonNull(GraphQLString) },
     profitToken: { type: new GraphQLNonNull(GraphQLString) },
@@ -1851,96 +1540,13 @@ export const DistributeEvent = new GraphQLObjectType({
 
 /*----------------------------------------------------------------------*/
 
-export const TransferProfitEventAccounts = new GraphQLObjectType({
-  name: 'TransferProfitEventAccounts',
-  fields: {
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    profit: { type: new GraphQLNonNull(GraphQLString) },
-    transferProfit: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    profitToken: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const TransferProfitEventData = new GraphQLObjectType({
-  name: 'TransferProfitEventData',
-  fields: {
-    withdrawalAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const TransferProfitEvent = new GraphQLObjectType({
-  name: 'TransferProfitEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.TransferProfit,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(TransferProfitEventData) },
-    accounts: { type: new GraphQLNonNull(TransferProfitEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateWithdrawalGovernanceEventAccounts = new GraphQLObjectType({
-  name: 'CreateWithdrawalGovernanceEventAccounts',
-  fields: {
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateWithdrawalGovernanceEventData = new GraphQLObjectType({
-  name: 'CreateWithdrawalGovernanceEventData',
-  fields: {
-    treasuryIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    maxVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
-    voteThresholdPercentage: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const CreateWithdrawalGovernanceEvent = new GraphQLObjectType({
-  name: 'CreateWithdrawalGovernanceEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateWithdrawalGovernance,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateWithdrawalGovernanceEventData) },
-    accounts: {
-      type: new GraphQLNonNull(CreateWithdrawalGovernanceEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
 export const CastNftVoteEventAccounts = new GraphQLObjectType({
   name: 'CastNftVoteEventAccounts',
   fields: {
     realm: { type: new GraphQLNonNull(GraphQLString) },
     voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
     memberData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     proposal: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
@@ -1974,22 +1580,13 @@ export const InitializeStakingEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const InitializeStakingEventData = new GraphQLObjectType({
-  name: 'InitializeStakingEventData',
-  fields: {
-    stakeName: { type: new GraphQLNonNull(GraphQLString) },
-    capAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    stakePeriod: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const InitializeStakingEvent = new GraphQLObjectType({
   name: 'InitializeStakingEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.InitializeStaking,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(InitializeStakingEventData) },
+    data: { type: new GraphQLNonNull(GraphQLString) },
     accounts: { type: new GraphQLNonNull(InitializeStakingEventAccounts) },
   },
 })
@@ -2008,22 +1605,13 @@ export const StakeTokensEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const StakeTokensEventData = new GraphQLObjectType({
-  name: 'StakeTokensEventData',
-  fields: {
-    stakeIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    amount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    stakeOption: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const StakeTokensEvent = new GraphQLObjectType({
   name: 'StakeTokensEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.StakeTokens,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(StakeTokensEventData) },
+    data: { type: new GraphQLNonNull(GraphQLBigNumber) },
     accounts: { type: new GraphQLNonNull(StakeTokensEventAccounts) },
   },
 })
@@ -2044,21 +1632,13 @@ export const ClaimStakedTokensEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const ClaimStakedTokensEventData = new GraphQLObjectType({
-  name: 'ClaimStakedTokensEventData',
-  fields: {
-    stakeIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    stakeOption: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const ClaimStakedTokensEvent = new GraphQLObjectType({
   name: 'ClaimStakedTokensEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.ClaimStakedTokens,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(ClaimStakedTokensEventData) },
+    data: { type: new GraphQLNonNull(StakeOption) },
     accounts: { type: new GraphQLNonNull(ClaimStakedTokensEventAccounts) },
   },
 })
@@ -2076,21 +1656,13 @@ export const UnstakeTokensEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const UnstakeTokensEventData = new GraphQLObjectType({
-  name: 'UnstakeTokensEventData',
-  fields: {
-    stakeIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    stakeOption: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const UnstakeTokensEvent = new GraphQLObjectType({
   name: 'UnstakeTokensEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.UnstakeTokens,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(UnstakeTokensEventData) },
+    data: { type: new GraphQLNonNull(StakeOption) },
     accounts: { type: new GraphQLNonNull(UnstakeTokensEventAccounts) },
   },
 })
@@ -2111,20 +1683,12 @@ export const FinishStakingEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const FinishStakingEventData = new GraphQLObjectType({
-  name: 'FinishStakingEventData',
-  fields: {
-    stakeIndex: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const FinishStakingEvent = new GraphQLObjectType({
   name: 'FinishStakingEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.FinishStaking,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(FinishStakingEventData) },
     accounts: { type: new GraphQLNonNull(FinishStakingEventAccounts) },
   },
 })
@@ -2145,20 +1709,12 @@ export const StartStakingEventAccounts = new GraphQLObjectType({
   },
 })
 
-export const StartStakingEventData = new GraphQLObjectType({
-  name: 'StartStakingEventData',
-  fields: {
-    stakeIndex: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
 export const StartStakingEvent = new GraphQLObjectType({
   name: 'StartStakingEvent',
   interfaces: [Event],
   isTypeOf: (item) => item.type === InstructionType.StartStaking,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(StartStakingEventData) },
     accounts: { type: new GraphQLNonNull(StartStakingEventAccounts) },
   },
 })
@@ -2191,342 +1747,33 @@ export const InitializeStakingRewardEvent = new GraphQLObjectType({
 
 /*----------------------------------------------------------------------*/
 
-export const UpdateProposalDescriptionEventAccounts = new GraphQLObjectType({
-  name: 'UpdateProposalDescriptionEventAccounts',
+export const UpdateProposalMetadataEventAccounts = new GraphQLObjectType({
+  name: 'UpdateProposalMetadataEventAccounts',
   fields: {
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
     proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const UpdateProposalDescriptionEventData = new GraphQLObjectType({
-  name: 'UpdateProposalDescriptionEventData',
+export const UpdateProposalMetadataEventData = new GraphQLObjectType({
+  name: 'UpdateProposalMetadataEventData',
   fields: {
-    descriptionBuffer: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     options: { type: new GraphQLNonNull(GraphQLString) },
     discussionLink: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const UpdateProposalDescriptionEvent = new GraphQLObjectType({
-  name: 'UpdateProposalDescriptionEvent',
+export const UpdateProposalMetadataEvent = new GraphQLObjectType({
+  name: 'UpdateProposalMetadataEvent',
   interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.UpdateProposalDescription,
+  isTypeOf: (item) => item.type === InstructionType.UpdateProposalMetadata,
   fields: {
     ...commonEventFields,
-    data: { type: new GraphQLNonNull(UpdateProposalDescriptionEventData) },
-    accounts: {
-      type: new GraphQLNonNull(UpdateProposalDescriptionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateMeBuyNowProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateMeBuyNowProposalEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenData: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateMeBuyNowProposalEventData = new GraphQLObjectType({
-  name: 'CreateMeBuyNowProposalEventData',
-  fields: {
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-  },
-})
-
-export const CreateMeBuyNowProposalEvent = new GraphQLObjectType({
-  name: 'CreateMeBuyNowProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateMeBuyNowProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateMeBuyNowProposalEventData) },
-    accounts: { type: new GraphQLNonNull(CreateMeBuyNowProposalEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateMeSellProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateMeSellProposalEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenData: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateMeSellProposalEventData = new GraphQLObjectType({
-  name: 'CreateMeSellProposalEventData',
-  fields: {
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-  },
-})
-
-export const CreateMeSellProposalEvent = new GraphQLObjectType({
-  name: 'CreateMeSellProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateMeSellProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateMeSellProposalEventData) },
-    accounts: { type: new GraphQLNonNull(CreateMeSellProposalEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteMeBuyNowTransactionEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteMeBuyNowTransactionEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    unqEscrowTokens: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenEscrowedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeBuyNowTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteMeBuyNowTransactionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteMeBuyNowTransaction,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteMeBuyNowTransactionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteMeSellTransactionEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteMeSellTransactionEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    nativeMint: { type: new GraphQLNonNull(GraphQLString) },
-    makerWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    unqEscrowTokens: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenEscrowedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeSellTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteMeSellTransactionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteMeSellTransaction,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteMeSellTransactionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteMeBuyNowEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteMeBuyNowEventAccounts',
-  fields: {
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenAccountsHolder: { type: new GraphQLNonNull(GraphQLString) },
-    sellersWallet: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenExerchina: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenEscrowedToken: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenEscrowedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenEscrowedTokenMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState1: { type: new GraphQLNonNull(GraphQLString) },
-    escrowedWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    autExer: { type: new GraphQLNonNull(GraphQLString) },
-    e8cExer: { type: new GraphQLNonNull(GraphQLString) },
-    expoitExer: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState2: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState3: { type: new GraphQLNonNull(GraphQLString) },
-    onebwExer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    associatedTokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-    magicEden: { type: new GraphQLNonNull(GraphQLString) },
-    unqEscrowToken: { type: new GraphQLNonNull(GraphQLString) },
-    account13: { type: new GraphQLNonNull(GraphQLString) },
-    account15: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeBuyNowEventData = new GraphQLObjectType({
-  name: 'ExecuteMeBuyNowEventData',
-  fields: {
-    data1: { type: new GraphQLNonNull(GraphQLString) },
-    data2: { type: new GraphQLNonNull(GraphQLString) },
-    data3: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeBuyNowEvent = new GraphQLObjectType({
-  name: 'ExecuteMeBuyNowEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteMeBuyNow,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(ExecuteMeBuyNowEventData) },
-    accounts: { type: new GraphQLNonNull(ExecuteMeBuyNowEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteMeSellEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteMeSellEventAccounts',
-  fields: {
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    meState0: { type: new GraphQLNonNull(GraphQLString) },
-    offeredNftToken: { type: new GraphQLNonNull(GraphQLString) },
-    nftMint: { type: new GraphQLNonNull(GraphQLString) },
-    nftMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenExerchina: { type: new GraphQLNonNull(GraphQLString) },
-    autExer: { type: new GraphQLNonNull(GraphQLString) },
-    e8cExer: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState1: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState2: { type: new GraphQLNonNull(GraphQLString) },
-    onebwExer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    associatedTokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-    magicEden: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeSellEventData = new GraphQLObjectType({
-  name: 'ExecuteMeSellEventData',
-  fields: {
-    data: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeSellEvent = new GraphQLObjectType({
-  name: 'ExecuteMeSellEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteMeSell,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(ExecuteMeSellEventData) },
-    accounts: { type: new GraphQLNonNull(ExecuteMeSellEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteMeSellCancelEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteMeSellCancelEventAccounts',
-  fields: {
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    offeredNftToken: { type: new GraphQLNonNull(GraphQLString) },
-    nftMint: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenExerchina: { type: new GraphQLNonNull(GraphQLString) },
-    autExer: { type: new GraphQLNonNull(GraphQLString) },
-    e8cExer: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState1: { type: new GraphQLNonNull(GraphQLString) },
-    magicEdenState2: { type: new GraphQLNonNull(GraphQLString) },
-    onebwExer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    magicEden: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeSellCancelEventData = new GraphQLObjectType({
-  name: 'ExecuteMeSellCancelEventData',
-  fields: {
-    data: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteMeSellCancelEvent = new GraphQLObjectType({
-  name: 'ExecuteMeSellCancelEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteMeSellCancel,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(ExecuteMeSellCancelEventData) },
-    accounts: { type: new GraphQLNonNull(ExecuteMeSellCancelEventAccounts) },
+    data: { type: new GraphQLNonNull(UpdateProposalMetadataEventData) },
+    accounts: { type: new GraphQLNonNull(UpdateProposalMetadataEventAccounts) },
   },
 })
 
@@ -2605,6 +1852,7 @@ export const AcceptFinancialOfferEventAccounts = new GraphQLObjectType({
     treasury: { type: new GraphQLNonNull(GraphQLString) },
     buyerFinancialRecord: { type: new GraphQLNonNull(GraphQLString) },
     sellerFinancialRecord: { type: new GraphQLNonNull(GraphQLString) },
+    buyerTokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
@@ -2624,493 +1872,6 @@ export const AcceptFinancialOfferEvent = new GraphQLObjectType({
     ...commonEventFields,
     data: { type: new GraphQLNonNull(AcceptFinancialOfferEventData) },
     accounts: { type: new GraphQLNonNull(AcceptFinancialOfferEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateTransferProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateTransferProposalEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    destination: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateTransferProposalEventData = new GraphQLObjectType({
-  name: 'CreateTransferProposalEventData',
-  fields: {
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-    transferAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-  },
-})
-
-export const CreateTransferProposalEvent = new GraphQLObjectType({
-  name: 'CreateTransferProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateTransferProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateTransferProposalEventData) },
-    accounts: { type: new GraphQLNonNull(CreateTransferProposalEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteTransferProposalEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteTransferProposalEventAccounts',
-  fields: {
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryToken: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenLedger: { type: new GraphQLNonNull(GraphQLString) },
-    ledgerEntry: { type: new GraphQLNonNull(GraphQLString) },
-    destination: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteTransferProposalEvent = new GraphQLObjectType({
-  name: 'ExecuteTransferProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteTransferProposal,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteTransferProposalEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateTransferGovernanceEventAccounts = new GraphQLObjectType({
-  name: 'CreateTransferGovernanceEventAccounts',
-  fields: {
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    governedAccount: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateTransferGovernanceEventData = new GraphQLObjectType({
-  name: 'CreateTransferGovernanceEventData',
-  fields: {
-    maxVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
-    voteThresholdPercentage: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const CreateTransferGovernanceEvent = new GraphQLObjectType({
-  name: 'CreateTransferGovernanceEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateTransferGovernance,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateTransferGovernanceEventData) },
-    accounts: {
-      type: new GraphQLNonNull(CreateTransferGovernanceEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const UpdateGovernanceConfigEventAccounts = new GraphQLObjectType({
-  name: 'UpdateGovernanceConfigEventAccounts',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernance: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const UpdateGovernanceConfigEventData = new GraphQLObjectType({
-  name: 'UpdateGovernanceConfigEventData',
-  fields: {
-    newQuorum: { type: new GraphQLNonNull(GraphQLString) },
-    seeds: { type: new GraphQLNonNull(GraphQLString) },
-    newVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const UpdateGovernanceConfigEvent = new GraphQLObjectType({
-  name: 'UpdateGovernanceConfigEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.UpdateGovernanceConfig,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(UpdateGovernanceConfigEventData) },
-    accounts: { type: new GraphQLNonNull(UpdateGovernanceConfigEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteUpdateGovernanceConfigEventAccounts = new GraphQLObjectType(
-  {
-    name: 'ExecuteUpdateGovernanceConfigEventAccounts',
-    fields: {
-      clubData: { type: new GraphQLNonNull(GraphQLString) },
-      realm: { type: new GraphQLNonNull(GraphQLString) },
-      governance: { type: new GraphQLNonNull(GraphQLString) },
-      proposal: { type: new GraphQLNonNull(GraphQLString) },
-      proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-      treasury: { type: new GraphQLNonNull(GraphQLString) },
-      treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-      proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-      splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    },
-  },
-)
-
-export const ExecuteUpdateGovernanceConfigEvent = new GraphQLObjectType({
-  name: 'ExecuteUpdateGovernanceConfigEvent',
-  interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.ExecuteUpdateGovernanceConfig,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteUpdateGovernanceConfigEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateUpdateRoleProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateUpdateRoleProposalEventAccounts',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    communityMint: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateUpdateRoleProposalEventData = new GraphQLObjectType({
-  name: 'CreateUpdateRoleProposalEventData',
-  fields: {
-    roleWeigthConfig: { type: new GraphQLNonNull(UpdateRoleWeight) },
-  },
-})
-
-export const CreateUpdateRoleProposalEvent = new GraphQLObjectType({
-  name: 'CreateUpdateRoleProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateUpdateRoleProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateUpdateRoleProposalEventData) },
-    accounts: {
-      type: new GraphQLNonNull(CreateUpdateRoleProposalEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteUpdateRoleEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteUpdateRoleEventAccounts',
-  fields: {
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteUpdateRoleEvent = new GraphQLObjectType({
-  name: 'ExecuteUpdateRoleEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteUpdateRole,
-  fields: {
-    ...commonEventFields,
-    accounts: { type: new GraphQLNonNull(ExecuteUpdateRoleEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateChangeClubConfigGovernanceEventAccounts =
-  new GraphQLObjectType({
-    name: 'CreateChangeClubConfigGovernanceEventAccounts',
-    fields: {
-      realm: { type: new GraphQLNonNull(GraphQLString) },
-      clubData: { type: new GraphQLNonNull(GraphQLString) },
-      payer: { type: new GraphQLNonNull(GraphQLString) },
-      memberData: { type: new GraphQLNonNull(GraphQLString) },
-      treasury: { type: new GraphQLNonNull(GraphQLString) },
-      treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-      governance: { type: new GraphQLNonNull(GraphQLString) },
-      realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-      realmAuthority: { type: new GraphQLNonNull(GraphQLString) },
-      voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-      tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-      goverenedAccount: { type: new GraphQLNonNull(GraphQLString) },
-      splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-      systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-      tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    },
-  })
-
-export const CreateChangeClubConfigGovernanceEventData = new GraphQLObjectType({
-  name: 'CreateChangeClubConfigGovernanceEventData',
-  fields: {
-    voteThreshold: { type: new GraphQLNonNull(GraphQLInt) },
-    maxVotingTime: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const CreateChangeClubConfigGovernanceEvent = new GraphQLObjectType({
-  name: 'CreateChangeClubConfigGovernanceEvent',
-  interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.CreateChangeClubConfigGovernance,
-  fields: {
-    ...commonEventFields,
-    data: {
-      type: new GraphQLNonNull(CreateChangeClubConfigGovernanceEventData),
-    },
-    accounts: {
-      type: new GraphQLNonNull(CreateChangeClubConfigGovernanceEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CreateSolseaProposalEventAccounts = new GraphQLObjectType({
-  name: 'CreateSolseaProposalEventAccounts',
-  fields: {
-    realm: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    escrowWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-    makerWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    offeredTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    wantedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernance: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CreateSolseaProposalEventData = new GraphQLObjectType({
-  name: 'CreateSolseaProposalEventData',
-  fields: {
-    treasuryIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-    offeredAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    wantedAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
-    sellerFeeBps: { type: new GraphQLNonNull(GraphQLInt) },
-    useDeny: { type: new GraphQLNonNull(GraphQLBoolean) },
-    action: { type: new GraphQLNonNull(GraphQLInt) },
-  },
-})
-
-export const CreateSolseaProposalEvent = new GraphQLObjectType({
-  name: 'CreateSolseaProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CreateSolseaProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CreateSolseaProposalEventData) },
-    accounts: { type: new GraphQLNonNull(CreateSolseaProposalEventAccounts) },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteSolseaTransactionEventAccounts = new GraphQLObjectType({
-  name: 'ExecuteSolseaTransactionEventAccounts',
-  fields: {
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    solseaEscrow: { type: new GraphQLNonNull(GraphQLString) },
-    authorityAccount: { type: new GraphQLNonNull(GraphQLString) },
-    solseaProfitAccount: { type: new GraphQLNonNull(GraphQLString) },
-    solseaEscrowTokens: { type: new GraphQLNonNull(GraphQLString) },
-    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    maker: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    solseaProgram: { type: new GraphQLNonNull(GraphQLString) },
-    wantedTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    offeredTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    escrowWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    makerWantedToken: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedToken: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    splGovernance: { type: new GraphQLNonNull(GraphQLString) },
-    governance: { type: new GraphQLNonNull(GraphQLString) },
-    profitAccount: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-    rent: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteSolseaTransactionEventData = new GraphQLObjectType({
-  name: 'ExecuteSolseaTransactionEventData',
-  fields: {
-    action: { type: new GraphQLNonNull(GraphQLInt) },
-    treasuryIndex: { type: new GraphQLNonNull(GraphQLInt) },
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-    authorityBump: { type: new GraphQLNonNull(GraphQLInt) },
-    creatorsCount: { type: new GraphQLNonNull(GraphQLInt) },
-    sellerFeeBps: { type: new GraphQLNonNull(GraphQLInt) },
-    royalties: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const ExecuteSolseaTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteSolseaTransactionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.ExecuteSolseaTransaction,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(ExecuteSolseaTransactionEventData) },
-    accounts: {
-      type: new GraphQLNonNull(ExecuteSolseaTransactionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const CancelSolseaOfferEventAccounts = new GraphQLObjectType({
-  name: 'CancelSolseaOfferEventAccounts',
-  fields: {
-    clubData: { type: new GraphQLNonNull(GraphQLString) },
-    solseaEscrow: { type: new GraphQLNonNull(GraphQLString) },
-    solseaEscrowTokens: { type: new GraphQLNonNull(GraphQLString) },
-    offeredTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-    solseaAuthority: { type: new GraphQLNonNull(GraphQLString) },
-    proposal: { type: new GraphQLNonNull(GraphQLString) },
-    treasury: { type: new GraphQLNonNull(GraphQLString) },
-    offer: { type: new GraphQLNonNull(GraphQLString) },
-    vault: { type: new GraphQLNonNull(GraphQLString) },
-    makerOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
-    payer: { type: new GraphQLNonNull(GraphQLString) },
-    memberData: { type: new GraphQLNonNull(GraphQLString) },
-    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
-    solseaProgram: { type: new GraphQLNonNull(GraphQLString) },
-    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CancelSolseaOfferEventData = new GraphQLObjectType({
-  name: 'CancelSolseaOfferEventData',
-  fields: {
-    chainId: { type: new GraphQLNonNull(GraphQLString) },
-  },
-})
-
-export const CancelSolseaOfferEvent = new GraphQLObjectType({
-  name: 'CancelSolseaOfferEvent',
-  interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.CancelSolseaOffer,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(CancelSolseaOfferEventData) },
-    accounts: { type: new GraphQLNonNull(CancelSolseaOfferEventAccounts) },
   },
 })
 
@@ -3175,124 +1936,191 @@ export const UpdateAllocationEvent = new GraphQLObjectType({
 
 /*----------------------------------------------------------------------*/
 
-export const CreateAddSellPermissionProposalEventAccounts =
-  new GraphQLObjectType({
-    name: 'CreateAddSellPermissionProposalEventAccounts',
-    fields: {
-      governance: { type: new GraphQLNonNull(GraphQLString) },
-      realm: { type: new GraphQLNonNull(GraphQLString) },
-      governanceAuthority: { type: new GraphQLNonNull(GraphQLString) },
-      realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-      proposal: { type: new GraphQLNonNull(GraphQLString) },
-      proposalTransactionAddress: { type: new GraphQLNonNull(GraphQLString) },
-      tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-      splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-      communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
-      payer: { type: new GraphQLNonNull(GraphQLString) },
-      voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-      treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-      proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-      clubData: { type: new GraphQLNonNull(GraphQLString) },
-      rent: { type: new GraphQLNonNull(GraphQLString) },
-      systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    },
-  })
-
-export const CreateAddSellPermissionProposalEvent = new GraphQLObjectType({
-  name: 'CreateAddSellPermissionProposalEvent',
-  interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.CreateAddSellPermissionProposal,
-  fields: {
-    ...commonEventFields,
-    data: { type: new GraphQLNonNull(GraphQLBoolean) },
-    accounts: {
-      type: new GraphQLNonNull(CreateAddSellPermissionProposalEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const ExecuteSellPermissionTransactionEventAccounts =
-  new GraphQLObjectType({
-    name: 'ExecuteSellPermissionTransactionEventAccounts',
-    fields: {
-      governance: { type: new GraphQLNonNull(GraphQLString) },
-      realm: { type: new GraphQLNonNull(GraphQLString) },
-      realmConfig: { type: new GraphQLNonNull(GraphQLString) },
-      proposal: { type: new GraphQLNonNull(GraphQLString) },
-      proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
-      splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
-      tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
-      voterWeightRecord: { type: new GraphQLNonNull(GraphQLString) },
-      payer: { type: new GraphQLNonNull(GraphQLString) },
-      proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
-      clubData: { type: new GraphQLNonNull(GraphQLString) },
-      treasuryData: { type: new GraphQLNonNull(GraphQLString) },
-      memberData: { type: new GraphQLNonNull(GraphQLString) },
-      clubProgram: { type: new GraphQLNonNull(GraphQLString) },
-      spcGovernance: { type: new GraphQLNonNull(GraphQLString) },
-      spcGovernedAccount: { type: new GraphQLNonNull(GraphQLString) },
-      systemProgram: { type: new GraphQLNonNull(GraphQLString) },
-    },
-  })
-
-export const ExecuteSellPermissionTransactionEvent = new GraphQLObjectType({
-  name: 'ExecuteSellPermissionTransactionEvent',
-  interfaces: [Event],
-  isTypeOf: (item) =>
-    item.type === InstructionType.ExecuteSellPermissionTransaction,
-  fields: {
-    ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(ExecuteSellPermissionTransactionEventAccounts),
-    },
-  },
-})
-
-/*----------------------------------------------------------------------*/
-
-export const AddStakeConfigToStakeRecordEventAccounts = new GraphQLObjectType({
-  name: 'AddStakeConfigToStakeRecordEventAccounts',
+export const ConfigureWhitelistingsEventAccounts = new GraphQLObjectType({
+  name: 'ConfigureWhitelistingsEventAccounts',
   fields: {
     payer: { type: new GraphQLNonNull(GraphQLString) },
-    stakeRecord: { type: new GraphQLNonNull(GraphQLString) },
-    stakeConfig: { type: new GraphQLNonNull(GraphQLString) },
+    whitelistingData: { type: new GraphQLNonNull(GraphQLString) },
+    adminsData: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const AddStakeConfigToStakeRecordEvent = new GraphQLObjectType({
-  name: 'AddStakeConfigToStakeRecordEvent',
+export const ConfigureWhitelistingsEvent = new GraphQLObjectType({
+  name: 'ConfigureWhitelistingsEvent',
   interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.AddStakeConfigToStakeRecord,
+  isTypeOf: (item) => item.type === InstructionType.ConfigureWhitelistings,
   fields: {
     ...commonEventFields,
-    accounts: {
-      type: new GraphQLNonNull(AddStakeConfigToStakeRecordEventAccounts),
-    },
+    data: { type: new GraphQLNonNull(GraphQLString) },
+    accounts: { type: new GraphQLNonNull(ConfigureWhitelistingsEventAccounts) },
   },
 })
 
 /*----------------------------------------------------------------------*/
 
-export const AddCanLeaveActionEventAccounts = new GraphQLObjectType({
-  name: 'AddCanLeaveActionEventAccounts',
+export const ConfigureAdminsEventAccounts = new GraphQLObjectType({
+  name: 'ConfigureAdminsEventAccounts',
   fields: {
+    admins: { type: new GraphQLNonNull(GraphQLString) },
+    payer: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const ConfigureAdminsEventData = new GraphQLObjectType({
+  name: 'ConfigureAdminsEventData',
+  fields: {
+    admins: { type: new GraphQLNonNull(AdminConfig) },
+    feeWallet: { type: new GraphQLNonNull(GraphQLString) },
+    feePercentage: { type: new GraphQLNonNull(GraphQLInt) },
+    fundraiseFeeConfigs: { type: new GraphQLNonNull(FundraiseFeeConfig) },
+    otcFeeConfigs: { type: new GraphQLNonNull(OtcFeeConfig) },
+  },
+})
+
+export const ConfigureAdminsEvent = new GraphQLObjectType({
+  name: 'ConfigureAdminsEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.ConfigureAdmins,
+  fields: {
+    ...commonEventFields,
+    data: { type: new GraphQLNonNull(ConfigureAdminsEventData) },
+    accounts: { type: new GraphQLNonNull(ConfigureAdminsEventAccounts) },
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+export const MigrateFinancialsEventAccounts = new GraphQLObjectType({
+  name: 'MigrateFinancialsEventAccounts',
+  fields: {
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    payer: { type: new GraphQLNonNull(GraphQLString) },
+    payerMemberData: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    member: { type: new GraphQLNonNull(GraphQLString) },
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
+    financialRecord: { type: new GraphQLNonNull(GraphQLString) },
+    fundraiseConfig: { type: new GraphQLNonNull(GraphQLString) },
+    splGovernance: { type: new GraphQLNonNull(GraphQLString) },
+    realm: { type: new GraphQLNonNull(GraphQLString) },
+    governingTokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const MigrateFinancialsEventData = new GraphQLObjectType({
+  name: 'MigrateFinancialsEventData',
+  fields: {
+    usdcAmount: { type: new GraphQLNonNull(GraphQLBigNumber) },
+  },
+})
+
+export const MigrateFinancialsEvent = new GraphQLObjectType({
+  name: 'MigrateFinancialsEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.MigrateFinancials,
+  fields: {
+    ...commonEventFields,
+    data: { type: new GraphQLNonNull(MigrateFinancialsEventData) },
+    accounts: { type: new GraphQLNonNull(MigrateFinancialsEventAccounts) },
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+export const InsertTransactionEventAccounts = new GraphQLObjectType({
+  name: 'InsertTransactionEventAccounts',
+  fields: {
+    splGovernanceProgram: { type: new GraphQLNonNull(GraphQLString) },
+    governance: { type: new GraphQLNonNull(GraphQLString) },
+    proposal: { type: new GraphQLNonNull(GraphQLString) },
+    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    proposalTransaction: { type: new GraphQLNonNull(GraphQLString) },
+    tokenOwnerRecord: { type: new GraphQLNonNull(GraphQLString) },
+    communityTokenMint: { type: new GraphQLNonNull(GraphQLString) },
+    payer: { type: new GraphQLNonNull(GraphQLString) },
+    rent: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const InsertTransactionEventData = new GraphQLObjectType({
+  name: 'InsertTransactionEventData',
+  fields: {
+    data: { type: new GraphQLNonNull(GraphQLString) },
+    signerIndexes: { type: new GraphQLNonNull(GraphQLInt) },
+  },
+})
+
+export const InsertTransactionEvent = new GraphQLObjectType({
+  name: 'InsertTransactionEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.InsertTransaction,
+  fields: {
+    ...commonEventFields,
+    data: { type: new GraphQLNonNull(InsertTransactionEventData) },
+    accounts: { type: new GraphQLNonNull(InsertTransactionEventAccounts) },
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+export const FundraiseEventAccounts = new GraphQLObjectType({
+  name: 'FundraiseEventAccounts',
+  fields: {
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    fundraiseConfig: { type: new GraphQLNonNull(GraphQLString) },
     payer: { type: new GraphQLNonNull(GraphQLString) },
     clubData: { type: new GraphQLNonNull(GraphQLString) },
     systemProgram: { type: new GraphQLNonNull(GraphQLString) },
   },
 })
 
-export const AddCanLeaveActionEvent = new GraphQLObjectType({
-  name: 'AddCanLeaveActionEvent',
+export const FundraiseEvent = new GraphQLObjectType({
+  name: 'FundraiseEvent',
   interfaces: [Event],
-  isTypeOf: (item) => item.type === InstructionType.AddCanLeaveAction,
+  isTypeOf: (item) => item.type === InstructionType.Fundraise,
   fields: {
     ...commonEventFields,
-    accounts: { type: new GraphQLNonNull(AddCanLeaveActionEventAccounts) },
+    data: { type: new GraphQLNonNull(FundraiseAction) },
+    accounts: { type: new GraphQLNonNull(FundraiseEventAccounts) },
+  },
+})
+
+/*----------------------------------------------------------------------*/
+
+export const CancelProposalEventAccounts = new GraphQLObjectType({
+  name: 'CancelProposalEventAccounts',
+  fields: {
+    clubData: { type: new GraphQLNonNull(GraphQLString) },
+    memberData: { type: new GraphQLNonNull(GraphQLString) },
+    offer: { type: new GraphQLNonNull(GraphQLString) },
+    proposalMetadata: { type: new GraphQLNonNull(GraphQLString) },
+    vault: { type: new GraphQLNonNull(GraphQLString) },
+    treasury: { type: new GraphQLNonNull(GraphQLString) },
+    treasuryData: { type: new GraphQLNonNull(GraphQLString) },
+    makerOfferedTokens: { type: new GraphQLNonNull(GraphQLString) },
+    payer: { type: new GraphQLNonNull(GraphQLString) },
+    escrowProgram: { type: new GraphQLNonNull(GraphQLString) },
+    tokenProgram: { type: new GraphQLNonNull(GraphQLString) },
+    systemProgram: { type: new GraphQLNonNull(GraphQLString) },
+  },
+})
+
+export const CancelProposalEvent = new GraphQLObjectType({
+  name: 'CancelProposalEvent',
+  interfaces: [Event],
+  isTypeOf: (item) => item.type === InstructionType.CancelProposal,
+  fields: {
+    ...commonEventFields,
+    data: { type: new GraphQLNonNull(GraphQLString) },
+    accounts: { type: new GraphQLNonNull(CancelProposalEventAccounts) },
   },
 })
 
@@ -3302,9 +2130,8 @@ export const Events = new GraphQLList(Event)
 
 export const types = [
   CreateClubEvent,
-  CreateClubVaultEvent,
-  CreateTreasuryGovernanceEvent,
-  AddSellPermissionEvent,
+  CreateGovernanceEvent,
+  CreateTreasuryEvent,
   SupportClubEvent,
   LeaveClubEvent,
   CreateClubProposalEvent,
@@ -3312,18 +2139,9 @@ export const types = [
   UpdateMemberEvent,
   AcceptMembershipEvent,
   CancelInvitationEvent,
-  CreateFundraiseEvent,
-  FinishFundraiseEvent,
   UpdateVoterWeightEvent,
-  ExecuteTransactionEvent,
-  CancelEscrowEvent,
-  CreateProposalMetadataEvent,
-  CreateWithdrawalProposalEvent,
-  ExecuteWithdrawalTransactionEvent,
-  UpdateVoterWeightForGovernanceEvent,
+  ExecuteProposalEvent,
   DistributeEvent,
-  TransferProfitEvent,
-  CreateWithdrawalGovernanceEvent,
   CastNftVoteEvent,
   InitializeStakingEvent,
   StakeTokensEvent,
@@ -3332,32 +2150,16 @@ export const types = [
   FinishStakingEvent,
   StartStakingEvent,
   InitializeStakingRewardEvent,
-  UpdateProposalDescriptionEvent,
-  CreateMeBuyNowProposalEvent,
-  CreateMeSellProposalEvent,
-  ExecuteMeBuyNowTransactionEvent,
-  ExecuteMeSellTransactionEvent,
-  ExecuteMeBuyNowEvent,
-  ExecuteMeSellEvent,
-  ExecuteMeSellCancelEvent,
+  UpdateProposalMetadataEvent,
   CreateFinancialOfferEvent,
   CancelFinancialOfferEvent,
   AcceptFinancialOfferEvent,
-  CreateTransferProposalEvent,
-  ExecuteTransferProposalEvent,
-  CreateTransferGovernanceEvent,
-  UpdateGovernanceConfigEvent,
-  ExecuteUpdateGovernanceConfigEvent,
-  CreateUpdateRoleProposalEvent,
-  ExecuteUpdateRoleEvent,
-  CreateChangeClubConfigGovernanceEvent,
-  CreateSolseaProposalEvent,
-  ExecuteSolseaTransactionEvent,
-  CancelSolseaOfferEvent,
   ReserveRightsEvent,
   UpdateAllocationEvent,
-  CreateAddSellPermissionProposalEvent,
-  ExecuteSellPermissionTransactionEvent,
-  AddStakeConfigToStakeRecordEvent,
-  AddCanLeaveActionEvent,
+  ConfigureWhitelistingsEvent,
+  ConfigureAdminsEvent,
+  MigrateFinancialsEvent,
+  InsertTransactionEvent,
+  FundraiseEvent,
+  CancelProposalEvent,
 ]

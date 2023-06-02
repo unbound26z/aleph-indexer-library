@@ -15,6 +15,7 @@ export enum ClubType {
   TokenEqual,
   RoleBased,
   NftBased,
+  Syndicate,
 }
 
 /**

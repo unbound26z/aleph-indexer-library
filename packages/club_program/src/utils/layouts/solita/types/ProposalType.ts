@@ -22,7 +22,6 @@ export enum ProposalType {
   BuySolsea,
   UpdateGovernanceConfig,
   UpdateRoleConfig,
-  AddSellPermission,
 }
 
 /**

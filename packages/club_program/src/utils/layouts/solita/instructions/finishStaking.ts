@@ -14,23 +14,10 @@ import * as web3 from '@solana/web3.js'
  * @category FinishStaking
  * @category generated
  */
-export type FinishStakingInstructionArgs = {
-  stakeIndex: number
-}
-/**
- * @category Instructions
- * @category FinishStaking
- * @category generated
- */
-export const finishStakingStruct = new beet.BeetArgsStruct<
-  FinishStakingInstructionArgs & {
-    instructionDiscriminator: number[] /* size: 8 */
-  }
->(
-  [
-    ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['stakeIndex', beet.u32],
-  ],
+export const finishStakingStruct = new beet.BeetArgsStruct<{
+  instructionDiscriminator: number[] /* size: 8 */
+}>(
+  [['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)]],
   'FinishStakingInstructionArgs',
 )
 /**
@@ -66,20 +53,16 @@ export const finishStakingInstructionDiscriminator = [
  * Creates a _FinishStaking_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
- * @param args to provide as instruction data to the program
- *
  * @category Instructions
  * @category FinishStaking
  * @category generated
  */
 export function createFinishStakingInstruction(
   accounts: FinishStakingInstructionAccounts,
-  args: FinishStakingInstructionArgs,
   programId = new web3.PublicKey('UNQc364EDzKQqfSW1Fnhfam2fvsFGVdVqg77kpBqRSe'),
 ) {
   const [data] = finishStakingStruct.serialize({
     instructionDiscriminator: finishStakingInstructionDiscriminator,
-    ...args,
   })
   const keys: web3.AccountMeta[] = [
     {

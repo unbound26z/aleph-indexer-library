@@ -7,6 +7,7 @@
 
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import { AllowType, allowTypeBeet } from '../types/AllowType.js'
 
 /**
  * @category Instructions
@@ -15,6 +16,7 @@ import * as web3 from '@solana/web3.js'
  */
 export type AllowMemberInstructionArgs = {
   roles: string[]
+  allowType: AllowType
 }
 /**
  * @category Instructions
@@ -29,6 +31,7 @@ export const allowMemberStruct = new beet.FixableBeetArgsStruct<
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['roles', beet.array(beet.utf8String)],
+    ['allowType', allowTypeBeet],
   ],
   'AllowMemberInstructionArgs',
 )
@@ -38,6 +41,7 @@ export const allowMemberStruct = new beet.FixableBeetArgsStruct<
  * @property [] memberData
  * @property [_writable_, **signer**] payer
  * @property [_writable_] clubData
+ * @property [] realm
  * @category Instructions
  * @category AllowMember
  * @category generated
@@ -46,6 +50,7 @@ export type AllowMemberInstructionAccounts = {
   memberData: web3.PublicKey
   payer: web3.PublicKey
   clubData: web3.PublicKey
+  realm: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
@@ -87,6 +92,11 @@ export function createAllowMemberInstruction(
     {
       pubkey: accounts.clubData,
       isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.realm,
+      isWritable: false,
       isSigner: false,
     },
     {

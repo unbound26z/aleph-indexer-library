@@ -11,11 +11,11 @@ import * as beet from '@metaplex-foundation/beet'
  * @category generated
  */
 export enum MemberStatus {
-  UNINVITED,
-  PENDING,
-  ACCEPTED,
-  REJECTED,
-  CANCELED,
+  Uninvited,
+  Pending,
+  Accepted,
+  Rejected,
+  Cancelled,
 }
 
 /**

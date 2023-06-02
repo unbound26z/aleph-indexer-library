@@ -61,6 +61,16 @@ export default class WorkerDomain
   ): Promise<boolean> {
     throw new Error('Method not implemented.')
   }
+  async solanaIndexInstructions(
+    context: ParserContext,
+    entities: SolanaParsedInstructionContext[],
+  ): Promise<void> {
+    const parsedIxs = entities.map((ix) => this.eventParser.parse(ix))
+
+    console.log(`indexing ${entities.length} parsed ixs`)
+
+    await this.eventDAL.save(parsedIxs)
+  }
 
   async onNewAccount(
     config: AccountIndexerConfigWithMeta<ClubProgramAccountInfo>,
@@ -112,17 +122,6 @@ export default class WorkerDomain
     return ixsContext.filter(({ instruction }) => {
       return isParsedIx(instruction) && instruction.programId === this.programId
     })
-  }
-
-  async solanaIndexInstructions(
-    context: ParserContext,
-    entities: SolanaParsedInstructionContext[],
-  ): Promise<void> {
-    const parsedIxs = entities.map((ix) => this.eventParser.parse(ix))
-
-    console.log(`indexing ${entities.length} parsed ixs`)
-
-    await this.eventDAL.save(parsedIxs)
   }
 
   // ------------- Custom impl methods -------------------

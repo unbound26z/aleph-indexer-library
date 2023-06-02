@@ -21,6 +21,10 @@ export type FinancialRecordArgs = {
   sellOffersCount: number
   listedFinancialRights: beet.bignum
   depositRecords: DepositRecord[]
+  treasuryRole: string
+  createdAt: beet.bignum
+  createdAtSlot: beet.bignum
+  tokenOwnerRecord: web3.PublicKey
 }
 
 export const financialRecordDiscriminator = [
@@ -40,6 +44,10 @@ export class FinancialRecord implements FinancialRecordArgs {
     readonly sellOffersCount: number,
     readonly listedFinancialRights: beet.bignum,
     readonly depositRecords: DepositRecord[],
+    readonly treasuryRole: string,
+    readonly createdAt: beet.bignum,
+    readonly createdAtSlot: beet.bignum,
+    readonly tokenOwnerRecord: web3.PublicKey,
   ) {}
 
   /**
@@ -52,6 +60,10 @@ export class FinancialRecord implements FinancialRecordArgs {
       args.sellOffersCount,
       args.listedFinancialRights,
       args.depositRecords,
+      args.treasuryRole,
+      args.createdAt,
+      args.createdAtSlot,
+      args.tokenOwnerRecord,
     )
   }
 
@@ -175,6 +187,30 @@ export class FinancialRecord implements FinancialRecordArgs {
         return x
       })(),
       depositRecords: this.depositRecords,
+      treasuryRole: this.treasuryRole,
+      createdAt: (() => {
+        const x = <{ toNumber: () => number }>this.createdAt
+        if (typeof x.toNumber === 'function') {
+          try {
+            return x.toNumber()
+          } catch (_) {
+            return x
+          }
+        }
+        return x
+      })(),
+      createdAtSlot: (() => {
+        const x = <{ toNumber: () => number }>this.createdAtSlot
+        if (typeof x.toNumber === 'function') {
+          try {
+            return x.toNumber()
+          } catch (_) {
+            return x
+          }
+        }
+        return x
+      })(),
+      tokenOwnerRecord: this.tokenOwnerRecord.toBase58(),
     }
   }
 }
@@ -196,6 +232,10 @@ export const financialRecordBeet = new beet.FixableBeetStruct<
     ['sellOffersCount', beet.u32],
     ['listedFinancialRights', beet.u64],
     ['depositRecords', beet.array(depositRecordBeet)],
+    ['treasuryRole', beet.utf8String],
+    ['createdAt', beet.i64],
+    ['createdAtSlot', beet.u64],
+    ['tokenOwnerRecord', beetSolana.publicKey],
   ],
   FinancialRecord.fromArgs,
   'FinancialRecord',

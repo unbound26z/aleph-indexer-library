@@ -7,6 +7,7 @@
 
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import { ClubAction, clubActionBeet } from '../types/ClubAction.js'
 
 /**
  * @category Instructions
@@ -14,7 +15,7 @@ import * as web3 from '@solana/web3.js'
  * @category generated
  */
 export type UpdateVoterWeightInstructionArgs = {
-  action: number
+  action: ClubAction
 }
 /**
  * @category Instructions
@@ -28,7 +29,7 @@ export const updateVoterWeightStruct = new beet.BeetArgsStruct<
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['action', beet.u8],
+    ['action', clubActionBeet],
   ],
   'UpdateVoterWeightInstructionArgs',
 )
@@ -41,9 +42,6 @@ export const updateVoterWeightStruct = new beet.BeetArgsStruct<
  * @property [] memberData
  * @property [] clubData
  * @property [_writable_, **signer**] payer
- * @property [_writable_] maxVoterWeightRecord
- * @property [_writable_] proposalMetadata
- * @property [] proposal
  * @category Instructions
  * @category UpdateVoterWeight
  * @category generated
@@ -55,9 +53,6 @@ export type UpdateVoterWeightInstructionAccounts = {
   memberData: web3.PublicKey
   clubData: web3.PublicKey
   payer: web3.PublicKey
-  maxVoterWeightRecord: web3.PublicKey
-  proposalMetadata: web3.PublicKey
-  proposal: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
@@ -115,21 +110,6 @@ export function createUpdateVoterWeightInstruction(
       pubkey: accounts.payer,
       isWritable: true,
       isSigner: true,
-    },
-    {
-      pubkey: accounts.maxVoterWeightRecord,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.proposalMetadata,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.proposal,
-      isWritable: false,
-      isSigner: false,
     },
     {
       pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,

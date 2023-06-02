@@ -8,6 +8,7 @@
 import * as splToken from '@solana/spl-token'
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
+import { SupportType, supportTypeBeet } from '../types/SupportType.js'
 
 /**
  * @category Instructions
@@ -15,50 +16,48 @@ import * as web3 from '@solana/web3.js'
  * @category generated
  */
 export type SupportClubInstructionArgs = {
-  depositAmount: beet.bignum
-  supportType: number
+  supportType: SupportType
 }
 /**
  * @category Instructions
  * @category SupportClub
  * @category generated
  */
-export const supportClubStruct = new beet.BeetArgsStruct<
+export const supportClubStruct = new beet.FixableBeetArgsStruct<
   SupportClubInstructionArgs & {
     instructionDiscriminator: number[] /* size: 8 */
   }
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['depositAmount', beet.u64],
-    ['supportType', beet.u8],
+    ['supportType', supportTypeBeet],
   ],
   'SupportClubInstructionArgs',
 )
 /**
  * Accounts required by the _supportClub_ instruction
  *
- * @property [] realm
  * @property [_writable_] memberData
  * @property [_writable_] fundraiseConfig
- * @property [_writable_] financialRecord
  * @property [_writable_] treasuryData
  * @property [] clubData
  * @property [_writable_] treasury
+ * @property [_writable_] financialRecord
  * @property [_writable_, **signer**] payer
+ * @property [] tokenOwnerRecord
  * @category Instructions
  * @category SupportClub
  * @category generated
  */
 export type SupportClubInstructionAccounts = {
-  realm: web3.PublicKey
   memberData: web3.PublicKey
   fundraiseConfig: web3.PublicKey
-  financialRecord: web3.PublicKey
   treasuryData: web3.PublicKey
   clubData: web3.PublicKey
   treasury: web3.PublicKey
+  financialRecord: web3.PublicKey
   payer: web3.PublicKey
+  tokenOwnerRecord: web3.PublicKey
   tokenProgram?: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
@@ -89,22 +88,12 @@ export function createSupportClubInstruction(
   })
   const keys: web3.AccountMeta[] = [
     {
-      pubkey: accounts.realm,
-      isWritable: false,
-      isSigner: false,
-    },
-    {
       pubkey: accounts.memberData,
       isWritable: true,
       isSigner: false,
     },
     {
       pubkey: accounts.fundraiseConfig,
-      isWritable: true,
-      isSigner: false,
-    },
-    {
-      pubkey: accounts.financialRecord,
       isWritable: true,
       isSigner: false,
     },
@@ -124,9 +113,19 @@ export function createSupportClubInstruction(
       isSigner: false,
     },
     {
+      pubkey: accounts.financialRecord,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
       pubkey: accounts.payer,
       isWritable: true,
       isSigner: true,
+    },
+    {
+      pubkey: accounts.tokenOwnerRecord,
+      isWritable: false,
+      isSigner: false,
     },
     {
       pubkey: accounts.tokenProgram ?? splToken.TOKEN_PROGRAM_ID,

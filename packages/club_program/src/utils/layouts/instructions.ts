@@ -1,13 +1,12 @@
 import { EventBase } from '@aleph-indexer/framework'
-import * as solita from './solita/index.js'
 import { PublicKey } from '@solana/web3.js'
+import * as solita from './solita/index.js'
 import BN from 'bn.js'
 
 export enum InstructionType {
   CreateClub = 'CreateClubEvent',
-  CreateClubVault = 'CreateClubVaultEvent',
-  CreateTreasuryGovernance = 'CreateTreasuryGovernanceEvent',
-  AddSellPermission = 'AddSellPermissionEvent',
+  CreateGovernance = 'CreateGovernanceEvent',
+  CreateTreasury = 'CreateTreasuryEvent',
   SupportClub = 'SupportClubEvent',
   LeaveClub = 'LeaveClubEvent',
   CreateClubProposal = 'CreateClubProposalEvent',
@@ -15,18 +14,9 @@ export enum InstructionType {
   UpdateMember = 'UpdateMemberEvent',
   AcceptMembership = 'AcceptMembershipEvent',
   CancelInvitation = 'CancelInvitationEvent',
-  CreateFundraise = 'CreateFundraiseEvent',
-  FinishFundraise = 'FinishFundraiseEvent',
   UpdateVoterWeight = 'UpdateVoterWeightEvent',
-  ExecuteTransaction = 'ExecuteTransactionEvent',
-  CancelEscrow = 'CancelEscrowEvent',
-  CreateProposalMetadata = 'CreateProposalMetadataEvent',
-  CreateWithdrawalProposal = 'CreateWithdrawalProposalEvent',
-  ExecuteWithdrawalTransaction = 'ExecuteWithdrawalTransactionEvent',
-  UpdateVoterWeightForGovernance = 'UpdateVoterWeightForGovernanceEvent',
+  ExecuteProposal = 'ExecuteProposalEvent',
   Distribute = 'DistributeEvent',
-  TransferProfit = 'TransferProfitEvent',
-  CreateWithdrawalGovernance = 'CreateWithdrawalGovernanceEvent',
   CastNftVote = 'CastNftVoteEvent',
   InitializeStaking = 'InitializeStakingEvent',
   StakeTokens = 'StakeTokensEvent',
@@ -35,34 +25,18 @@ export enum InstructionType {
   FinishStaking = 'FinishStakingEvent',
   StartStaking = 'StartStakingEvent',
   InitializeStakingReward = 'InitializeStakingRewardEvent',
-  UpdateProposalDescription = 'UpdateProposalDescriptionEvent',
-  CreateMeBuyNowProposal = 'CreateMeBuyNowProposalEvent',
-  CreateMeSellProposal = 'CreateMeSellProposalEvent',
-  ExecuteMeBuyNowTransaction = 'ExecuteMeBuyNowTransactionEvent',
-  ExecuteMeSellTransaction = 'ExecuteMeSellTransactionEvent',
-  ExecuteMeBuyNow = 'ExecuteMeBuyNowEvent',
-  ExecuteMeSell = 'ExecuteMeSellEvent',
-  ExecuteMeSellCancel = 'ExecuteMeSellCancelEvent',
+  UpdateProposalMetadata = 'UpdateProposalMetadataEvent',
   CreateFinancialOffer = 'CreateFinancialOfferEvent',
   CancelFinancialOffer = 'CancelFinancialOfferEvent',
   AcceptFinancialOffer = 'AcceptFinancialOfferEvent',
-  CreateTransferProposal = 'CreateTransferProposalEvent',
-  ExecuteTransferProposal = 'ExecuteTransferProposalEvent',
-  CreateTransferGovernance = 'CreateTransferGovernanceEvent',
-  UpdateGovernanceConfig = 'UpdateGovernanceConfigEvent',
-  ExecuteUpdateGovernanceConfig = 'ExecuteUpdateGovernanceConfigEvent',
-  CreateUpdateRoleProposal = 'CreateUpdateRoleProposalEvent',
-  ExecuteUpdateRole = 'ExecuteUpdateRoleEvent',
-  CreateChangeClubConfigGovernance = 'CreateChangeClubConfigGovernanceEvent',
-  CreateSolseaProposal = 'CreateSolseaProposalEvent',
-  ExecuteSolseaTransaction = 'ExecuteSolseaTransactionEvent',
-  CancelSolseaOffer = 'CancelSolseaOfferEvent',
   ReserveRights = 'ReserveRightsEvent',
   UpdateAllocation = 'UpdateAllocationEvent',
-  CreateAddSellPermissionProposal = 'CreateAddSellPermissionProposalEvent',
-  ExecuteSellPermissionTransaction = 'ExecuteSellPermissionTransactionEvent',
-  AddStakeConfigToStakeRecord = 'AddStakeConfigToStakeRecordEvent',
-  AddCanLeaveAction = 'AddCanLeaveActionEvent',
+  ConfigureWhitelistings = 'ConfigureWhitelistingsEvent',
+  ConfigureAdmins = 'ConfigureAdminsEvent',
+  MigrateFinancials = 'MigrateFinancialsEvent',
+  InsertTransaction = 'InsertTransactionEvent',
+  Fundraise = 'FundraiseEvent',
+  CancelProposal = 'CancelProposalEvent',
 }
 
 export type InstructionBase = EventBase<InstructionType> & {
@@ -73,17 +47,8 @@ export type InstructionBase = EventBase<InstructionType> & {
 
 /*-----------------------* CUSTOM EVENTS TYPES *-----------------------*/
 
-export type CreateClubEventData = {
-  clubName: string
-  clubType: number
-  roles: Buffer
-  ownerRole: string
-  defaultRole: string
-  kycConfig: solita.KycConfig
-}
-
 export type CreateClubInfo = {
-  data: CreateClubEventData
+  data: solita.CreateClubInstructionArgs
   accounts: solita.CreateClubInstructionAccounts
 }
 
@@ -94,53 +59,43 @@ export type CreateClubEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type CreateClubVaultEventData = {
+export type CreateGovernanceEventData = {
+  governanceDtos: solita.GovernanceDto
+}
+
+export type CreateGovernanceInfo = {
+  data: CreateGovernanceEventData
+  accounts: solita.CreateGovernanceInstructionAccounts
+}
+
+export type CreateGovernanceEvent = InstructionBase &
+  CreateGovernanceInfo & {
+    type: InstructionType.CreateGovernance
+  }
+
+/*----------------------------------------------------------------------*/
+
+export type CreateTreasuryEventData = {
+  name: string
   chainId: string
+  nftMaxVoterWeight: BN
+  roleDtos: solita.TreasuryRolesDto
 }
 
-export type CreateClubVaultInfo = {
-  data: CreateClubVaultEventData
-  accounts: solita.CreateClubVaultInstructionAccounts
+export type CreateTreasuryInfo = {
+  data: CreateTreasuryEventData
+  accounts: solita.CreateTreasuryInstructionAccounts
 }
 
-export type CreateClubVaultEvent = InstructionBase &
-  CreateClubVaultInfo & {
-    type: InstructionType.CreateClubVault
+export type CreateTreasuryEvent = InstructionBase &
+  CreateTreasuryInfo & {
+    type: InstructionType.CreateTreasury
   }
 
 /*----------------------------------------------------------------------*/
-
-export type CreateTreasuryGovernanceInfo = {
-  data: solita.CreateTreasuryGovernanceInstructionArgs
-  accounts: solita.CreateTreasuryGovernanceInstructionAccounts
-}
-
-export type CreateTreasuryGovernanceEvent = InstructionBase &
-  CreateTreasuryGovernanceInfo & {
-    type: InstructionType.CreateTreasuryGovernance
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type AddSellPermissionInfo = {
-  data: solita.AddSellPermissionInstructionArgs
-  accounts: solita.AddSellPermissionInstructionAccounts
-}
-
-export type AddSellPermissionEvent = InstructionBase &
-  AddSellPermissionInfo & {
-    type: InstructionType.AddSellPermission
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type SupportClubEventData = {
-  depositAmount: BN
-  supportType: number
-}
 
 export type SupportClubInfo = {
-  data: SupportClubEventData
+  data: solita.SupportType
   accounts: solita.SupportClubInstructionAccounts
 }
 
@@ -162,17 +117,8 @@ export type LeaveClubEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type CreateClubProposalEventData = {
-  chainId: string
-  useDeny: boolean
-  offeredAmount: BN
-  wantedAmount: BN
-  action: number
-  dedicatedTaker: PublicKey
-}
-
 export type CreateClubProposalInfo = {
-  data: CreateClubProposalEventData
+  data: solita.CreateClubProposalInstructionArgs
   accounts: solita.CreateClubProposalInstructionAccounts
 }
 
@@ -183,12 +129,8 @@ export type CreateClubProposalEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type AllowMemberEventData = {
-  roles: string
-}
-
 export type AllowMemberInfo = {
-  data: AllowMemberEventData
+  data: solita.AllowMemberInstructionArgs
   accounts: solita.AllowMemberInstructionAccounts
 }
 
@@ -233,39 +175,8 @@ export type CancelInvitationEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type CreateFundraiseEventData = {
-  amount: BN
-}
-
-export type CreateFundraiseInfo = {
-  data: CreateFundraiseEventData
-  accounts: solita.CreateFundraiseInstructionAccounts
-}
-
-export type CreateFundraiseEvent = InstructionBase &
-  CreateFundraiseInfo & {
-    type: InstructionType.CreateFundraise
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type FinishFundraiseInfo = {
-  accounts: solita.FinishFundraiseInstructionAccounts
-}
-
-export type FinishFundraiseEvent = InstructionBase &
-  FinishFundraiseInfo & {
-    type: InstructionType.FinishFundraise
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type UpdateVoterWeightEventData = {
-  action: number
-}
-
 export type UpdateVoterWeightInfo = {
-  data: UpdateVoterWeightEventData
+  data: solita.ClubAction
   accounts: solita.UpdateVoterWeightInstructionAccounts
 }
 
@@ -276,96 +187,13 @@ export type UpdateVoterWeightEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type ExecuteTransactionEventData = {
-  chainId: string
-  action: number
-  treasuryIndex: number
+export type ExecuteProposalInfo = {
+  accounts: solita.ExecuteProposalInstructionAccounts
 }
 
-export type ExecuteTransactionInfo = {
-  data: ExecuteTransactionEventData
-  accounts: solita.ExecuteTransactionInstructionAccounts
-}
-
-export type ExecuteTransactionEvent = InstructionBase &
-  ExecuteTransactionInfo & {
-    type: InstructionType.ExecuteTransaction
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CancelEscrowEventData = {
-  chainId: string
-  action: number
-  treasuryIndex: number
-}
-
-export type CancelEscrowInfo = {
-  data: CancelEscrowEventData
-  accounts: solita.CancelEscrowInstructionAccounts
-}
-
-export type CancelEscrowEvent = InstructionBase &
-  CancelEscrowInfo & {
-    type: InstructionType.CancelEscrow
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateProposalMetadataEventData = {
-  proposalType: number
-  data1: Buffer
-  data2: Buffer
-  data3: Buffer
-}
-
-export type CreateProposalMetadataInfo = {
-  data: CreateProposalMetadataEventData
-  accounts: solita.CreateProposalMetadataInstructionAccounts
-}
-
-export type CreateProposalMetadataEvent = InstructionBase &
-  CreateProposalMetadataInfo & {
-    type: InstructionType.CreateProposalMetadata
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateWithdrawalProposalEventData = {
-  useDeny: boolean
-  withdrawalAmount: BN
-}
-
-export type CreateWithdrawalProposalInfo = {
-  data: CreateWithdrawalProposalEventData
-  accounts: solita.CreateWithdrawalProposalInstructionAccounts
-}
-
-export type CreateWithdrawalProposalEvent = InstructionBase &
-  CreateWithdrawalProposalInfo & {
-    type: InstructionType.CreateWithdrawalProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteWithdrawalTransactionInfo = {
-  accounts: solita.ExecuteWithdrawalTransactionInstructionAccounts
-}
-
-export type ExecuteWithdrawalTransactionEvent = InstructionBase &
-  ExecuteWithdrawalTransactionInfo & {
-    type: InstructionType.ExecuteWithdrawalTransaction
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type UpdateVoterWeightForGovernanceInfo = {
-  accounts: solita.UpdateVoterWeightForGovernanceInstructionAccounts
-}
-
-export type UpdateVoterWeightForGovernanceEvent = InstructionBase &
-  UpdateVoterWeightForGovernanceInfo & {
-    type: InstructionType.UpdateVoterWeightForGovernance
+export type ExecuteProposalEvent = InstructionBase &
+  ExecuteProposalInfo & {
+    type: InstructionType.ExecuteProposal
   }
 
 /*----------------------------------------------------------------------*/
@@ -387,40 +215,6 @@ export type DistributeEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type TransferProfitEventData = {
-  withdrawalAmount: BN
-}
-
-export type TransferProfitInfo = {
-  data: TransferProfitEventData
-  accounts: solita.TransferProfitInstructionAccounts
-}
-
-export type TransferProfitEvent = InstructionBase &
-  TransferProfitInfo & {
-    type: InstructionType.TransferProfit
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateWithdrawalGovernanceEventData = {
-  treasuryIndex: number
-  maxVotingTime: number
-  voteThresholdPercentage: number
-}
-
-export type CreateWithdrawalGovernanceInfo = {
-  data: CreateWithdrawalGovernanceEventData
-  accounts: solita.CreateWithdrawalGovernanceInstructionAccounts
-}
-
-export type CreateWithdrawalGovernanceEvent = InstructionBase &
-  CreateWithdrawalGovernanceInfo & {
-    type: InstructionType.CreateWithdrawalGovernance
-  }
-
-/*----------------------------------------------------------------------*/
-
 export type CastNftVoteInfo = {
   accounts: solita.CastNftVoteInstructionAccounts
 }
@@ -432,14 +226,8 @@ export type CastNftVoteEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type InitializeStakingEventData = {
-  stakeName: string
-  capAmount: BN
-  stakePeriod: number
-}
-
 export type InitializeStakingInfo = {
-  data: InitializeStakingEventData
+  data: solita.InitializeStakingInstructionArgs
   accounts: solita.InitializeStakingInstructionAccounts
 }
 
@@ -450,14 +238,8 @@ export type InitializeStakingEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type StakeTokensEventData = {
-  stakeIndex: number
-  amount: BN
-  stakeOption: number
-}
-
 export type StakeTokensInfo = {
-  data: StakeTokensEventData
+  data: solita.StakeTokensInstructionArgs
   accounts: solita.StakeTokensInstructionAccounts
 }
 
@@ -468,13 +250,8 @@ export type StakeTokensEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type ClaimStakedTokensEventData = {
-  stakeIndex: number
-  stakeOption: number
-}
-
 export type ClaimStakedTokensInfo = {
-  data: ClaimStakedTokensEventData
+  data: solita.StakeOption
   accounts: solita.ClaimStakedTokensInstructionAccounts
 }
 
@@ -485,13 +262,8 @@ export type ClaimStakedTokensEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type UnstakeTokensEventData = {
-  stakeIndex: number
-  stakeOption: number
-}
-
 export type UnstakeTokensInfo = {
-  data: UnstakeTokensEventData
+  data: solita.StakeOption
   accounts: solita.UnstakeTokensInstructionAccounts
 }
 
@@ -502,12 +274,7 @@ export type UnstakeTokensEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type FinishStakingEventData = {
-  stakeIndex: number
-}
-
 export type FinishStakingInfo = {
-  data: FinishStakingEventData
   accounts: solita.FinishStakingInstructionAccounts
 }
 
@@ -518,12 +285,7 @@ export type FinishStakingEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type StartStakingEventData = {
-  stakeIndex: number
-}
-
 export type StartStakingInfo = {
-  data: StartStakingEventData
   accounts: solita.StartStakingInstructionAccounts
 }
 
@@ -545,125 +307,21 @@ export type InitializeStakingRewardEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type UpdateProposalDescriptionEventData = {
-  descriptionBuffer: string
+export type UpdateProposalMetadataEventData = {
+  description: string
   name: string
   options: string
   discussionLink: string
 }
 
-export type UpdateProposalDescriptionInfo = {
-  data: UpdateProposalDescriptionEventData
-  accounts: solita.UpdateProposalDescriptionInstructionAccounts
+export type UpdateProposalMetadataInfo = {
+  data: UpdateProposalMetadataEventData
+  accounts: solita.UpdateProposalMetadataInstructionAccounts
 }
 
-export type UpdateProposalDescriptionEvent = InstructionBase &
-  UpdateProposalDescriptionInfo & {
-    type: InstructionType.UpdateProposalDescription
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateMeBuyNowProposalEventData = {
-  useDeny: boolean
-}
-
-export type CreateMeBuyNowProposalInfo = {
-  data: CreateMeBuyNowProposalEventData
-  accounts: solita.CreateMeBuyNowProposalInstructionAccounts
-}
-
-export type CreateMeBuyNowProposalEvent = InstructionBase &
-  CreateMeBuyNowProposalInfo & {
-    type: InstructionType.CreateMeBuyNowProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateMeSellProposalEventData = {
-  useDeny: boolean
-}
-
-export type CreateMeSellProposalInfo = {
-  data: CreateMeSellProposalEventData
-  accounts: solita.CreateMeSellProposalInstructionAccounts
-}
-
-export type CreateMeSellProposalEvent = InstructionBase &
-  CreateMeSellProposalInfo & {
-    type: InstructionType.CreateMeSellProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteMeBuyNowTransactionInfo = {
-  accounts: solita.ExecuteMeBuyNowTransactionInstructionAccounts
-}
-
-export type ExecuteMeBuyNowTransactionEvent = InstructionBase &
-  ExecuteMeBuyNowTransactionInfo & {
-    type: InstructionType.ExecuteMeBuyNowTransaction
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteMeSellTransactionInfo = {
-  accounts: solita.ExecuteMeSellTransactionInstructionAccounts
-}
-
-export type ExecuteMeSellTransactionEvent = InstructionBase &
-  ExecuteMeSellTransactionInfo & {
-    type: InstructionType.ExecuteMeSellTransaction
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteMeBuyNowEventData = {
-  data1: Buffer
-  data2: Buffer
-  data3: Buffer
-}
-
-export type ExecuteMeBuyNowInfo = {
-  data: ExecuteMeBuyNowEventData
-  accounts: solita.ExecuteMeBuyNowInstructionAccounts
-}
-
-export type ExecuteMeBuyNowEvent = InstructionBase &
-  ExecuteMeBuyNowInfo & {
-    type: InstructionType.ExecuteMeBuyNow
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteMeSellEventData = {
-  data: Buffer
-}
-
-export type ExecuteMeSellInfo = {
-  data: ExecuteMeSellEventData
-  accounts: solita.ExecuteMeSellInstructionAccounts
-}
-
-export type ExecuteMeSellEvent = InstructionBase &
-  ExecuteMeSellInfo & {
-    type: InstructionType.ExecuteMeSell
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteMeSellCancelEventData = {
-  data: Buffer
-}
-
-export type ExecuteMeSellCancelInfo = {
-  data: ExecuteMeSellCancelEventData
-  accounts: solita.ExecuteMeSellCancelInstructionAccounts
-}
-
-export type ExecuteMeSellCancelEvent = InstructionBase &
-  ExecuteMeSellCancelInfo & {
-    type: InstructionType.ExecuteMeSellCancel
+export type UpdateProposalMetadataEvent = InstructionBase &
+  UpdateProposalMetadataInfo & {
+    type: InstructionType.UpdateProposalMetadata
   }
 
 /*----------------------------------------------------------------------*/
@@ -713,184 +371,6 @@ export type AcceptFinancialOfferEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type CreateTransferProposalEventData = {
-  useDeny: boolean
-  transferAmount: BN
-}
-
-export type CreateTransferProposalInfo = {
-  data: CreateTransferProposalEventData
-  accounts: solita.CreateTransferProposalInstructionAccounts
-}
-
-export type CreateTransferProposalEvent = InstructionBase &
-  CreateTransferProposalInfo & {
-    type: InstructionType.CreateTransferProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteTransferProposalInfo = {
-  accounts: solita.ExecuteTransferProposalInstructionAccounts
-}
-
-export type ExecuteTransferProposalEvent = InstructionBase &
-  ExecuteTransferProposalInfo & {
-    type: InstructionType.ExecuteTransferProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateTransferGovernanceEventData = {
-  maxVotingTime: number
-  voteThresholdPercentage: number
-}
-
-export type CreateTransferGovernanceInfo = {
-  data: CreateTransferGovernanceEventData
-  accounts: solita.CreateTransferGovernanceInstructionAccounts
-}
-
-export type CreateTransferGovernanceEvent = InstructionBase &
-  CreateTransferGovernanceInfo & {
-    type: InstructionType.CreateTransferGovernance
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type UpdateGovernanceConfigEventData = {
-  newQuorum: Buffer
-  seeds: Buffer
-  newVotingTime: number
-}
-
-export type UpdateGovernanceConfigInfo = {
-  data: UpdateGovernanceConfigEventData
-  accounts: solita.UpdateGovernanceConfigInstructionAccounts
-}
-
-export type UpdateGovernanceConfigEvent = InstructionBase &
-  UpdateGovernanceConfigInfo & {
-    type: InstructionType.UpdateGovernanceConfig
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteUpdateGovernanceConfigInfo = {
-  accounts: solita.ExecuteUpdateGovernanceConfigInstructionAccounts
-}
-
-export type ExecuteUpdateGovernanceConfigEvent = InstructionBase &
-  ExecuteUpdateGovernanceConfigInfo & {
-    type: InstructionType.ExecuteUpdateGovernanceConfig
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateUpdateRoleProposalEventData = {
-  roleWeigthConfig: solita.UpdateRoleWeight
-}
-
-export type CreateUpdateRoleProposalInfo = {
-  data: CreateUpdateRoleProposalEventData
-  accounts: solita.CreateUpdateRoleProposalInstructionAccounts
-}
-
-export type CreateUpdateRoleProposalEvent = InstructionBase &
-  CreateUpdateRoleProposalInfo & {
-    type: InstructionType.CreateUpdateRoleProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteUpdateRoleInfo = {
-  accounts: solita.ExecuteUpdateRoleInstructionAccounts
-}
-
-export type ExecuteUpdateRoleEvent = InstructionBase &
-  ExecuteUpdateRoleInfo & {
-    type: InstructionType.ExecuteUpdateRole
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateChangeClubConfigGovernanceEventData = {
-  voteThreshold: number
-  maxVotingTime: number
-}
-
-export type CreateChangeClubConfigGovernanceInfo = {
-  data: CreateChangeClubConfigGovernanceEventData
-  accounts: solita.CreateChangeClubConfigGovernanceInstructionAccounts
-}
-
-export type CreateChangeClubConfigGovernanceEvent = InstructionBase &
-  CreateChangeClubConfigGovernanceInfo & {
-    type: InstructionType.CreateChangeClubConfigGovernance
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CreateSolseaProposalEventData = {
-  treasuryIndex: number
-  chainId: string
-  offeredAmount: BN
-  wantedAmount: BN
-  sellerFeeBps: number
-  useDeny: boolean
-  action: number
-}
-
-export type CreateSolseaProposalInfo = {
-  data: CreateSolseaProposalEventData
-  accounts: solita.CreateSolseaProposalInstructionAccounts
-}
-
-export type CreateSolseaProposalEvent = InstructionBase &
-  CreateSolseaProposalInfo & {
-    type: InstructionType.CreateSolseaProposal
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type ExecuteSolseaTransactionEventData = {
-  action: number
-  treasuryIndex: number
-  chainId: string
-  authorityBump: number
-  creatorsCount: number
-  sellerFeeBps: number
-  royalties: string
-}
-
-export type ExecuteSolseaTransactionInfo = {
-  data: ExecuteSolseaTransactionEventData
-  accounts: solita.ExecuteSolseaTransactionInstructionAccounts
-}
-
-export type ExecuteSolseaTransactionEvent = InstructionBase &
-  ExecuteSolseaTransactionInfo & {
-    type: InstructionType.ExecuteSolseaTransaction
-  }
-
-/*----------------------------------------------------------------------*/
-
-export type CancelSolseaOfferEventData = {
-  chainId: string
-}
-
-export type CancelSolseaOfferInfo = {
-  data: CancelSolseaOfferEventData
-  accounts: solita.CancelSolseaOfferInstructionAccounts
-}
-
-export type CancelSolseaOfferEvent = InstructionBase &
-  CancelSolseaOfferInfo & {
-    type: InstructionType.CancelSolseaOffer
-  }
-
-/*----------------------------------------------------------------------*/
-
 export type ReserveRightsInfo = {
   data: solita.ReservedRights
   accounts: solita.ReserveRightsInstructionAccounts
@@ -922,47 +402,91 @@ export type UpdateAllocationEvent = InstructionBase &
 
 /*----------------------------------------------------------------------*/
 
-export type CreateAddSellPermissionProposalInfo = {
-  data: solita.CreateAddSellPermissionProposalInstructionArgs
-  accounts: solita.CreateAddSellPermissionProposalInstructionAccounts
+export type ConfigureWhitelistingsInfo = {
+  data: solita.ConfigureWhitelistingsInstructionArgs
+  accounts: solita.ConfigureWhitelistingsInstructionAccounts
 }
 
-export type CreateAddSellPermissionProposalEvent = InstructionBase &
-  CreateAddSellPermissionProposalInfo & {
-    type: InstructionType.CreateAddSellPermissionProposal
+export type ConfigureWhitelistingsEvent = InstructionBase &
+  ConfigureWhitelistingsInfo & {
+    type: InstructionType.ConfigureWhitelistings
   }
 
 /*----------------------------------------------------------------------*/
 
-export type ExecuteSellPermissionTransactionInfo = {
-  accounts: solita.ExecuteSellPermissionTransactionInstructionAccounts
+export type ConfigureAdminsEventData = {
+  admins: solita.AdminConfig
+  feeWallet: PublicKey
+  feePercentage: number
+  fundraiseFeeConfigs: solita.FundraiseFeeConfig
+  otcFeeConfigs: solita.OtcFeeConfig
 }
 
-export type ExecuteSellPermissionTransactionEvent = InstructionBase &
-  ExecuteSellPermissionTransactionInfo & {
-    type: InstructionType.ExecuteSellPermissionTransaction
+export type ConfigureAdminsInfo = {
+  data: ConfigureAdminsEventData
+  accounts: solita.ConfigureAdminsInstructionAccounts
+}
+
+export type ConfigureAdminsEvent = InstructionBase &
+  ConfigureAdminsInfo & {
+    type: InstructionType.ConfigureAdmins
   }
 
 /*----------------------------------------------------------------------*/
 
-export type AddStakeConfigToStakeRecordInfo = {
-  accounts: solita.AddStakeConfigToStakeRecordInstructionAccounts
+export type MigrateFinancialsEventData = {
+  usdcAmount: BN
 }
 
-export type AddStakeConfigToStakeRecordEvent = InstructionBase &
-  AddStakeConfigToStakeRecordInfo & {
-    type: InstructionType.AddStakeConfigToStakeRecord
+export type MigrateFinancialsInfo = {
+  data: MigrateFinancialsEventData
+  accounts: solita.MigrateFinancialsInstructionAccounts
+}
+
+export type MigrateFinancialsEvent = InstructionBase &
+  MigrateFinancialsInfo & {
+    type: InstructionType.MigrateFinancials
   }
 
 /*----------------------------------------------------------------------*/
 
-export type AddCanLeaveActionInfo = {
-  accounts: solita.AddCanLeaveActionInstructionAccounts
+export type InsertTransactionEventData = {
+  data: Buffer
+  signerIndexes: number
 }
 
-export type AddCanLeaveActionEvent = InstructionBase &
-  AddCanLeaveActionInfo & {
-    type: InstructionType.AddCanLeaveAction
+export type InsertTransactionInfo = {
+  data: InsertTransactionEventData
+  accounts: solita.InsertTransactionInstructionAccounts
+}
+
+export type InsertTransactionEvent = InstructionBase &
+  InsertTransactionInfo & {
+    type: InstructionType.InsertTransaction
+  }
+
+/*----------------------------------------------------------------------*/
+
+export type FundraiseInfo = {
+  data: solita.FundraiseAction
+  accounts: solita.FundraiseInstructionAccounts
+}
+
+export type FundraiseEvent = InstructionBase &
+  FundraiseInfo & {
+    type: InstructionType.Fundraise
+  }
+
+/*----------------------------------------------------------------------*/
+
+export type CancelProposalInfo = {
+  data: solita.CancelProposalInstructionArgs
+  accounts: solita.CancelProposalInstructionAccounts
+}
+
+export type CancelProposalEvent = InstructionBase &
+  CancelProposalInfo & {
+    type: InstructionType.CancelProposal
   }
 
 /*----------------------------------------------------------------------*/
@@ -981,22 +505,16 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.CreateClub,
   ],
   [
-    Buffer.from(solita.createClubVaultInstructionDiscriminator).toString(
+    Buffer.from(solita.createGovernanceInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.CreateClubVault,
+    InstructionType.CreateGovernance,
   ],
   [
-    Buffer.from(
-      solita.createTreasuryGovernanceInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateTreasuryGovernance,
-  ],
-  [
-    Buffer.from(solita.addSellPermissionInstructionDiscriminator).toString(
+    Buffer.from(solita.createTreasuryInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.AddSellPermission,
+    InstructionType.CreateTreasury,
   ],
   [
     Buffer.from(solita.supportClubInstructionDiscriminator).toString('ascii'),
@@ -1033,72 +551,20 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.CancelInvitation,
   ],
   [
-    Buffer.from(solita.createFundraiseInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CreateFundraise,
-  ],
-  [
-    Buffer.from(solita.finishFundraiseInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.FinishFundraise,
-  ],
-  [
     Buffer.from(solita.updateVoterWeightInstructionDiscriminator).toString(
       'ascii',
     ),
     InstructionType.UpdateVoterWeight,
   ],
   [
-    Buffer.from(solita.executeTransactionInstructionDiscriminator).toString(
+    Buffer.from(solita.executeProposalInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.ExecuteTransaction,
-  ],
-  [
-    Buffer.from(solita.cancelEscrowInstructionDiscriminator).toString('ascii'),
-    InstructionType.CancelEscrow,
-  ],
-  [
-    Buffer.from(solita.createProposalMetadataInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CreateProposalMetadata,
-  ],
-  [
-    Buffer.from(
-      solita.createWithdrawalProposalInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateWithdrawalProposal,
-  ],
-  [
-    Buffer.from(
-      solita.executeWithdrawalTransactionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteWithdrawalTransaction,
-  ],
-  [
-    Buffer.from(
-      solita.updateVoterWeightForGovernanceInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.UpdateVoterWeightForGovernance,
+    InstructionType.ExecuteProposal,
   ],
   [
     Buffer.from(solita.distributeInstructionDiscriminator).toString('ascii'),
     InstructionType.Distribute,
-  ],
-  [
-    Buffer.from(solita.transferProfitInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.TransferProfit,
-  ],
-  [
-    Buffer.from(
-      solita.createWithdrawalGovernanceInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateWithdrawalGovernance,
   ],
   [
     Buffer.from(solita.castNftVoteInstructionDiscriminator).toString('ascii'),
@@ -1139,50 +605,10 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.InitializeStakingReward,
   ],
   [
-    Buffer.from(
-      solita.updateProposalDescriptionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.UpdateProposalDescription,
-  ],
-  [
-    Buffer.from(solita.createMeBuyNowProposalInstructionDiscriminator).toString(
+    Buffer.from(solita.updateProposalMetadataInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.CreateMeBuyNowProposal,
-  ],
-  [
-    Buffer.from(solita.createMeSellProposalInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CreateMeSellProposal,
-  ],
-  [
-    Buffer.from(
-      solita.executeMeBuyNowTransactionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteMeBuyNowTransaction,
-  ],
-  [
-    Buffer.from(
-      solita.executeMeSellTransactionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteMeSellTransaction,
-  ],
-  [
-    Buffer.from(solita.executeMeBuyNowInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.ExecuteMeBuyNow,
-  ],
-  [
-    Buffer.from(solita.executeMeSellInstructionDiscriminator).toString('ascii'),
-    InstructionType.ExecuteMeSell,
-  ],
-  [
-    Buffer.from(solita.executeMeSellCancelInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.ExecuteMeSellCancel,
+    InstructionType.UpdateProposalMetadata,
   ],
   [
     Buffer.from(solita.createFinancialOfferInstructionDiscriminator).toString(
@@ -1203,72 +629,6 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.AcceptFinancialOffer,
   ],
   [
-    Buffer.from(solita.createTransferProposalInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CreateTransferProposal,
-  ],
-  [
-    Buffer.from(
-      solita.executeTransferProposalInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteTransferProposal,
-  ],
-  [
-    Buffer.from(
-      solita.createTransferGovernanceInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateTransferGovernance,
-  ],
-  [
-    Buffer.from(solita.updateGovernanceConfigInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.UpdateGovernanceConfig,
-  ],
-  [
-    Buffer.from(
-      solita.executeUpdateGovernanceConfigInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteUpdateGovernanceConfig,
-  ],
-  [
-    Buffer.from(
-      solita.createUpdateRoleProposalInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateUpdateRoleProposal,
-  ],
-  [
-    Buffer.from(solita.executeUpdateRoleInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.ExecuteUpdateRole,
-  ],
-  [
-    Buffer.from(
-      solita.createChangeClubConfigGovernanceInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateChangeClubConfigGovernance,
-  ],
-  [
-    Buffer.from(solita.createSolseaProposalInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CreateSolseaProposal,
-  ],
-  [
-    Buffer.from(
-      solita.executeSolseaTransactionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteSolseaTransaction,
-  ],
-  [
-    Buffer.from(solita.cancelSolseaOfferInstructionDiscriminator).toString(
-      'ascii',
-    ),
-    InstructionType.CancelSolseaOffer,
-  ],
-  [
     Buffer.from(solita.reserveRightsInstructionDiscriminator).toString('ascii'),
     InstructionType.ReserveRights,
   ],
@@ -1279,36 +639,44 @@ export const IX_METHOD_CODE: Map<string, InstructionType | undefined> = new Map<
     InstructionType.UpdateAllocation,
   ],
   [
-    Buffer.from(
-      solita.createAddSellPermissionProposalInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.CreateAddSellPermissionProposal,
-  ],
-  [
-    Buffer.from(
-      solita.executeSellPermissionTransactionInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.ExecuteSellPermissionTransaction,
-  ],
-  [
-    Buffer.from(
-      solita.addStakeConfigToStakeRecordInstructionDiscriminator,
-    ).toString('ascii'),
-    InstructionType.AddStakeConfigToStakeRecord,
-  ],
-  [
-    Buffer.from(solita.addCanLeaveActionInstructionDiscriminator).toString(
+    Buffer.from(solita.configureWhitelistingsInstructionDiscriminator).toString(
       'ascii',
     ),
-    InstructionType.AddCanLeaveAction,
+    InstructionType.ConfigureWhitelistings,
+  ],
+  [
+    Buffer.from(solita.configureAdminsInstructionDiscriminator).toString(
+      'ascii',
+    ),
+    InstructionType.ConfigureAdmins,
+  ],
+  [
+    Buffer.from(solita.migrateFinancialsInstructionDiscriminator).toString(
+      'ascii',
+    ),
+    InstructionType.MigrateFinancials,
+  ],
+  [
+    Buffer.from(solita.insertTransactionInstructionDiscriminator).toString(
+      'ascii',
+    ),
+    InstructionType.InsertTransaction,
+  ],
+  [
+    Buffer.from(solita.fundraiseInstructionDiscriminator).toString('ascii'),
+    InstructionType.Fundraise,
+  ],
+  [
+    Buffer.from(solita.cancelProposalInstructionDiscriminator).toString(
+      'ascii',
+    ),
+    InstructionType.CancelProposal,
   ],
 ])
 export const IX_DATA_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.CreateClub]: solita.createClubStruct,
-  [InstructionType.CreateClubVault]: solita.createClubVaultStruct,
-  [InstructionType.CreateTreasuryGovernance]:
-    solita.createTreasuryGovernanceStruct,
-  [InstructionType.AddSellPermission]: solita.addSellPermissionStruct,
+  [InstructionType.CreateGovernance]: solita.createGovernanceStruct,
+  [InstructionType.CreateTreasury]: solita.createTreasuryStruct,
   [InstructionType.SupportClub]: solita.supportClubStruct,
   [InstructionType.LeaveClub]: solita.leaveClubStruct,
   [InstructionType.CreateClubProposal]: solita.createClubProposalStruct,
@@ -1316,22 +684,9 @@ export const IX_DATA_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.UpdateMember]: solita.updateMemberStruct,
   [InstructionType.AcceptMembership]: solita.acceptMembershipStruct,
   [InstructionType.CancelInvitation]: solita.cancelInvitationStruct,
-  [InstructionType.CreateFundraise]: solita.createFundraiseStruct,
-  [InstructionType.FinishFundraise]: solita.finishFundraiseStruct,
   [InstructionType.UpdateVoterWeight]: solita.updateVoterWeightStruct,
-  [InstructionType.ExecuteTransaction]: solita.executeTransactionStruct,
-  [InstructionType.CancelEscrow]: solita.cancelEscrowStruct,
-  [InstructionType.CreateProposalMetadata]: solita.createProposalMetadataStruct,
-  [InstructionType.CreateWithdrawalProposal]:
-    solita.createWithdrawalProposalStruct,
-  [InstructionType.ExecuteWithdrawalTransaction]:
-    solita.executeWithdrawalTransactionStruct,
-  [InstructionType.UpdateVoterWeightForGovernance]:
-    solita.updateVoterWeightForGovernanceStruct,
+  [InstructionType.ExecuteProposal]: solita.executeProposalStruct,
   [InstructionType.Distribute]: solita.distributeStruct,
-  [InstructionType.TransferProfit]: solita.transferProfitStruct,
-  [InstructionType.CreateWithdrawalGovernance]:
-    solita.createWithdrawalGovernanceStruct,
   [InstructionType.CastNftVote]: solita.castNftVoteStruct,
   [InstructionType.InitializeStaking]: solita.initializeStakingStruct,
   [InstructionType.StakeTokens]: solita.stakeTokensStruct,
@@ -1341,54 +696,24 @@ export const IX_DATA_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.StartStaking]: solita.startStakingStruct,
   [InstructionType.InitializeStakingReward]:
     solita.initializeStakingRewardStruct,
-  [InstructionType.UpdateProposalDescription]:
-    solita.updateProposalDescriptionStruct,
-  [InstructionType.CreateMeBuyNowProposal]: solita.createMeBuyNowProposalStruct,
-  [InstructionType.CreateMeSellProposal]: solita.createMeSellProposalStruct,
-  [InstructionType.ExecuteMeBuyNowTransaction]:
-    solita.executeMeBuyNowTransactionStruct,
-  [InstructionType.ExecuteMeSellTransaction]:
-    solita.executeMeSellTransactionStruct,
-  [InstructionType.ExecuteMeBuyNow]: solita.executeMeBuyNowStruct,
-  [InstructionType.ExecuteMeSell]: solita.executeMeSellStruct,
-  [InstructionType.ExecuteMeSellCancel]: solita.executeMeSellCancelStruct,
+  [InstructionType.UpdateProposalMetadata]: solita.updateProposalMetadataStruct,
   [InstructionType.CreateFinancialOffer]: solita.createFinancialOfferStruct,
   [InstructionType.CancelFinancialOffer]: solita.cancelFinancialOfferStruct,
   [InstructionType.AcceptFinancialOffer]: solita.acceptFinancialOfferStruct,
-  [InstructionType.CreateTransferProposal]: solita.createTransferProposalStruct,
-  [InstructionType.ExecuteTransferProposal]:
-    solita.executeTransferProposalStruct,
-  [InstructionType.CreateTransferGovernance]:
-    solita.createTransferGovernanceStruct,
-  [InstructionType.UpdateGovernanceConfig]: solita.updateGovernanceConfigStruct,
-  [InstructionType.ExecuteUpdateGovernanceConfig]:
-    solita.executeUpdateGovernanceConfigStruct,
-  [InstructionType.CreateUpdateRoleProposal]:
-    solita.createUpdateRoleProposalStruct,
-  [InstructionType.ExecuteUpdateRole]: solita.executeUpdateRoleStruct,
-  [InstructionType.CreateChangeClubConfigGovernance]:
-    solita.createChangeClubConfigGovernanceStruct,
-  [InstructionType.CreateSolseaProposal]: solita.createSolseaProposalStruct,
-  [InstructionType.ExecuteSolseaTransaction]:
-    solita.executeSolseaTransactionStruct,
-  [InstructionType.CancelSolseaOffer]: solita.cancelSolseaOfferStruct,
   [InstructionType.ReserveRights]: solita.reserveRightsStruct,
   [InstructionType.UpdateAllocation]: solita.updateAllocationStruct,
-  [InstructionType.CreateAddSellPermissionProposal]:
-    solita.createAddSellPermissionProposalStruct,
-  [InstructionType.ExecuteSellPermissionTransaction]:
-    solita.executeSellPermissionTransactionStruct,
-  [InstructionType.AddStakeConfigToStakeRecord]:
-    solita.addStakeConfigToStakeRecordStruct,
-  [InstructionType.AddCanLeaveAction]: solita.addCanLeaveActionStruct,
+  [InstructionType.ConfigureWhitelistings]: solita.configureWhitelistingsStruct,
+  [InstructionType.ConfigureAdmins]: solita.configureAdminsStruct,
+  [InstructionType.MigrateFinancials]: solita.migrateFinancialsStruct,
+  [InstructionType.InsertTransaction]: solita.insertTransactionStruct,
+  [InstructionType.Fundraise]: solita.fundraiseStruct,
+  [InstructionType.CancelProposal]: solita.cancelProposalStruct,
 }
 
 export const IX_ACCOUNTS_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.CreateClub]: solita.CreateClubAccounts,
-  [InstructionType.CreateClubVault]: solita.CreateClubVaultAccounts,
-  [InstructionType.CreateTreasuryGovernance]:
-    solita.CreateTreasuryGovernanceAccounts,
-  [InstructionType.AddSellPermission]: solita.AddSellPermissionAccounts,
+  [InstructionType.CreateGovernance]: solita.CreateGovernanceAccounts,
+  [InstructionType.CreateTreasury]: solita.CreateTreasuryAccounts,
   [InstructionType.SupportClub]: solita.SupportClubAccounts,
   [InstructionType.LeaveClub]: solita.LeaveClubAccounts,
   [InstructionType.CreateClubProposal]: solita.CreateClubProposalAccounts,
@@ -1396,23 +721,9 @@ export const IX_ACCOUNTS_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.UpdateMember]: solita.UpdateMemberAccounts,
   [InstructionType.AcceptMembership]: solita.AcceptMembershipAccounts,
   [InstructionType.CancelInvitation]: solita.CancelInvitationAccounts,
-  [InstructionType.CreateFundraise]: solita.CreateFundraiseAccounts,
-  [InstructionType.FinishFundraise]: solita.FinishFundraiseAccounts,
   [InstructionType.UpdateVoterWeight]: solita.UpdateVoterWeightAccounts,
-  [InstructionType.ExecuteTransaction]: solita.ExecuteTransactionAccounts,
-  [InstructionType.CancelEscrow]: solita.CancelEscrowAccounts,
-  [InstructionType.CreateProposalMetadata]:
-    solita.CreateProposalMetadataAccounts,
-  [InstructionType.CreateWithdrawalProposal]:
-    solita.CreateWithdrawalProposalAccounts,
-  [InstructionType.ExecuteWithdrawalTransaction]:
-    solita.ExecuteWithdrawalTransactionAccounts,
-  [InstructionType.UpdateVoterWeightForGovernance]:
-    solita.UpdateVoterWeightForGovernanceAccounts,
+  [InstructionType.ExecuteProposal]: solita.ExecuteProposalAccounts,
   [InstructionType.Distribute]: solita.DistributeAccounts,
-  [InstructionType.TransferProfit]: solita.TransferProfitAccounts,
-  [InstructionType.CreateWithdrawalGovernance]:
-    solita.CreateWithdrawalGovernanceAccounts,
   [InstructionType.CastNftVote]: solita.CastNftVoteAccounts,
   [InstructionType.InitializeStaking]: solita.InitializeStakingAccounts,
   [InstructionType.StakeTokens]: solita.StakeTokensAccounts,
@@ -1422,56 +733,26 @@ export const IX_ACCOUNTS_LAYOUT: Partial<Record<InstructionType, any>> = {
   [InstructionType.StartStaking]: solita.StartStakingAccounts,
   [InstructionType.InitializeStakingReward]:
     solita.InitializeStakingRewardAccounts,
-  [InstructionType.UpdateProposalDescription]:
-    solita.UpdateProposalDescriptionAccounts,
-  [InstructionType.CreateMeBuyNowProposal]:
-    solita.CreateMeBuyNowProposalAccounts,
-  [InstructionType.CreateMeSellProposal]: solita.CreateMeSellProposalAccounts,
-  [InstructionType.ExecuteMeBuyNowTransaction]:
-    solita.ExecuteMeBuyNowTransactionAccounts,
-  [InstructionType.ExecuteMeSellTransaction]:
-    solita.ExecuteMeSellTransactionAccounts,
-  [InstructionType.ExecuteMeBuyNow]: solita.ExecuteMeBuyNowAccounts,
-  [InstructionType.ExecuteMeSell]: solita.ExecuteMeSellAccounts,
-  [InstructionType.ExecuteMeSellCancel]: solita.ExecuteMeSellCancelAccounts,
+  [InstructionType.UpdateProposalMetadata]:
+    solita.UpdateProposalMetadataAccounts,
   [InstructionType.CreateFinancialOffer]: solita.CreateFinancialOfferAccounts,
   [InstructionType.CancelFinancialOffer]: solita.CancelFinancialOfferAccounts,
   [InstructionType.AcceptFinancialOffer]: solita.AcceptFinancialOfferAccounts,
-  [InstructionType.CreateTransferProposal]:
-    solita.CreateTransferProposalAccounts,
-  [InstructionType.ExecuteTransferProposal]:
-    solita.ExecuteTransferProposalAccounts,
-  [InstructionType.CreateTransferGovernance]:
-    solita.CreateTransferGovernanceAccounts,
-  [InstructionType.UpdateGovernanceConfig]:
-    solita.UpdateGovernanceConfigAccounts,
-  [InstructionType.ExecuteUpdateGovernanceConfig]:
-    solita.ExecuteUpdateGovernanceConfigAccounts,
-  [InstructionType.CreateUpdateRoleProposal]:
-    solita.CreateUpdateRoleProposalAccounts,
-  [InstructionType.ExecuteUpdateRole]: solita.ExecuteUpdateRoleAccounts,
-  [InstructionType.CreateChangeClubConfigGovernance]:
-    solita.CreateChangeClubConfigGovernanceAccounts,
-  [InstructionType.CreateSolseaProposal]: solita.CreateSolseaProposalAccounts,
-  [InstructionType.ExecuteSolseaTransaction]:
-    solita.ExecuteSolseaTransactionAccounts,
-  [InstructionType.CancelSolseaOffer]: solita.CancelSolseaOfferAccounts,
   [InstructionType.ReserveRights]: solita.ReserveRightsAccounts,
   [InstructionType.UpdateAllocation]: solita.UpdateAllocationAccounts,
-  [InstructionType.CreateAddSellPermissionProposal]:
-    solita.CreateAddSellPermissionProposalAccounts,
-  [InstructionType.ExecuteSellPermissionTransaction]:
-    solita.ExecuteSellPermissionTransactionAccounts,
-  [InstructionType.AddStakeConfigToStakeRecord]:
-    solita.AddStakeConfigToStakeRecordAccounts,
-  [InstructionType.AddCanLeaveAction]: solita.AddCanLeaveActionAccounts,
+  [InstructionType.ConfigureWhitelistings]:
+    solita.ConfigureWhitelistingsAccounts,
+  [InstructionType.ConfigureAdmins]: solita.ConfigureAdminsAccounts,
+  [InstructionType.MigrateFinancials]: solita.MigrateFinancialsAccounts,
+  [InstructionType.InsertTransaction]: solita.InsertTransactionAccounts,
+  [InstructionType.Fundraise]: solita.FundraiseAccounts,
+  [InstructionType.CancelProposal]: solita.CancelProposalAccounts,
 }
 
 export type ParsedEventsInfo =
   | CreateClubInfo
-  | CreateClubVaultInfo
-  | CreateTreasuryGovernanceInfo
-  | AddSellPermissionInfo
+  | CreateGovernanceInfo
+  | CreateTreasuryInfo
   | SupportClubInfo
   | LeaveClubInfo
   | CreateClubProposalInfo
@@ -1479,18 +760,9 @@ export type ParsedEventsInfo =
   | UpdateMemberInfo
   | AcceptMembershipInfo
   | CancelInvitationInfo
-  | CreateFundraiseInfo
-  | FinishFundraiseInfo
   | UpdateVoterWeightInfo
-  | ExecuteTransactionInfo
-  | CancelEscrowInfo
-  | CreateProposalMetadataInfo
-  | CreateWithdrawalProposalInfo
-  | ExecuteWithdrawalTransactionInfo
-  | UpdateVoterWeightForGovernanceInfo
+  | ExecuteProposalInfo
   | DistributeInfo
-  | TransferProfitInfo
-  | CreateWithdrawalGovernanceInfo
   | CastNftVoteInfo
   | InitializeStakingInfo
   | StakeTokensInfo
@@ -1499,40 +771,23 @@ export type ParsedEventsInfo =
   | FinishStakingInfo
   | StartStakingInfo
   | InitializeStakingRewardInfo
-  | UpdateProposalDescriptionInfo
-  | CreateMeBuyNowProposalInfo
-  | CreateMeSellProposalInfo
-  | ExecuteMeBuyNowTransactionInfo
-  | ExecuteMeSellTransactionInfo
-  | ExecuteMeBuyNowInfo
-  | ExecuteMeSellInfo
-  | ExecuteMeSellCancelInfo
+  | UpdateProposalMetadataInfo
   | CreateFinancialOfferInfo
   | CancelFinancialOfferInfo
   | AcceptFinancialOfferInfo
-  | CreateTransferProposalInfo
-  | ExecuteTransferProposalInfo
-  | CreateTransferGovernanceInfo
-  | UpdateGovernanceConfigInfo
-  | ExecuteUpdateGovernanceConfigInfo
-  | CreateUpdateRoleProposalInfo
-  | ExecuteUpdateRoleInfo
-  | CreateChangeClubConfigGovernanceInfo
-  | CreateSolseaProposalInfo
-  | ExecuteSolseaTransactionInfo
-  | CancelSolseaOfferInfo
   | ReserveRightsInfo
   | UpdateAllocationInfo
-  | CreateAddSellPermissionProposalInfo
-  | ExecuteSellPermissionTransactionInfo
-  | AddStakeConfigToStakeRecordInfo
-  | AddCanLeaveActionInfo
+  | ConfigureWhitelistingsInfo
+  | ConfigureAdminsInfo
+  | MigrateFinancialsInfo
+  | InsertTransactionInfo
+  | FundraiseInfo
+  | CancelProposalInfo
 
 export type ParsedEvents =
   | CreateClubEvent
-  | CreateClubVaultEvent
-  | CreateTreasuryGovernanceEvent
-  | AddSellPermissionEvent
+  | CreateGovernanceEvent
+  | CreateTreasuryEvent
   | SupportClubEvent
   | LeaveClubEvent
   | CreateClubProposalEvent
@@ -1540,18 +795,9 @@ export type ParsedEvents =
   | UpdateMemberEvent
   | AcceptMembershipEvent
   | CancelInvitationEvent
-  | CreateFundraiseEvent
-  | FinishFundraiseEvent
   | UpdateVoterWeightEvent
-  | ExecuteTransactionEvent
-  | CancelEscrowEvent
-  | CreateProposalMetadataEvent
-  | CreateWithdrawalProposalEvent
-  | ExecuteWithdrawalTransactionEvent
-  | UpdateVoterWeightForGovernanceEvent
+  | ExecuteProposalEvent
   | DistributeEvent
-  | TransferProfitEvent
-  | CreateWithdrawalGovernanceEvent
   | CastNftVoteEvent
   | InitializeStakingEvent
   | StakeTokensEvent
@@ -1560,31 +806,15 @@ export type ParsedEvents =
   | FinishStakingEvent
   | StartStakingEvent
   | InitializeStakingRewardEvent
-  | UpdateProposalDescriptionEvent
-  | CreateMeBuyNowProposalEvent
-  | CreateMeSellProposalEvent
-  | ExecuteMeBuyNowTransactionEvent
-  | ExecuteMeSellTransactionEvent
-  | ExecuteMeBuyNowEvent
-  | ExecuteMeSellEvent
-  | ExecuteMeSellCancelEvent
+  | UpdateProposalMetadataEvent
   | CreateFinancialOfferEvent
   | CancelFinancialOfferEvent
   | AcceptFinancialOfferEvent
-  | CreateTransferProposalEvent
-  | ExecuteTransferProposalEvent
-  | CreateTransferGovernanceEvent
-  | UpdateGovernanceConfigEvent
-  | ExecuteUpdateGovernanceConfigEvent
-  | CreateUpdateRoleProposalEvent
-  | ExecuteUpdateRoleEvent
-  | CreateChangeClubConfigGovernanceEvent
-  | CreateSolseaProposalEvent
-  | ExecuteSolseaTransactionEvent
-  | CancelSolseaOfferEvent
   | ReserveRightsEvent
   | UpdateAllocationEvent
-  | CreateAddSellPermissionProposalEvent
-  | ExecuteSellPermissionTransactionEvent
-  | AddStakeConfigToStakeRecordEvent
-  | AddCanLeaveActionEvent
+  | ConfigureWhitelistingsEvent
+  | ConfigureAdminsEvent
+  | MigrateFinancialsEvent
+  | InsertTransactionEvent
+  | FundraiseEvent
+  | CancelProposalEvent

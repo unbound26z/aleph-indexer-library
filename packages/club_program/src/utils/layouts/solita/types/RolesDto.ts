@@ -6,9 +6,11 @@
  */
 
 import * as beet from '@metaplex-foundation/beet'
+import { ClubAction, clubActionBeet } from './ClubAction.js'
 export type RolesDto = {
   name: string
   roleWeight: beet.bignum
+  clubActions: ClubAction[]
 }
 
 /**
@@ -19,6 +21,7 @@ export const rolesDtoBeet = new beet.FixableBeetArgsStruct<RolesDto>(
   [
     ['name', beet.utf8String],
     ['roleWeight', beet.u64],
+    ['clubActions', beet.array(clubActionBeet)],
   ],
   'RolesDto',
 )

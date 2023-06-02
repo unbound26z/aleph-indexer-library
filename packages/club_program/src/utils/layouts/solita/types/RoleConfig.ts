@@ -9,7 +9,6 @@ import * as beet from '@metaplex-foundation/beet'
 import { ClubAction, clubActionBeet } from './ClubAction.js'
 export type RoleConfig = {
   name: string
-  roleWeight: beet.bignum
   clubActions: ClubAction[]
   membersCount: number
 }
@@ -21,7 +20,6 @@ export type RoleConfig = {
 export const roleConfigBeet = new beet.FixableBeetArgsStruct<RoleConfig>(
   [
     ['name', beet.utf8String],
-    ['roleWeight', beet.u64],
     ['clubActions', beet.array(clubActionBeet)],
     ['membersCount', beet.u32],
   ],

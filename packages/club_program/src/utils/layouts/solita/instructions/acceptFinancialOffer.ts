@@ -44,6 +44,7 @@ export const acceptFinancialOfferStruct = new beet.BeetArgsStruct<
  * @property [] treasury
  * @property [_writable_] buyerFinancialRecord
  * @property [_writable_] sellerFinancialRecord
+ * @property [] buyerTokenOwnerRecord
  * @category Instructions
  * @category AcceptFinancialOffer
  * @category generated
@@ -58,6 +59,7 @@ export type AcceptFinancialOfferInstructionAccounts = {
   treasury: web3.PublicKey
   buyerFinancialRecord: web3.PublicKey
   sellerFinancialRecord: web3.PublicKey
+  buyerTokenOwnerRecord: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
@@ -129,6 +131,11 @@ export function createAcceptFinancialOfferInstruction(
     {
       pubkey: accounts.sellerFinancialRecord,
       isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.buyerTokenOwnerRecord,
+      isWritable: false,
       isSigner: false,
     },
     {

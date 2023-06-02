@@ -8,6 +8,7 @@
 import * as web3 from '@solana/web3.js'
 import * as beet from '@metaplex-foundation/beet'
 import * as beetSolana from '@metaplex-foundation/beet-solana'
+import { Rarity, rarityBeet } from '../types/Rarity.js'
 
 /**
  * Arguments used to create {@link UniverseMetadata}
@@ -22,7 +23,7 @@ export type UniverseMetadataArgs = {
   mintingEpoch: beet.bignum
   currentUniverseLevel: number
   status: number
-  rarity: number
+  rarity: Rarity
   evolutionPoints: beet.bignum
 }
 
@@ -45,7 +46,7 @@ export class UniverseMetadata implements UniverseMetadataArgs {
     readonly mintingEpoch: beet.bignum,
     readonly currentUniverseLevel: number,
     readonly status: number,
-    readonly rarity: number,
+    readonly rarity: Rarity,
     readonly evolutionPoints: beet.bignum,
   ) {}
 
@@ -186,7 +187,7 @@ export class UniverseMetadata implements UniverseMetadataArgs {
       })(),
       currentUniverseLevel: this.currentUniverseLevel,
       status: this.status,
-      rarity: this.rarity,
+      rarity: 'Rarity.' + Rarity[this.rarity],
       evolutionPoints: (() => {
         const x = <{ toNumber: () => number }>this.evolutionPoints
         if (typeof x.toNumber === 'function') {
@@ -221,7 +222,7 @@ export const universeMetadataBeet = new beet.BeetStruct<
     ['mintingEpoch', beet.u64],
     ['currentUniverseLevel', beet.u32],
     ['status', beet.u8],
-    ['rarity', beet.u8],
+    ['rarity', rarityBeet],
     ['evolutionPoints', beet.u64],
   ],
   UniverseMetadata.fromArgs,
